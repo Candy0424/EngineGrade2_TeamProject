@@ -36,15 +36,21 @@ namespace Work.CIW.Code.Grid
         // 맵 초기화 -> 빈 gridCell들을 3차원 공간에 배치
         private void InitializeGrid()
         {
+            int startX = -(gridSize.x / 2);
+            int startY = -(gridSize.y / 2);
+            int startZ = -(gridSize.z / 2);
+
             for (int x = 0; x < gridSize.x; x++)
             {
                 for (int y = 0; y < gridSize.y; y++)
                 {
                     for (int z = 0; z < gridSize.z; z++)
                     {
-                        Vector3Int pos = new Vector3Int(x, y, z);
+                        Vector3Int pos = new Vector3Int(startX + x, startY + y, startZ + z);
+                        Vector3 worldPos = new Vector3(pos.x, pos.y, pos.z);
+
                         // 이거 나중에 오브젝트 풀링으로 바꿔줄거임
-                        GridCell newCell = Instantiate(cellPrefab, pos, Quaternion.identity, gridParent);
+                        GridCell newCell = Instantiate(cellPrefab, worldPos, Quaternion.identity, gridParent);
 
                         newCell.InitializeCoodinates(pos);
                         _gridMap.Add(pos, newCell);
