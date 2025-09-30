@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Work.PSB.Code
+namespace Work.PSB.Code.Test
 {
     public class BlockPushTest : MonoBehaviour
     {
@@ -23,10 +23,12 @@ namespace Work.PSB.Code
             Vector3Int targetPos = _gridPos + dir;
             
             Collider[] hits = Physics.OverlapSphere(targetPos, 0.1f);
-            foreach (var hit in hits)
+            foreach (Collider hit in hits)
             {
-                if (hit.GetComponent<BlockPushTest>() != null) return false;
-                if (hit.CompareTag("Wall")) return false;
+                if (hit.GetComponent<BlockPushTest>() != null)
+                    return false;
+                if (hit.CompareTag("Wall") || hit.CompareTag("Spike"))
+                    return false;
             }
 
             return true;
