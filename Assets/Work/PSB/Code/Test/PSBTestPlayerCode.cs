@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using Work.CIW.Code.Player;
 
-namespace Work.PSB.Code
+namespace Work.PSB.Code.Test
 {
     public class PSBTestPlayerCode : MonoBehaviour, IMovement
     {
         [SerializeField] float moveTime = 0.15f;
 
-        bool _isMoving = false;
-        Vector3Int _currentGridPos;
+        private bool _isMoving = false;
+        private Vector3Int _currentGridPos;
+        
+        [SerializeField] public UnityEvent OnMoveComplete;
 
         private void Start()
         {
@@ -73,6 +76,8 @@ namespace Work.PSB.Code
             _currentGridPos = Vector3Int.RoundToInt(end);
 
             _isMoving = false;
+            
+            OnMoveComplete?.Invoke();
         }
         
     }
