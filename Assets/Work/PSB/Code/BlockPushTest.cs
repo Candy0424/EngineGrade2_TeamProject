@@ -3,9 +3,10 @@ using UnityEngine;
 
 namespace Work.PSB.Code
 {
-    public class BlockPullTest : MonoBehaviour
+    public class BlockPushTest : MonoBehaviour
     {
         [SerializeField] private float moveTime = 0.15f;
+        [SerializeField] private bool canMoveBlock = true;
         private bool _isMoving = false;
         private Vector3Int _gridPos;
 
@@ -17,7 +18,17 @@ namespace Work.PSB.Code
 
         public bool CanMove(Vector3Int dir)
         {
-            Vector3Int target = _gridPos + dir;
+            if (!canMoveBlock) return false;
+            
+            Vector3Int targetPos = _gridPos + dir;
+            
+            Collider[] hits = Physics.OverlapSphere(targetPos, 0.1f);
+            foreach (var hit in hits)
+            {
+                if (hit.GetComponent<BlockPushTest>() != null) return false;
+                if (hit.CompareTag("Wall")) return false;
+            }
+
             return true;
         }
 

@@ -28,7 +28,7 @@ namespace Work.PSB.Code
             Collider[] hits = Physics.OverlapSphere(nextPos, 0.1f);
             foreach (Collider hit in hits)
             {
-                BlockPullTest block = hit.GetComponent<BlockPullTest>();
+                BlockPushTest block = hit.GetComponent<BlockPushTest>();
                 if (block != null)
                 {
                     if (block.CanMove(dir))
