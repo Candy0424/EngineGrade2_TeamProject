@@ -21,7 +21,7 @@ namespace Work.CIW.Code
                 _controls.Player.SetCallbacks(this);
             }
 
-            _controls.Player.Enable();
+            _controls.Enable();
         }
 
         private void OnDisable()
