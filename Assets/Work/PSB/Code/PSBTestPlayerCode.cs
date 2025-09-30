@@ -1,22 +1,15 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
+using Work.CIW.Code.Player;
 
-namespace Work.CIW.Code.Player
+namespace Work.PSB.Code
 {
-    public interface IMovement
-    {
-        void HandleInput(Vector2 input);
-    }
-
-    public class PlayerMovement : MonoBehaviour, IMovement
+    public class PSBTestPlayerCode : MonoBehaviour, IMovement
     {
         [SerializeField] float moveTime = 0.15f;
 
         bool _isMoving = false;
         Vector3Int _currentGridPos;
-
-        [SerializeField] UnityEvent onMoveComplete;
 
         private void Start()
         {
@@ -29,8 +22,27 @@ namespace Work.CIW.Code.Player
             if (_isMoving) return;
 
             Vector3Int dir = GetDirection(input);
-            if (dir != Vector3Int.zero)
-                StartCoroutine(MoveRoutine(dir));
+            if (dir == Vector3Int.zero) return;
+            
+            Vector3Int nextPos = _currentGridPos + dir;
+            Collider[] hits = Physics.OverlapSphere(nextPos, 0.1f);
+            foreach (Collider hit in hits)
+            {
+                BlockPushTest block = hit.GetComponent<BlockPushTest>();
+                if (block != null)
+                {
+                    if (block.CanMove(dir))
+                    {
+                        StartCoroutine(block.MoveRoutine(dir));
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+            }
+            
+            StartCoroutine(MoveRoutine(dir));
         }
 
         private Vector3Int GetDirection(Vector2 input)
@@ -61,8 +73,7 @@ namespace Work.CIW.Code.Player
             _currentGridPos = Vector3Int.RoundToInt(end);
 
             _isMoving = false;
-
-            onMoveComplete?.Invoke();
         }
+        
     }
 }
