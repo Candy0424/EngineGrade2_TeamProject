@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Work.CIW.Code.Player
 {
@@ -14,6 +15,8 @@ namespace Work.CIW.Code.Player
 
         bool _isMoving = false;
         Vector3Int _currentGridPos;
+
+        [SerializeField] UnityEvent onMoveComplete;
 
         private void Start()
         {
@@ -58,6 +61,8 @@ namespace Work.CIW.Code.Player
             _currentGridPos = Vector3Int.RoundToInt(end);
 
             _isMoving = false;
+
+            onMoveComplete?.Invoke();
         }
     }
 }
