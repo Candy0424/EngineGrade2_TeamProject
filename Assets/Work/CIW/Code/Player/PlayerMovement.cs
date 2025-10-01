@@ -51,7 +51,7 @@ namespace Work.CIW.Code.Player
 
         bool _isMoving = false;
 
-        [SerializeField] UnityEvent onMoveComplete;
+        //[SerializeField] UnityEvent onMoveComplete;
 
         private void Awake()
         {
@@ -125,7 +125,7 @@ namespace Work.CIW.Code.Player
 
             _isMoving = false;
 
-            onMoveComplete?.Invoke();
+            //onMoveComplete?.Invoke();
         }
 
         public GameObject GetObject()

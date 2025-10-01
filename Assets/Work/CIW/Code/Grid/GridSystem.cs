@@ -21,6 +21,10 @@ namespace Work.CIW.Code.Grid
         [SerializeField] LayerMask whatIsWalkable;
         [SerializeField] float raycastDistance = 1.0f; // 이동하는 거리와 일치해야해
 
+        [Header("Dependencies")]
+        [SerializeField] MonoBehaviour turnServiceMono;
+        ITurnService _turnService;
+
         Dictionary<Vector3Int, GridCell> _gridMap = new Dictionary<Vector3Int, GridCell>();
 
         private void Awake()
@@ -30,7 +34,16 @@ namespace Work.CIW.Code.Grid
             else
                 Destroy(Instance);
 
-            InitializeGrid();
+            if (turnServiceMono is ITurnService service)
+            {
+                _turnService = service;
+            }
+            else
+            {
+                Debug.LogError("ITurnService dependency not met. Assign TurnSystemAdapter to turnServiceMono.");
+            }
+
+                InitializeGrid();
         }
 
         // 맵 초기화 -> 빈 gridCell들을 3차원 공간에 배치
@@ -69,6 +82,12 @@ namespace Work.CIW.Code.Grid
 
             Debug.Log($"[GRID CHECK] Requesting check from {curPos} in direction {dir}.");
 
+            if (_turnService != null && !_turnService.HasTurnRemaining)
+            {
+                Debug.LogWarning("[GRID CHECK] FAILED (0): No turns remaining. Movement blocked.");
+                return false;
+            }
+
             if (!_gridMap.TryGetValue(targetPos, out GridCell targetCell))
             {
                 Debug.LogWarning($"[GRID CHECK] FAILED (1): Target position {targetPos} is outside map boundaries.");
@@ -102,6 +121,12 @@ namespace Work.CIW.Code.Grid
 
         public void UpdateObjectPosition(IGridObject movingObj, Vector3Int oldPos, Vector3Int newPos)
         {
+            if (_turnService != null)
+            {
+                _turnService.UseTurn();
+                Debug.Log($"Turn Used. Current Turns Remaining: {_turnService.HasTurnRemaining}");
+            }
+
             // 이전 칸 비워주기
             if (_gridMap.TryGetValue(oldPos, out GridCell oldCell))
             {
