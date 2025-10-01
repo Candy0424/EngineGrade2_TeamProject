@@ -1,43 +1,11 @@
-using System.Collections;
+癤퓎sing System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using Work.CIW.Code.Player;
 
-namespace Work.CIW.Code.Player
+namespace Work.PSB.Code.Test
 {
-    #region Interfaces
-
-    public interface IGridDataService
-    {
-        // Grid System에 이동 가능을 부여함
-        bool CanMoveTo(Vector3Int curPos, Vector3Int dir, out Vector3Int targetPos);
-
-        // 이동 완료 후 Grid System의 데이터를 갱신해줌
-        void UpdateObjectPosition(IGridObject movingObj, Vector3Int oldPos, Vector3Int newPos);
-
-        // Grid System이 특정 Grid Object의 위치를 초기화 할때 사용
-        void SetObjectInitialPosition(IGridObject obj, Vector3Int initPos);
-    }
-
-    public interface IGridObject
-    {
-        Vector3Int CurrentGridPosition { get; }
-
-        GameObject GetObject();
-    }
-
-    public interface IInteractable
-    {
-        bool Interact(IGridObject actor, Vector3Int dir);
-    }
-
-    public interface IMovement
-    {
-        void HandleInput(Vector2 input);
-    }
-
-    #endregion
-
-    public class PlayerMovement : MonoBehaviour, IMovement, IGridObject
+    public class PSBTestPlayerCode : MonoBehaviour, IMovement, IGridObject
     {
         [Header("Dependencies - DIP")]
         [SerializeField] MonoBehaviour gridServiceMono;
@@ -51,7 +19,7 @@ namespace Work.CIW.Code.Player
 
         bool _isMoving = false;
 
-        [SerializeField] UnityEvent onMoveComplete;
+        [SerializeField] public UnityEvent OnActionComplete;
 
         private void Awake()
         {
@@ -61,7 +29,6 @@ namespace Work.CIW.Code.Player
             }
             else
             {
-                Debug.LogError("IGridDataService dependency not met. Assign GridSystem to gridServiceMono.");
                 enabled = false;
             }
         }
@@ -81,16 +48,32 @@ namespace Work.CIW.Code.Player
             Vector3Int dir = GetDirection(input);
             if (dir == Vector3Int.zero) return;
 
-            Debug.Log($"[PLAYER INPUT] Input received. Direction: {dir}");
+            Vector3Int nextPos = CurrentGridPosition + dir;
+            
+            Collider[] hits = Physics.OverlapSphere(nextPos, 0.1f);
+            bool blockFound = false;
 
-            if (_gridService.CanMoveTo(CurrentGridPosition, dir, out Vector3Int targetPos))
+            foreach (Collider hit in hits)
             {
-                Debug.Log($"[PLAYER MOVEMENT] GridSystem approved move to: {targetPos}");
-                StartCoroutine(MoveRoutine(targetPos));
+                if (hit.TryGetComponent(out BlockPushTest block)) 
+                {
+                    blockFound = true;
+
+                    if (block.CanMove(dir))
+                    {
+                        StartCoroutine(block.MoveRoutine(dir));
+                        OnActionComplete?.Invoke();
+                    }
+                    return;
+                }
             }
-            else
+ 
+            if (!blockFound)
             {
-                Debug.LogWarning($"[PLAYER MOVEMENT] Move to {CurrentGridPosition + dir} blocked by GridSystem.");
+                if (_gridService.CanMoveTo(CurrentGridPosition, dir, out Vector3Int targetPos))
+                {
+                    StartCoroutine(MoveRoutine(targetPos));
+                }
             }
         }
 
@@ -125,12 +108,13 @@ namespace Work.CIW.Code.Player
 
             _isMoving = false;
 
-            onMoveComplete?.Invoke();
+            OnActionComplete?.Invoke();
         }
 
         public GameObject GetObject()
         {
             return gameObject;
         }
+        
     }
 }
