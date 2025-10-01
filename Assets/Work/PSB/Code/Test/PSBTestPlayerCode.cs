@@ -5,19 +5,40 @@ using Work.CIW.Code.Player;
 
 namespace Work.PSB.Code.Test
 {
-    public class PSBTestPlayerCode : MonoBehaviour, IMovement
+    public class PSBTestPlayerCode : MonoBehaviour, IMovement, IGridObject
     {
+        [Header("Dependencies - DIP")]
+        [SerializeField] MonoBehaviour gridServiceMono;
+        IGridDataService _gridService;
+
+        [Header("Movement")]
         [SerializeField] float moveTime = 0.15f;
 
-        private bool _isMoving = false;
-        private Vector3Int _currentGridPos;
-        
-        [SerializeField] public UnityEvent OnMoveComplete;
+        public Vector3Int CurrentGridPosition { get; private set; }
+        public GameObject GetGameObject() => gameObject;
+
+        bool _isMoving = false;
+
+        [SerializeField] public UnityEvent OnActionComplete;
+
+        private void Awake()
+        {
+            if (gridServiceMono is IGridDataService service)
+            {
+                _gridService = service;
+            }
+            else
+            {
+                enabled = false;
+            }
+        }
 
         private void Start()
         {
-            _currentGridPos = Vector3Int.RoundToInt(transform.position);
-            transform.position = _currentGridPos;
+            CurrentGridPosition = Vector3Int.RoundToInt(transform.position);
+            transform.position = CurrentGridPosition;
+
+            _gridService.SetObjectInitialPosition(this, CurrentGridPosition);
         }
 
         public void HandleInput(Vector2 input)
@@ -26,58 +47,73 @@ namespace Work.PSB.Code.Test
 
             Vector3Int dir = GetDirection(input);
             if (dir == Vector3Int.zero) return;
+
+            Vector3Int nextPos = CurrentGridPosition + dir;
             
-            Vector3Int nextPos = _currentGridPos + dir;
             Collider[] hits = Physics.OverlapSphere(nextPos, 0.1f);
+            bool blockFound = false;
+
             foreach (Collider hit in hits)
             {
-                BlockPushTest block = hit.GetComponent<BlockPushTest>();
-                if (block != null)
+                if (hit.TryGetComponent(out BlockPushTest block)) 
                 {
+                    blockFound = true;
+
                     if (block.CanMove(dir))
                     {
                         StartCoroutine(block.MoveRoutine(dir));
+                        OnActionComplete?.Invoke();
                     }
-                    else
-                    {
-                        return;
-                    }
+                    return;
                 }
             }
-            
-            StartCoroutine(MoveRoutine(dir));
+ 
+            if (!blockFound)
+            {
+                if (_gridService.CanMoveTo(CurrentGridPosition, dir, out Vector3Int targetPos))
+                {
+                    StartCoroutine(MoveRoutine(targetPos));
+                }
+            }
         }
 
         private Vector3Int GetDirection(Vector2 input)
         {
             if (input.y > 0.5f) return Vector3Int.forward;
             if (input.y < -0.5f) return Vector3Int.back;
+
             if (input.x > 0.5f) return Vector3Int.right;
             if (input.x < -0.5f) return Vector3Int.left;
+            
             return Vector3Int.zero;
         }
 
-        private IEnumerator MoveRoutine(Vector3Int dir)
+        private IEnumerator MoveRoutine(Vector3Int targetPos)
         {
             _isMoving = true;
 
             Vector3 start = transform.position;
-            Vector3 end = start + dir;
 
             float elapsed = 0f;
             while (elapsed < moveTime)
             {
-                transform.position = Vector3.Lerp(start, end, elapsed / moveTime);
+                transform.position = Vector3.Lerp(start, targetPos, elapsed / moveTime);
                 elapsed += Time.deltaTime;
                 yield return null;
             }
 
-            transform.position = end;
-            _currentGridPos = Vector3Int.RoundToInt(end);
+            transform.position = targetPos;
+            _gridService.UpdateObjectPosition(this, CurrentGridPosition, targetPos);
+            CurrentGridPosition = targetPos;
 
             _isMoving = false;
-            
-            OnMoveComplete?.Invoke();
+
+            OnActionComplete?.Invoke();
+        }
+
+        public GameObject GetObject()
+        {
+            return gameObject;
         }
         
     }
