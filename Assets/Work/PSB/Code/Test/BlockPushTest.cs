@@ -45,7 +45,10 @@ namespace Work.PSB.Code.Test
                 if (hit.GetComponent<BlockPushTest>() != null)
                     return false;
                 if (hit.CompareTag("Wall") || hit.CompareTag("Spike"))
+                {
+                    Debug.LogError("벽이나 가시가 있어 블럭을 옮길 수 없습니다.");
                     return false;
+                }
             }
 
             return true;

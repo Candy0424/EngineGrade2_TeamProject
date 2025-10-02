@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 85739227}
   m_Layer: 0
   m_Name: Sphere (3)
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -312,7 +312,7 @@ Transform:
   m_GameObject: {fileID: 91463934}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2, y: 1, z: -5}
+  m_LocalPosition: {x: 0.41, y: 1, z: -13.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -363,7 +363,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellPrefab: {fileID: 1516584889428346146, guid: da0ba59cce1cfab4ebd30f7be32ede80, type: 3}
-  gridSize: {x: 25, y: 5, z: 25}
+  gridCenter: {x: 0, y: 3, z: 0}
+  gridSize: {x: 30, y: 5, z: 30}
   gridParent: {fileID: 1467270964}
   whatIsWalkable:
     serializedVersion: 2
@@ -590,7 +591,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &339874131
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -736,7 +737,7 @@ GameObject:
   - component: {fileID: 773024305}
   m_Layer: 0
   m_Name: Sphere (2)
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -877,11 +878,11 @@ GameObject:
   - component: {fileID: 899237239}
   m_Layer: 0
   m_Name: Spike4
-  m_TagString: Spike
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &899237238
 Transform:
   m_ObjectHideFlags: 0
@@ -1108,7 +1109,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1170388777
 Transform:
   m_ObjectHideFlags: 0
@@ -1653,11 +1654,11 @@ GameObject:
   - component: {fileID: 1540239811}
   m_Layer: 0
   m_Name: Spike2
-  m_TagString: Spike
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1540239810
 Transform:
   m_ObjectHideFlags: 0
@@ -1700,11 +1701,11 @@ GameObject:
   - component: {fileID: 1635222858}
   m_Layer: 0
   m_Name: Spike1
-  m_TagString: Spike
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1635222857
 Transform:
   m_ObjectHideFlags: 0
@@ -1836,7 +1837,7 @@ Transform:
   m_GameObject: {fileID: 1641700307}
   serializedVersion: 2
   m_LocalRotation: {x: 0.53729963, y: 0, z: 0, w: 0.8433915}
-  m_LocalPosition: {x: 2, y: 11.875692, z: -10.071418}
+  m_LocalPosition: {x: 0.41, y: 11.875694, z: -19.041418}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1930,7 +1931,7 @@ Transform:
   m_GameObject: {fileID: 1778318392}
   serializedVersion: 2
   m_LocalRotation: {x: 0.53729963, y: 0, z: 0, w: 0.8433915}
-  m_LocalPosition: {x: 2, y: 11.875692, z: -10.071418}
+  m_LocalPosition: {x: 0.41, y: 11.875694, z: -19.041418}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2024,11 +2025,11 @@ GameObject:
   - component: {fileID: 1861367930}
   m_Layer: 0
   m_Name: Spike3
-  m_TagString: Spike
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1861367929
 Transform:
   m_ObjectHideFlags: 0
@@ -2073,7 +2074,7 @@ GameObject:
   - component: {fileID: 1912653490}
   m_Layer: 0
   m_Name: Sphere
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2181,7 +2182,7 @@ GameObject:
   - component: {fileID: 1936722056}
   m_Layer: 0
   m_Name: Sphere (1)
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2295,7 +2296,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2107698968
 MonoBehaviour:
   m_ObjectHideFlags: 0
