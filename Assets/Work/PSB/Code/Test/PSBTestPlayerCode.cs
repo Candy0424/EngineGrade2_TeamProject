@@ -19,8 +19,6 @@ namespace Work.PSB.Code.Test
 
         bool _isMoving = false;
 
-        [SerializeField] public UnityEvent OnActionComplete;
-
         private void Awake()
         {
             if (gridServiceMono is IGridDataService service)
@@ -62,7 +60,6 @@ namespace Work.PSB.Code.Test
                     if (block.CanMove(dir))
                     {
                         StartCoroutine(block.MoveRoutine(dir));
-                        OnActionComplete?.Invoke();
                     }
                     return;
                 }
@@ -107,8 +104,6 @@ namespace Work.PSB.Code.Test
             CurrentGridPosition = targetPos;
 
             _isMoving = false;
-
-            OnActionComplete?.Invoke();
         }
 
         public GameObject GetObject()

@@ -1,26 +1,43 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
+using Work.CIW.Code.Player;
 
 namespace Work.PSB.Code.Test
 {
-    public class BlockPushTest : MonoBehaviour
+    public class BlockPushTest : MonoBehaviour, IGridObject
     {
+        [SerializeField] private MonoBehaviour gridServiceMono;
+        
         [SerializeField] private float moveTime = 0.15f;
         [SerializeField] private bool canMoveBlock = true;
+
+        public Vector3Int CurrentGridPosition { get; private set; }
+        
+        private IGridDataService _gridService;
         private bool _isMoving = false;
-        private Vector3Int _gridPos;
+
+        private void Awake()
+        {
+            if (gridServiceMono is IGridDataService service)
+            {
+                _gridService = service;
+            }
+        }
 
         private void Start()
         {
-            _gridPos = Vector3Int.RoundToInt(transform.position);
-            transform.position = _gridPos;
+            CurrentGridPosition = Vector3Int.RoundToInt(transform.position);
+            transform.position = CurrentGridPosition;
+            
+            _gridService.SetObjectInitialPosition(this, CurrentGridPosition);
         }
 
         public bool CanMove(Vector3Int dir)
         {
             if (!canMoveBlock) return false;
             
-            Vector3Int targetPos = _gridPos + dir;
+            Vector3Int targetPos = CurrentGridPosition + dir;
             
             Collider[] hits = Physics.OverlapSphere(targetPos, 0.1f);
             foreach (Collider hit in hits)
@@ -37,11 +54,16 @@ namespace Work.PSB.Code.Test
         public IEnumerator MoveRoutine(Vector3Int dir)
         {
             if (_isMoving) yield break;
+            
+            if (!CanMove(dir)) yield break;
 
             _isMoving = true;
 
+            Vector3Int oldPos = CurrentGridPosition;
+            Vector3Int targetPos = oldPos + dir;
+
             Vector3 start = transform.position;
-            Vector3 end = start + dir;
+            Vector3 end = targetPos;
 
             float elapsed = 0f;
             while (elapsed < moveTime)
@@ -52,9 +74,16 @@ namespace Work.PSB.Code.Test
             }
 
             transform.position = end;
-            _gridPos = Vector3Int.RoundToInt(end);
+            CurrentGridPosition = targetPos;
+            
+            _gridService.UpdateObjectPosition(this, oldPos, targetPos);
 
             _isMoving = false;
+        }
+        
+        public GameObject GetObject()
+        {
+            return gameObject;
         }
         
     }

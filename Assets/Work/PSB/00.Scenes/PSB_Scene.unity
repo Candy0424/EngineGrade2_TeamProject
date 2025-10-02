@@ -119,6 +119,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &57106786
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 57106788}
+  - component: {fileID: 57106787}
+  m_Layer: 0
+  m_Name: TurnAdapter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &57106787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57106786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87a70a70ced625e46a5a4058df643f62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turnCntSystem: {fileID: 1463251120}
+--- !u!4 &57106788
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57106786}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &85739225
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,21 +333,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridServiceMono: {fileID: 98024712}
   moveTime: 0.15
-  OnActionComplete:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1454926985}
-        m_TargetAssemblyTypeName: Work.ISC.Code.System.TurnManager, Assembly-CSharp
-        m_MethodName: HandleUseTurn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &98024711
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,8 +367,9 @@ MonoBehaviour:
   gridParent: {fileID: 1467270964}
   whatIsWalkable:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 64
   raycastDistance: 1
+  turnServiceMono: {fileID: 57106787}
 --- !u!4 &98024713
 Transform:
   m_ObjectHideFlags: 0
@@ -536,6 +567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9061b3f199641b69771b1083ff4b42a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridServiceMono: {fileID: 98024712}
   moveTime: 0.15
   canMoveBlock: 0
 --- !u!1 &339874130
@@ -660,6 +692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9061b3f199641b69771b1083ff4b42a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridServiceMono: {fileID: 98024712}
   moveTime: 0.15
   canMoveBlock: 1
 --- !u!54 &339874137
@@ -1130,6 +1163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9061b3f199641b69771b1083ff4b42a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridServiceMono: {fileID: 98024712}
   moveTime: 0.15
   canMoveBlock: 1
 --- !u!65 &1170388780
@@ -1510,7 +1544,7 @@ GameObject:
   - component: {fileID: 1501577101}
   - component: {fileID: 1501577100}
   - component: {fileID: 1501577099}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2274,6 +2308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9061b3f199641b69771b1083ff4b42a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridServiceMono: {fileID: 98024712}
   moveTime: 0.15
   canMoveBlock: 1
 --- !u!65 &2107698969
@@ -2404,3 +2439,4 @@ SceneRoots:
   - {fileID: 1454926984}
   - {fileID: 98024713}
   - {fileID: 1467270964}
+  - {fileID: 57106788}
