@@ -58,12 +58,14 @@ namespace Work.PSB.Code.Test
         {
             if (_isMoving) yield break;
             
+            if (!_gridService.CanMoveTo(CurrentGridPosition, dir, out Vector3Int targetPos))
+                yield break;
             if (!CanMove(dir)) yield break;
 
             _isMoving = true;
 
             Vector3Int oldPos = CurrentGridPosition;
-            Vector3Int targetPos = oldPos + dir;
+            targetPos = oldPos + dir;
 
             Vector3 start = transform.position;
             Vector3 end = targetPos;
