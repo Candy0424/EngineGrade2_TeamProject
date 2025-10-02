@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using Work.CIW.Code.Grid;
 
 namespace Work.CIW.Code.Player
 {
@@ -46,6 +47,10 @@ namespace Work.CIW.Code.Player
         [Header("Movement")]
         [SerializeField] float moveTime = 0.15f;
 
+        [Header("Stair Collision Setting")]
+        [SerializeField] float stairChkDistance = 0.9f;
+        [SerializeField] LayerMask whatIsStair;
+
         public Vector3Int CurrentGridPosition { get; private set; }
         public GameObject GetGameObject() => gameObject;
 
@@ -81,7 +86,10 @@ namespace Work.CIW.Code.Player
             Vector3Int dir = GetDirection(input);
             if (dir == Vector3Int.zero) return;
 
-            Debug.Log($"[PLAYER INPUT] Input received. Direction: {dir}");
+            if (CheckForStairs(dir))
+            {
+                return;
+            }
 
             if (_gridService.CanMoveTo(CurrentGridPosition, dir, out Vector3Int targetPos))
             {
@@ -131,6 +139,34 @@ namespace Work.CIW.Code.Player
         public GameObject GetObject()
         {
             return gameObject;
+        }
+
+        private bool CheckForStairs(Vector3Int dir)
+        {
+            Vector3 startPos = CurrentGridPosition;
+
+            if (Physics.Raycast(startPos, dir, out RaycastHit hit, stairChkDistance))
+            {
+                if (hit.collider.TryGetComponent(out StairTrigger stair))
+                {
+                    Vector3Int targetGridPos = new Vector3Int(CurrentGridPosition.x, stair.GetTargetY(), CurrentGridPosition.z);
+
+                    TeleportToFloor(targetGridPos);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void TeleportToFloor(Vector3Int targetPos)
+        {
+            _gridService.UpdateObjectPosition(this, CurrentGridPosition, targetPos);
+
+            CurrentGridPosition = targetPos;
+            transform.position = targetPos;
+
+            Debug.Log($"Teleport Floor : {targetPos}");
         }
     }
 }
