@@ -6,7 +6,7 @@ using Work.CIW.Code.Player;
 namespace Work.CIW.Code.Grid
 {
     /// <summary>
-    /// °ÝÀÚ ¸ÊÀÇ µ¥ÀÌÅÍ¸¦ °ü¸®ÇÏ´Â Áß¾Ó ½Ã½ºÅÛ
+    /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ß¾ï¿½ ï¿½Ã½ï¿½ï¿½ï¿½
     /// </summary>
     public class GridSystem : MonoBehaviour, IGridDataService
     {
@@ -14,12 +14,17 @@ namespace Work.CIW.Code.Grid
 
         [Header("Group Setup")]
         [SerializeField] GridCell cellPrefab;
+        [SerializeField] private Vector3Int gridCenter = new Vector3Int(0, 0, 0);
         [SerializeField] Vector3Int gridSize = new Vector3Int(10, 5, 10);
-        [SerializeField] Transform gridParent; // °ÝÀÚ CellµéÀ» ¹èÄ¡ÇÒ ºÎ¸ð ¿ÀºêÁ§Æ®
+        [SerializeField] Transform gridParent; // ï¿½ï¿½ï¿½ï¿½ Cellï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
 
         [Header("Movement Check Data")]
         [SerializeField] LayerMask whatIsWalkable;
-        [SerializeField] float raycastDistance = 1.0f; // ÀÌµ¿ÇÏ´Â °Å¸®¿Í ÀÏÄ¡ÇØ¾ßÇØ
+        [SerializeField] float raycastDistance = 1.0f; // ï¿½Ìµï¿½ï¿½Ï´ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ø¾ï¿½ï¿½ï¿½
+
+        [Header("Dependencies")]
+        [SerializeField] MonoBehaviour turnServiceMono;
+        ITurnService _turnService;
 
         Dictionary<Vector3Int, GridCell> _gridMap = new Dictionary<Vector3Int, GridCell>();
 
@@ -30,15 +35,24 @@ namespace Work.CIW.Code.Grid
             else
                 Destroy(Instance);
 
+            if (turnServiceMono is ITurnService service)
+            {
+                _turnService = service;
+            }
+            else
+            {
+                Debug.LogError("ITurnService dependency not met. Assign TurnSystemAdapter to turnServiceMono.");
+            }
+
             InitializeGrid();
         }
 
-        // ¸Ê ÃÊ±âÈ­ -> ºó gridCellµéÀ» 3Â÷¿ø °ø°£¿¡ ¹èÄ¡
+        // ï¿½ï¿½ ï¿½Ê±ï¿½È­ -> ï¿½ï¿½ gridCellï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
         private void InitializeGrid()
         {
-            int startX = -(gridSize.x / 2);
-            int startY = -(gridSize.y / 2);
-            int startZ = -(gridSize.z / 2);
+            int startX = gridCenter.x + -(gridSize.x / 2);
+            int startY = gridCenter.y + -(gridSize.y / 2);
+            int startZ = gridCenter.z + -(gridSize.z / 2);
 
             for (int x = 0; x < gridSize.x; x++)
             {
@@ -49,7 +63,7 @@ namespace Work.CIW.Code.Grid
                         Vector3Int pos = new Vector3Int(startX + x, startY + y, startZ + z);
                         Vector3 worldPos = new Vector3(pos.x, pos.y, pos.z);
 
-                        // ÀÌ°Å ³ªÁß¿¡ ¿ÀºêÁ§Æ® Ç®¸µÀ¸·Î ¹Ù²ãÁÙ°ÅÀÓ
+                        // ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Ç®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½Ù°ï¿½ï¿½ï¿½
                         GridCell newCell = Instantiate(cellPrefab, worldPos, Quaternion.identity, gridParent);
 
                         newCell.InitializeCoodinates(pos);
@@ -58,16 +72,22 @@ namespace Work.CIW.Code.Grid
                 }
             }
 
-            Debug.Log($"Grid Initialized: {_gridMap.Count} cells created.");
+            //Debug.Log($"Grid Initialized: {_gridMap.Count} cells created.");
         }
 
-        #region I Grid Data Service ±¸Çö
+        #region I Grid Data Service ï¿½ï¿½ï¿½ï¿½
 
         public bool CanMoveTo(Vector3Int curPos, Vector3Int dir, out Vector3Int targetPos)
         {
             targetPos = curPos + dir;
 
-            Debug.Log($"[GRID CHECK] Requesting check from {curPos} in direction {dir}.");
+            //Debug.Log($"[GRID CHECK] Requesting check from {curPos} in direction {dir}.");
+
+            if (_turnService != null && !_turnService.HasTurnRemaining)
+            {
+                Debug.LogWarning("[GRID CHECK] FAILED (0): No turns remaining. Movement blocked.");
+                return false;
+            }
 
             if (!_gridMap.TryGetValue(targetPos, out GridCell targetCell))
             {
@@ -75,7 +95,7 @@ namespace Work.CIW.Code.Grid
                 return false;
             }
 
-            // Grid CellÀ» °ÉÀ» ¼ö ÀÖ°í, ´©°¡ ±×°÷¿¡ À§Ä¡ÇÏ°í ÀÖÁö ¾Ê´Â°¡?
+            // Grid Cellï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö°ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½×°ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´Â°ï¿½?
             if (!targetCell.IsWalkable)
             {
                 Debug.LogWarning($"[GRID CHECK] FAILED (2): Cell at {targetPos} is not marked as walkable.");
@@ -89,10 +109,10 @@ namespace Work.CIW.Code.Grid
 
             Vector3 startPos = curPos;
 
-            // ´ÙÀ½ Ä­À¸·Î ÀÌµ¿ÇßÀ» ¶§ ¹ßÀ» µðµô ÁöÇüÀÌ ÀÖ´Â°¡?
+            // ï¿½ï¿½ï¿½ï¿½ Ä­ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Â°ï¿½?
             if (Physics.Raycast(startPos, dir, out RaycastHit hit, raycastDistance, whatIsWalkable))
             {
-                Debug.Log($"[GRID CHECK] SUCCESS! Raycast hit: {hit.collider.gameObject.name}. Move is approved.");
+                //Debug.Log($"[GRID CHECK] SUCCESS! Raycast hit: {hit.collider.gameObject.name}. Move is approved.");
                 return true;
             }
 
@@ -102,7 +122,13 @@ namespace Work.CIW.Code.Grid
 
         public void UpdateObjectPosition(IGridObject movingObj, Vector3Int oldPos, Vector3Int newPos)
         {
-            // ÀÌÀü Ä­ ºñ¿öÁÖ±â
+            if (_turnService != null)
+            {
+                _turnService.UseTurn();
+                //Debug.Log($"Turn Used. Current Turns Remaining: {_turnService.HasTurnRemaining}");
+            }
+
+            // ï¿½ï¿½ï¿½ï¿½ Ä­ ï¿½ï¿½ï¿½ï¿½Ö±ï¿½
             if (_gridMap.TryGetValue(oldPos, out GridCell oldCell))
             {
                 if (oldCell.Occupant == movingObj)
@@ -136,7 +162,7 @@ namespace Work.CIW.Code.Grid
             }
         }
 
-        // Grid CellÀÇ ÁÂÇ¥¸¦ ÃÊ±âÈ­ÇØÁØ´Ù
+        // Grid Cellï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½ï¿½ï¿½Ø´ï¿½
         public GridCell GetCell(Vector3Int pos)
         {
             _gridMap.TryGetValue(pos, out GridCell cell);
