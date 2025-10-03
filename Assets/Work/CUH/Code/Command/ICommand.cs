@@ -1,4 +1,4 @@
-﻿namespace Work.CUH.Code.Commands
+﻿namespace Work.CUH.Code.Command
 {
     /// <summary>
     /// 커맨드는 상세 동작은 모르나, 어떤 대상이 이러한 메서드를 갖고 있다 전도는 앎(추상화해서).

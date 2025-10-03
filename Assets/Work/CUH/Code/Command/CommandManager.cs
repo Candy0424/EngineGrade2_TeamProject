@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Chuh007Lib.Dependencies;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.GameEvents;
 using Work.ISC.Code.Managers;
@@ -14,58 +16,69 @@ namespace Work.CUH.Code.Commands
     /// 처리는 이곳의 큐에서 실행되게 됩니다.
     /// </summary>
     [Provide]
-    public class CommandManager : MonoBehaviour, ITurnAble
+    public class CommandManager : MonoBehaviour
     {
         [SerializeField] private int currentTurnCount = 0;
-        
-        private Queue<BaseCommandSO> _executionCommands = new Queue<BaseCommandSO>();
-        private Stack<BaseCommandSO> _undoCommands = new Stack<BaseCommandSO>();
-        private Stack<BaseCommandSO> _redoCommands = new Stack<BaseCommandSO>();
+
+        private Queue<BaseCommandSO> _executionCommands;
+        private Stack<BaseCommandSO> _undoCommands;
         
         private void Awake()
         {
+            _executionCommands = new Queue<BaseCommandSO>();
+            _undoCommands = new Stack<BaseCommandSO>();
             Bus<CommandEvent>.OnEvent += HandleCommand;
+            Bus<TurnUseEvent>.OnEvent += TurnUse;
         }
 
         private void OnDestroy()
         {
             Bus<CommandEvent>.OnEvent -= HandleCommand;
+            Bus<TurnUseEvent>.OnEvent -= TurnUse;
         }
-
+        
+        [ContextMenu("Undo")]
         public void Undo()
         {
             if (_undoCommands.Count <= 0 || currentTurnCount <= 0) return;
+            if (!_undoCommands.Peek().CanExecute()) return;
+            bool undo = false;
             while (_undoCommands.Count > 0 && _undoCommands.Peek().Tick == currentTurnCount)
             {
+                undo = true;
                 var command = _undoCommands.Pop();
                 command.Undo();
             }
-            currentTurnCount--;
-        }
-        
-        public void Redo()
-        {
-            if (_redoCommands.Count <= 0) return;
-            
-        }
 
+            if (undo)
+            {
+                currentTurnCount--;
+                Bus<TurnGetEvent>.Raise(new TurnGetEvent());
+            }
+        }
         
         // 플레이어가 행동해 OnUseTurn이 호출되면 호출됨
         // Queue에 플레이어의 행동이 있을거고, 그걸 실행한다.
         // 실행하면서 생기는 커맨드들도 여따가 넣는다.
-        public void TurnUse()
+        public void TurnUse(TurnUseEvent evt)
         {
+            currentTurnCount++;
             while (_executionCommands.Count > 0)
             {
                 BaseCommandSO command = _executionCommands.Dequeue();
+                Debug.Log(command);
                 if (command.CanExecute())
                 {
-                    command.Execute();
                     command.Tick = currentTurnCount;
+                    command.Execute();
                     _undoCommands.Push(command);
                 }
             }
-            currentTurnCount++;
+        }
+
+        public void Reset()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         
         // 커멘드를 넣는 작업
@@ -73,6 +86,14 @@ namespace Work.CUH.Code.Commands
         private void HandleCommand(CommandEvent evt)
         {
             _executionCommands.Enqueue(evt.Command);
+        }
+
+        private void Update()
+        {
+            if (Keyboard.current.zKey.wasPressedThisFrame)
+            {
+                Undo();
+            }
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Work.CIW.Code.Player
         {
             if (turnCntSystem == null) return;
 
-            turnCntSystem.TurnUse();
+            // turnCntSystem.TurnUse();
         }
     }
 }

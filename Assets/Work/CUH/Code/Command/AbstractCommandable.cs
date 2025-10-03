@@ -9,12 +9,6 @@ namespace Work.CUH.Code.Commands
     /// </summary>
     public class AbstractCommandable : MonoBehaviour
     {
-        /// <summary>
-        /// 해당 객체가 수행 가능한 커멘드들입니다.
-        /// </summary>
-        [field: SerializeField] public BaseCommandSO[] AvailableCommands { get; private set; }
-        // 만약 MoveCommand와 DestroyCommand가 있다면 이 놈은 움직일 수 있고 부술 수 있는 겁니다.
-        
         protected virtual void Awake()
         {
             
