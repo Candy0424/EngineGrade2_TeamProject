@@ -6,8 +6,8 @@
     /// </summary>
     public interface ICommand
     {
-        public bool CanHandle(CommandContext context); // 수행 가능한가?
-        public void Handle(CommandContext context); // 실제 수행
+        public bool CanExecute(); // 수행 가능한가?
+        public void Execute(); // 실제 수행
         public void Undo();
     }
 }

@@ -5,16 +5,6 @@ using UnityEngine;
 
 namespace Work.ISC.Code.System
 {
-    public struct TurnData
-    {
-        public Vector3[] StartTrmData;
-        public Vector3[] EndTrmData;
-
-        public GameObject Obj;
-
-        public bool IsTrigger;
-    }
-    
     public class TurnManager : MonoBehaviour
     {
         public event Action OnUseTurn;

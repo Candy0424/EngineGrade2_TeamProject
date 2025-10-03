@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using Chuh007Lib.Dependencies;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 using Work.ISC.Code.System;
 
 namespace Work.ISC.Code.Managers
 {
+    [Provide]
     public class TurnCountSystem : MonoBehaviour, ITurnAble
     {
         [SerializeField] private int maxTurnCount;
