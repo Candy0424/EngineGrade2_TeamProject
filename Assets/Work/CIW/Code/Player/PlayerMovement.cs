@@ -93,7 +93,6 @@ namespace Work.CIW.Code.Player
 
             if (_gridService.CanMoveTo(CurrentGridPosition, dir, out Vector3Int targetPos))
             {
-                Debug.Log($"[PLAYER MOVEMENT] GridSystem approved move to: {targetPos}");
                 StartCoroutine(MoveRoutine(targetPos));
             }
             else
@@ -144,14 +143,20 @@ namespace Work.CIW.Code.Player
         private bool CheckForStairs(Vector3Int dir)
         {
             Vector3 startPos = CurrentGridPosition;
+            Vector3 dirVec3 = (Vector3)dir;
 
-            if (Physics.Raycast(startPos, dir, out RaycastHit hit, stairChkDistance))
+            Debug.DrawRay(startPos, dirVec3 * stairChkDistance, Color.red, 1.0f);
+
+            if (Physics.Raycast(startPos, dirVec3, out RaycastHit hit, stairChkDistance, whatIsStair))
             {
+                Debug.Log("계단 감지");
+
                 if (hit.collider.TryGetComponent(out StairTrigger stair))
                 {
                     Vector3Int targetGridPos = new Vector3Int(CurrentGridPosition.x, stair.GetTargetY(), CurrentGridPosition.z);
 
                     TeleportToFloor(targetGridPos);
+                    Debug.Log("위치 이동");
                     return true;
                 }
             }
