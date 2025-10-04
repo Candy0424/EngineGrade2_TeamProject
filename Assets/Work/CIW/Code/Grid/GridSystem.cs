@@ -71,7 +71,8 @@ namespace Work.CIW.Code.Grid
                     }
                 }
             }
-            Debug.Log($"Grid Initialized: {_gridMap.Count} cells created.");
+
+            //Debug.Log($"Grid Initialized: {_gridMap.Count} cells created.");
         }
 
         #region I Grid Data Service ����
@@ -80,6 +81,7 @@ namespace Work.CIW.Code.Grid
         {
             targetPos = curPos + dir;
 
+            //Debug.Log($"[GRID CHECK] Requesting check from {curPos} in direction {dir}.");
 
             if (_turnService != null && !_turnService.HasTurnRemaining)
             {
@@ -110,6 +112,7 @@ namespace Work.CIW.Code.Grid
             // ���� ĭ���� �̵����� �� ���� ��� ������ �ִ°�?
             if (Physics.Raycast(startPos, dir, out RaycastHit hit, raycastDistance, whatIsWalkable))
             {
+                //Debug.Log($"[GRID CHECK] SUCCESS! Raycast hit: {hit.collider.gameObject.name}. Move is approved.");
                 return true;
             }
 
@@ -121,7 +124,8 @@ namespace Work.CIW.Code.Grid
         {
             if (_turnService != null)
             {
-                _turnService.UseTurn();
+                // _turnService.UseTurn();
+                //Debug.Log($"Turn Used. Current Turns Remaining: {_turnService.HasTurnRemaining}");
             }
 
             // ���� ĭ ����ֱ�

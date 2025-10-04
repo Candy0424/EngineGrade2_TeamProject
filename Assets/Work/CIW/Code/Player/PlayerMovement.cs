@@ -9,13 +9,13 @@ namespace Work.CIW.Code.Player
 
     public interface IGridDataService
     {
-        // Grid System¿¡ ÀÌµ¿ °¡´ÉÀ» ºÎ¿©ÇÔ
+        // Grid Systemì— ì´ë™ ê°€ëŠ¥ì„ ë¶€ì—¬í•¨
         bool CanMoveTo(Vector3Int curPos, Vector3Int dir, out Vector3Int targetPos);
 
-        // ÀÌµ¿ ¿Ï·á ÈÄ Grid SystemÀÇ µ¥ÀÌÅÍ¸¦ °»½ÅÇØÁÜ
+        // ì´ë™ ì™„ë£Œ í›„ Grid Systemì˜ ë°ì´í„°ë¥¼ ê°±ì‹ í•´ì¤Œ
         void UpdateObjectPosition(IGridObject movingObj, Vector3Int oldPos, Vector3Int newPos);
 
-        // Grid SystemÀÌ Æ¯Á¤ Grid ObjectÀÇ À§Ä¡¸¦ ÃÊ±âÈ­ ÇÒ¶§ »ç¿ë
+        // Grid Systemì´ íŠ¹ì • Grid Objectì˜ ìœ„ì¹˜ë¥¼ ì´ˆê¸°í™” í• ë•Œ ì‚¬ìš©
         void SetObjectInitialPosition(IGridObject obj, Vector3Int initPos);
     }
 
