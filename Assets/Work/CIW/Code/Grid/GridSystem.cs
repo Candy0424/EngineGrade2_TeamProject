@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Work.CIW.Code.Player;
@@ -120,26 +120,35 @@ namespace Work.CIW.Code.Grid
             return false;
         }
 
-        public void UpdateObjectPosition(IGridObject movingObj, Vector3Int oldPos, Vector3Int newPos)
+        public void UpdateObjectPosition(GridObjectBase movingObj, Vector3Int oldPos, Vector3Int newPos)
         {
             if (_turnService != null)
             {
+                // 턴 사용 로직 (주석 해제 시)
                 // _turnService.UseTurn();
                 //Debug.Log($"Turn Used. Current Turns Remaining: {_turnService.HasTurnRemaining}");
             }
 
-            // ���� ĭ ����ֱ�
+            // 이전 셀 비우기
             if (_gridMap.TryGetValue(oldPos, out GridCell oldCell))
             {
+                // 🌟 IGridObject 대신 GridObjectBase 사용
                 if (oldCell.Occupant == movingObj)
                 {
-                    oldCell.SetOccupant(null);
+                    oldCell.SetOccupant(null); // GridCell.Occupant 및 SetOccupant가 GridObjectBase를 사용한다고 가정
+
+                    // 🌟 GridObjectBase의 상태 갱신 로직 호출 (핵심 변경)
+                    movingObj.OnCellDeoccupied();
                 }
             }
 
+            // 새 셀 점유
             if (_gridMap.TryGetValue(newPos, out GridCell newCell))
             {
-                newCell.SetOccupant(movingObj);
+                newCell.SetOccupant(movingObj); // GridCell.SetOccupant가 GridObjectBase를 사용한다고 가정
+
+                // 🌟 GridObjectBase의 상태 갱신 로직 호출 (핵심 변경)
+                movingObj.OnCellOccupied(newPos);
             }
             else
             {
@@ -147,17 +156,19 @@ namespace Work.CIW.Code.Grid
             }
         }
 
-        public void SetObjectInitialPosition(IGridObject obj, Vector3Int initPos)
+        public void SetObjectInitialPosition(GridObjectBase obj, Vector3Int initPos)
         {
             if (_gridMap.TryGetValue(initPos, out GridCell initCell))
             {
                 if (!initCell.IsOccupant)
                 {
                     initCell.SetOccupant(obj);
+
+                    obj.OnCellOccupied(initPos);
                 }
                 else
                 {
-                    Debug.LogWarning($"Cell {initPos} already occupied at start. Cannot place {obj.GetObject().name}");
+                    Debug.LogWarning($"Cell {initPos} already occupied at start. Cannot place {obj.gameObject.name}");
                 }
             }
         }
