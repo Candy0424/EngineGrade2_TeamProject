@@ -1,115 +1,48 @@
-﻿using System.Collections;
-using UnityEngine;
-using UnityEngine.Events;
-using Work.CIW.Code.Player;
+﻿//using UnityEngine;
+//using Work.CIW.Code;
+//using Work.CUH.Chuh007Lib.EventBus;
+//using Work.CUH.Code.Commands;
+//using Work.CUH.Code.GameEvents;
 
-namespace Work.PSB.Code.Test
-{
-    public class PSBTestPlayerCode : MonoBehaviour, IMovement, IGridObject
-    {
-        [Header("Dependencies - DIP")]
-        [SerializeField] MonoBehaviour gridServiceMono;
-        IGridDataService _gridService;
+//namespace Work.PSB.Code.Test
+//{
+//    public class PSBTestPlayerCode : MonoBehaviour
+//    {
+//        [field: SerializeField] public PlayerInputSO InputSO { get; private set; }
 
-        [Header("Movement")]
-        [SerializeField] float moveTime = 0.15f;
-
-        public Vector3Int CurrentGridPosition { get; private set; }
-        public GameObject GetGameObject() => gameObject;
-
-        bool _isMoving = false;
-
-        private void Awake()
-        {
-            if (gridServiceMono is IGridDataService service)
-            {
-                _gridService = service;
-            }
-            else
-            {
-                enabled = false;
-            }
-        }
-
-        private void Start()
-        {
-            CurrentGridPosition = Vector3Int.RoundToInt(transform.position);
-            transform.position = CurrentGridPosition;
-
-            _gridService.SetObjectInitialPosition(this, CurrentGridPosition);
-        }
-
-        public void HandleInput(Vector2 input)
-        {
-            if (_isMoving) return;
-
-            Vector3Int dir = GetDirection(input);
-            if (dir == Vector3Int.zero) return;
-
-            Vector3Int nextPos = CurrentGridPosition + dir;
-            
-            Collider[] hits = Physics.OverlapSphere(nextPos, 0.1f);
-            bool blockFound = false;
-
-            foreach (Collider hit in hits)
-            {
-                if (hit.TryGetComponent(out BlockPushTest block)) 
-                {
-                    blockFound = true;
-
-                    if (block.CanMove(dir))
-                    {
-                        StartCoroutine(block.MoveRoutine(dir));
-                    }
-                    return;
-                }
-            }
- 
-            if (!blockFound)
-            {
-                if (_gridService.CanMoveTo(CurrentGridPosition, dir, out Vector3Int targetPos))
-                {
-                    StartCoroutine(MoveRoutine(targetPos));
-                }
-            }
-        }
-
-        private Vector3Int GetDirection(Vector2 input)
-        {
-            if (input.y > 0.5f) return Vector3Int.forward;
-            if (input.y < -0.5f) return Vector3Int.back;
-
-            if (input.x > 0.5f) return Vector3Int.right;
-            if (input.x < -0.5f) return Vector3Int.left;
-            
-            return Vector3Int.zero;
-        }
-
-        private IEnumerator MoveRoutine(Vector3Int targetPos)
-        {
-            _isMoving = true;
-
-            Vector3 start = transform.position;
-
-            float elapsed = 0f;
-            while (elapsed < moveTime)
-            {
-                transform.position = Vector3.Lerp(start, targetPos, elapsed / moveTime);
-                elapsed += Time.deltaTime;
-                yield return null;
-            }
-
-            transform.position = targetPos;
-            _gridService.UpdateObjectPosition(this, CurrentGridPosition, targetPos);
-            CurrentGridPosition = targetPos;
-
-            _isMoving = false;
-        }
-
-        public GameObject GetObject()
-        {
-            return gameObject;
-        }
+//        [SerializeField] private MoveCommand moveCommand;
         
-    }
-}
+//        private PSBTestPlayerMovement _movement;
+
+//        private void Awake()
+//        {
+//            _movement = GetComponent<PSBTestPlayerMovement>();
+//        }
+        
+//        private void OnEnable()
+//        {
+//            if (InputSO != null)
+//                InputSO.OnMovement += HandleMove;
+//        }
+
+//        private void OnDisable()
+//        {
+//            if (InputSO != null)
+//                InputSO.OnMovement -= HandleMove;
+//        }
+
+//        private void HandleMove(Vector2 dir)
+//        {
+//            if (_movement == null) return;
+//            var command = Instantiate(moveCommand);
+//            command.Commandable = _movement;
+//            command.Dir = dir;
+//            if (command.CanExecute())
+//            {
+//                Bus<CommandEvent>.Raise(new CommandEvent(command));
+//                Bus<TurnUseEvent>.Raise(new TurnUseEvent()); 
+//            }
+//        }
+        
+//    }
+//}

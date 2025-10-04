@@ -1,32 +1,28 @@
 ﻿//using System.Collections;
 //using UnityEngine;
 //using Work.CIW.Code.Player;
-//using Work.CUH.Chuh007Lib.EventBus;
 //using Work.CUH.Code.Commands;
-//using Work.CUH.Code.GameEvents;
+//using Work.CUH.Code.Test;
 
-//namespace Work.CUH.Code.Test
+//namespace Work.PSB.Code.Test
 //{
-//    // 지금 구현상 AbstractCommandable을 굳이 상속받을 필요는 없지만, 나중에 검사할때 필요할 수도 있음.
-//    public class TestPlayerMovement : AbstractCommandable, IMoveableTest, IGridObject
+//    public class PSBTestPlayerMovement : AbstractCommandable, IMoveableTest, IGridObject
 //    {
-//        [SerializeField] MonoBehaviour gridServiceMono;
+//        [SerializeField] MonoBehaviour gridManager;
         
 //        [Header("Movement")]
 //        [SerializeField] float moveTime = 0.15f;
         
 //        public Vector3Int CurrentGridPosition { get; private set; }
-//        public GameObject GetObject()
-//        {
-//            return gameObject;
-//        }
 //        public bool isMoving { get; set; }
-        
+
 //        private IGridDataService _gridService;
         
+//        public GameObject GetObject() => gameObject;
+
 //        protected override void Awake()
 //        {
-//            if (gridServiceMono is IGridDataService service)
+//            if (gridManager is IGridDataService service)
 //            {
 //                _gridService = service;
 //            }
@@ -44,20 +40,41 @@
 
 //            _gridService.SetObjectInitialPosition(this, CurrentGridPosition);
 //        }
-        
+
 //        public void HandleInput(Vector2 input)
 //        {
 //            if (isMoving) return;
-            
+
 //            Vector3Int dir = GetDirection(input);
+//            if (dir == Vector3Int.zero) return;
+
+//            Vector3Int nextPos = CurrentGridPosition + dir;
             
-//            if (_gridService.CanMoveTo(CurrentGridPosition, dir, out Vector3Int targetPos))
+//            Collider[] hits = Physics.OverlapSphere(nextPos, 0.1f);
+//            bool blockFound = false;
+
+//            foreach (Collider hit in hits)
 //            {
-//                Debug.Log($"[PLAYER MOVEMENT] GridSystem approved move to: {targetPos}");
-//                StartCoroutine(MoveRoutine(targetPos));
+//                if (hit.TryGetComponent(out BlockPushTest block)) 
+//                {
+//                    blockFound = true;
+
+//                    if (block.CanMove(dir))
+//                    {
+//                        StartCoroutine(block.MoveRoutine(dir));
+//                    }
+//                    return;
+//                }
+//            }
+
+//            if (!blockFound)
+//            {
+//                if (_gridService.CanMoveTo(CurrentGridPosition, dir, out Vector3Int targetPos))
+//                {
+//                    StartCoroutine(MoveRoutine(targetPos));
+//                }
 //            }
 //        }
-
 
 //        private Vector3Int GetDirection(Vector2 input)
 //        {
@@ -75,8 +92,8 @@
 //            isMoving = true;
 
 //            Vector3 start = transform.position;
-
 //            float elapsed = 0f;
+
 //            while (elapsed < moveTime)
 //            {
 //                transform.position = Vector3.Lerp(start, targetPos, elapsed / moveTime);
@@ -89,13 +106,12 @@
 //            CurrentGridPosition = targetPos;
             
 //            isMoving = false;
-
-//            //onMoveComplete?.Invoke();
 //        }
-
+        
 //        public void HandleInput(System.Numerics.Vector2 input)
 //        {
-//            throw new System.NotImplementedException();
 //        }
+        
+        
 //    }
 //}
