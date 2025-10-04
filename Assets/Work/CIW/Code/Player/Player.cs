@@ -17,11 +17,6 @@ namespace Work.CIW.Code.Player
             _movement = GetComponent<IMovement>();
         }
 
-        private void Start()
-        {
-            
-        }
-
         private void OnEnable()
         {
             if (InputSO != null)
@@ -41,12 +36,13 @@ namespace Work.CIW.Code.Player
 
         public override void OnCellDeoccupied()
         {
-            throw new System.NotImplementedException();
+            // 셀에서 나갈 때 필요한 로직
         }
 
         public override void OnCellOccupied(Vector3Int newPos)
         {
-            throw new System.NotImplementedException();
+            CurrentGridPosition = newPos;
+            transform.position = new Vector3(newPos.x, newPos.y, newPos.z);
         }
     }
 }

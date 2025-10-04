@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using Work.CIW.Code.Grid;
@@ -9,14 +9,14 @@ namespace Work.CIW.Code.Player
 
     public interface IGridDataService
     {
-        // Grid System에 이동 가능을 부여함
+        // Grid System???대룞 媛?μ쓣 遺?ы븿
         bool CanMoveTo(Vector3Int curPos, Vector3Int dir, out Vector3Int targetPos);
 
-        // 이동 완료 후 Grid System의 데이터를 갱신해줌
-        void UpdateObjectPosition(IGridObject movingObj, Vector3Int oldPos, Vector3Int newPos);
+        // ?대룞 ?꾨즺 ??Grid System???곗씠?곕? 媛깆떊?댁쨲
+        void UpdateObjectPosition(GridObjectBase movingObj, Vector3Int oldPos, Vector3Int newPos);
 
-        // Grid System이 특정 Grid Object의 위치를 초기화 할때 사용
-        void SetObjectInitialPosition(IGridObject obj, Vector3Int initPos);
+        // Grid System???뱀젙 Grid Object???꾩튂瑜?珥덇린???좊븣 ?ъ슜
+        void SetObjectInitialPosition(GridObjectBase obj, Vector3Int initPos);
     }
 
     public interface IGridObject
@@ -38,23 +38,24 @@ namespace Work.CIW.Code.Player
 
     #endregion
 
-    public class PlayerMovement : MonoBehaviour, IMovement, IGridObject
+    public class PlayerMovement : MonoBehaviour, IMovement
     {
         [Header("Dependencies - DIP")]
         [SerializeField] MonoBehaviour gridServiceMono;
         IGridDataService _gridService;
+        GridObjectBase _gridObject;
+
+        bool _isMoving = false;
 
         [Header("Movement")]
         [SerializeField] float moveTime = 0.15f;
 
         [Header("Stair Collision Setting")]
-        [SerializeField] float stairChkDistance = 0.9f;
+        [SerializeField] float stairChkDistance = 1.01f;
         [SerializeField] LayerMask whatIsStair;
 
-        public Vector3Int CurrentGridPosition { get; private set; }
-        public GameObject GetGameObject() => gameObject;
-
-        bool _isMoving = false;
+        //public Vector3Int CurrentGridPosition { get; private set; }
+        //public GameObject GetGameObject() => gameObject;
 
         //[SerializeField] UnityEvent onMoveComplete;
 
@@ -66,17 +67,16 @@ namespace Work.CIW.Code.Player
             }
             else
             {
-                Debug.LogError("IGridDataService dependency not met. Assign GridSystem to gridServiceMono.");
+                Debug.LogError("IGridDataService dependency not met. Assign GridSystem component to 'gridServiceMono'.");
                 enabled = false;
             }
-        }
 
-        private void Start()
-        {
-            CurrentGridPosition = Vector3Int.RoundToInt(transform.position);
-            transform.position = CurrentGridPosition;
-
-            _gridService.SetObjectInitialPosition(this, CurrentGridPosition);
+            _gridObject = GetComponent<GridObjectBase>();
+            if (_gridObject == null)
+            {
+                Debug.LogError("Player object must inherit from GridObjectBase.");
+                enabled = false;
+            }
         }
 
         public void HandleInput(Vector2 input)
@@ -86,18 +86,11 @@ namespace Work.CIW.Code.Player
             Vector3Int dir = GetDirection(input);
             if (dir == Vector3Int.zero) return;
 
-            if (CheckForStairs(dir))
-            {
-                return;
-            }
+            if (CheckForStairs(dir)) return;
 
-            if (_gridService.CanMoveTo(CurrentGridPosition, dir, out Vector3Int targetPos))
+            if (_gridService.CanMoveTo(_gridObject.CurrentGridPosition, dir, out Vector3Int targetPos))
             {
                 StartCoroutine(MoveRoutine(targetPos));
-            }
-            else
-            {
-                Debug.LogWarning($"[PLAYER MOVEMENT] Move to {CurrentGridPosition + dir} blocked by GridSystem.");
             }
         }
 
@@ -115,63 +108,53 @@ namespace Work.CIW.Code.Player
         private IEnumerator MoveRoutine(Vector3Int targetPos)
         {
             _isMoving = true;
+            Vector3Int oldPos = _gridObject.CurrentGridPosition;
 
             Vector3 start = transform.position;
-
             float elapsed = 0f;
-            while (elapsed < moveTime)
+
+            while (elapsed < moveTime) 
             {
                 transform.position = Vector3.Lerp(start, targetPos, elapsed / moveTime);
                 elapsed += Time.deltaTime;
+
                 yield return null;
             }
 
             transform.position = targetPos;
-            _gridService.UpdateObjectPosition(this, CurrentGridPosition, targetPos);
-            CurrentGridPosition = targetPos;
+
+            _gridService.UpdateObjectPosition(_gridObject, oldPos, targetPos);
 
             _isMoving = false;
 
-            //onMoveComplete?.Invoke();
-        }
-
-        public GameObject GetObject()
-        {
-            return gameObject;
+            yield break;
         }
 
         private bool CheckForStairs(Vector3Int dir)
         {
-            Vector3 startPos = CurrentGridPosition;
+            Vector3 startPos = _gridObject.CurrentGridPosition;
             Vector3 dirVec3 = (Vector3)dir;
 
-            Debug.DrawRay(startPos, dirVec3 * stairChkDistance, Color.red, 1.0f);
+            Vector3 fixedDirection = -dirVec3;
 
-            if (Physics.Raycast(startPos, dirVec3, out RaycastHit hit, stairChkDistance, whatIsStair))
+            // ... (Debug.DrawRay 및 Raycast 로직 유지) ...
+
+            if (Physics.Raycast(startPos, fixedDirection, out RaycastHit hit, stairChkDistance, whatIsStair))
             {
-                Debug.Log("��� ����");
-
                 if (hit.collider.TryGetComponent(out StairTrigger stair))
                 {
-                    Vector3Int targetGridPos = new Vector3Int(CurrentGridPosition.x, stair.GetTargetY(), CurrentGridPosition.z);
+                    Vector3Int targetGridPos = new Vector3Int(_gridObject.CurrentGridPosition.x, stair.GetTargetY(), _gridObject.CurrentGridPosition.z);
 
                     TeleportToFloor(targetGridPos);
-                    Debug.Log("��ġ �̵�");
                     return true;
                 }
             }
-
             return false;
         }
 
         private void TeleportToFloor(Vector3Int targetPos)
         {
-            _gridService.UpdateObjectPosition(this, CurrentGridPosition, targetPos);
-
-            CurrentGridPosition = targetPos;
-            transform.position = targetPos;
-
-            Debug.Log($"Teleport Floor : {targetPos}");
+            _gridService.UpdateObjectPosition(_gridObject, _gridObject.CurrentGridPosition, targetPos);
         }
     }
 }

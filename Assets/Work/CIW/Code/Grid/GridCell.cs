@@ -1,21 +1,21 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using Work.CIW.Code.Player;
 
 namespace Work.CIW.Code.Grid
 {
     /// <summary>
-    /// 3Â÷¿ø °İÀÚÀÇ ÇÑ Ä­À» ³ªÅ¸³»¸ç, ÇØ´ç Ä­ÀÇ Á¤º¸¸¦ ÀúÀåÇØÁØ´Ù
+    /// 3ì°¨ì› ê²©ìì˜ í•œ ì¹¸ì„ ë‚˜íƒ€ë‚´ë©°, í•´ë‹¹ ì¹¸ì˜ ì •ë³´ë¥¼ ì €ì¥í•´ì¤€ë‹¤
     /// </summary>
     public class GridCell : MonoBehaviour
     {
         [field : SerializeField] public Vector3Int Coordinates { get; private set; }
 
-        // ÇØ´ç Ä­À» Á¡À¯ÇÏ°í ÀÖ´Â ¿ÀºêÁ§Æ®ÀÇ ÂüÁ¶¸¦ ÀúÀåÇÑ´Ù
-        public IGridObject Occupant { get; private set; }
+        // í•´ë‹¹ ì¹¸ì„ ì ìœ í•˜ê³  ìˆëŠ” ì˜¤ë¸Œì íŠ¸ì˜ ì°¸ì¡°ë¥¼ ì €ì¥í•œë‹¤
+        public GridObjectBase Occupant { get; private set; }
 
         public bool IsOccupant => Occupant != null;
 
-        // Ä­ÀÇ ¼Ó¼ºÀ» Á¤ÀÇÇØÁÙ ÇÊµåÀÓ
+        // ì¹¸ì˜ ì†ì„±ì„ ì •ì˜í•´ì¤„ í•„ë“œì„
         public bool IsWalkable = true;
 
         public void InitializeCoodinates(Vector3Int pos)
@@ -24,10 +24,10 @@ namespace Work.CIW.Code.Grid
         }
 
         /// <summary>
-        /// Grid SystemÀÌ ¼¿ÀÇ Á¡À¯ÀÚ¸¦ ¼³Á¤/ÇØÁ¦ ½Ã »ç¿ëµÈ´Ù
+        /// Grid Systemì´ ì…€ì˜ ì ìœ ìë¥¼ ì„¤ì •/í•´ì œ ì‹œ ì‚¬ìš©ëœë‹¤
         /// </summary>
         /// <param name="obj"></param>
-        public void SetOccupant(IGridObject obj)
+        public void SetOccupant(GridObjectBase obj)
         {
             Occupant = obj;
         }
