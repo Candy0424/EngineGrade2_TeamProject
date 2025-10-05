@@ -7,7 +7,7 @@ namespace Work.CIW.Code.Player
     {
         [field: SerializeField] public PlayerInputSO InputSO { get; private set; }
 
-        [SerializeField] Vector3Int initialPosition = Vector3Int.zero;
+        //[SerializeField] Vector3Int initialPosition = Vector3Int.zero;
         public override Vector3Int CurrentGridPosition { get; set; }
 
         IMovement _movement;
@@ -42,7 +42,7 @@ namespace Work.CIW.Code.Player
         public override void OnCellOccupied(Vector3Int newPos)
         {
             CurrentGridPosition = newPos;
-            transform.position = new Vector3(newPos.x, newPos.y, newPos.z);
+            transform.position = new Vector3(newPos.x, newPos.y + 1f, newPos.z);
         }
     }
 }

@@ -19,18 +19,6 @@ namespace Work.CIW.Code.Player
         void SetObjectInitialPosition(GridObjectBase obj, Vector3Int initPos);
     }
 
-    public interface IGridObject
-    {
-        Vector3Int CurrentGridPosition { get; }
-
-        GameObject GetObject();
-    }
-
-    public interface IInteractable
-    {
-        bool Interact(IGridObject actor, Vector3Int dir);
-    }
-
     public interface IMovement
     {
         void HandleInput(Vector2 input);
@@ -79,6 +67,17 @@ namespace Work.CIW.Code.Player
             }
         }
 
+        private void Start()
+        {
+            Vector3Int initWorldPos = Vector3Int.RoundToInt(transform.position);
+
+            Vector3Int initGridPos = initWorldPos;
+            initGridPos.y = initGridPos.y - 1;
+
+            _gridService.SetObjectInitialPosition(_gridObject, initGridPos);
+            _gridObject.OnCellOccupied(initGridPos);
+        }
+
         public void HandleInput(Vector2 input)
         {
             if (_isMoving) return;
@@ -110,24 +109,29 @@ namespace Work.CIW.Code.Player
             _isMoving = true;
             Vector3Int oldPos = _gridObject.CurrentGridPosition;
 
-            Vector3 start = transform.position;
+            float startWorldY = oldPos.y + 1f;
+            Vector3 start = new Vector3(oldPos.x, startWorldY, oldPos.z);
+
+            transform.position = start;
+
+            float targetWorldY = targetPos.y + 1f;
+            Vector3 finalWorldPos = new Vector3(targetPos.x, targetWorldY, targetPos.z);
+
             float elapsed = 0f;
-
-            while (elapsed < moveTime) 
+            while (elapsed < moveTime)
             {
-                transform.position = Vector3.Lerp(start, targetPos, elapsed / moveTime);
+                transform.position = Vector3.Lerp(start, finalWorldPos, elapsed / moveTime);
                 elapsed += Time.deltaTime;
-
                 yield return null;
             }
 
-            transform.position = targetPos;
+            // 애니메이션 종료 후 최종 위치 확정
+            transform.position = finalWorldPos;
 
+            // GridSystem에 오프셋이 없는 순수한 Grid 좌표(targetPos)를 전달
             _gridService.UpdateObjectPosition(_gridObject, oldPos, targetPos);
 
             _isMoving = false;
-
-            yield break;
         }
 
         private bool CheckForStairs(Vector3Int dir)
