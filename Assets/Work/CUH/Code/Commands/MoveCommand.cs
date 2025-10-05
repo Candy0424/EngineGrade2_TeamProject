@@ -6,7 +6,7 @@ namespace Work.CUH.Code.Commands
 {
     // 주의사항 : 커멘드를 쓸때는 반드시 Instance로 생성해서 써야한다. 안 그러면 꼬임.
     [CreateAssetMenu(fileName = "MoveCommand", menuName = "SO/Commands/Move", order = 0)]
-    public class MoveCommand : BaseCommandSO, IMoveCommand
+    public class MoveCommand : BaseCommandSO
     {
         public Vector2 Dir { get; set; }
         
