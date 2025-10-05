@@ -19,18 +19,6 @@ namespace Work.CIW.Code.Player
         void SetObjectInitialPosition(GridObjectBase obj, Vector3Int initPos);
     }
 
-    public interface IGridObject
-    {
-        Vector3Int CurrentGridPosition { get; }
-
-        GameObject GetObject();
-    }
-
-    public interface IInteractable
-    {
-        bool Interact(IGridObject actor, Vector3Int dir);
-    }
-
     public interface IMovement
     {
         void HandleInput(Vector2 input);
