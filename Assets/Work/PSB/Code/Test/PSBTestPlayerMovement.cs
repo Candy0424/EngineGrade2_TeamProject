@@ -47,14 +47,15 @@ namespace Work.PSB.Code.Test
 
             Vector3Int dir = GetDirection(input);
             if (dir == Vector3Int.zero) return;
+            
+            if (CheckForStairs(dir)) return;
 
-            Vector3Int curPos = _gridObject.CurrentGridPosition;
+            Vector3Int curPos = new Vector3Int(_gridObject.CurrentGridPosition.x, 
+                (int)transform.position.y, _gridObject.CurrentGridPosition.z);
             
             if (_gridService.CanMoveTo(curPos, dir, out Vector3Int targetPos))
             {
-                Debug.Log($"[Player] CanMoveTo true → 플레이어 이동: {targetPos}");
                 StartCoroutine(MoveRoutine(targetPos));
-                return;
             }
             else
             {
@@ -69,24 +70,15 @@ namespace Work.PSB.Code.Test
                     BlockPushTest block = hit.GetComponent<BlockPushTest>();
                     if (block != null)
                     {
-                        Debug.Log($"[Player] 앞에 블럭 발견: {block.name}");
-                    
                         if (block.CanMove(dir))
                         {
-                            Debug.Log($"[Player] {block.name} 밀기 시작");
                             StartCoroutine(block.MoveRoutine(dir));
-                            Debug.Log("[Player] 블럭만 이동, 플레이어는 멈춤");
                         }
-                        else
-                        {
-                            Debug.Log($"[Player] {block.name}은(는) 못 밀어서 플레이어도 멈춤");
-                        }
-
                         return;
                     }
                 }
-                Debug.Log("[Player] 이동 불가: 앞에 벽/가시/못 미는 오브젝트 존재");
             }
+            
         }
 
         private Vector3Int GetDirection(Vector2 input)
