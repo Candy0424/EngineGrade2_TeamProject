@@ -10,4 +10,9 @@ namespace Work.CUH.Code.GameEvents
     {
         
     }
+    public class TurnConsumeOnlyEvent : IEvent
+    {
+        
+    }
+    
 }

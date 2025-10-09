@@ -17,11 +17,13 @@ namespace Work.ISC.Code.System
         {
             Initialize();
             Bus<TurnUseEvent>.OnEvent += HandleUseTurn;
+            Bus<TurnConsumeOnlyEvent>.OnEvent += HandleConsumeOnlyTurn;
         }
 
         private void OnDestroy()
         {
             Bus<TurnUseEvent>.OnEvent -= HandleUseTurn;
+            Bus<TurnConsumeOnlyEvent>.OnEvent -= HandleConsumeOnlyTurn;
         }
         
         private void Initialize()
@@ -33,6 +35,10 @@ namespace Work.ISC.Code.System
         private void HandleUseTurn(TurnUseEvent evt)
         {
             UseTurn();
+        }
+        
+        private void HandleConsumeOnlyTurn(TurnConsumeOnlyEvent evt)
+        {
         }
         
         [ContextMenu("Use Turn")]

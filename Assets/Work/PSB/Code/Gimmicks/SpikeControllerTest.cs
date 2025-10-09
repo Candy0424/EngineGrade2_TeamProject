@@ -1,6 +1,9 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using UnityEngine;
 using Work.CIW.Code.Grid;
+using Work.CUH.Chuh007Lib.EventBus;
+using Work.CUH.Code.GameEvents;
 using Work.ISC.Code.System;
 
 namespace Work.PSB.Code.Test
@@ -13,11 +16,13 @@ namespace Work.PSB.Code.Test
         [SerializeField] private float moveDistance = 3;
         [SerializeField] private float moveDuration = 0.3f;
         [SerializeField] private Ease easeType = Ease.OutQuad;
+        [SerializeField] private bool startRaised = false;
 
-        private bool _isRaised = false;
+        private bool _isRaised;
         private Vector3 _startPos;
         private Vector3 _raisedPos;
         private Tween _currentTween;
+        private Collider _collider;
 
         private void Awake()
         {
@@ -26,6 +31,17 @@ namespace Work.PSB.Code.Test
                 _startPos = spikeObject.transform.localPosition;
                 _raisedPos = _startPos + Vector3.up * moveDistance;
             }
+
+            _collider = spikeObject.GetComponent<Collider>();
+        }
+
+        private void Start()
+        {
+            _isRaised = startRaised;
+            spikeObject.transform.localPosition = _isRaised ? _raisedPos : _startPos;
+            
+            if (_collider != null)
+                _collider.enabled = _isRaised;
         }
 
         private void OnEnable()
@@ -45,19 +61,41 @@ namespace Work.PSB.Code.Test
         private void ToggleSpike()
         {
             if (spikeObject == null) return;
-            
+    
             _currentTween?.Kill();
 
-            _isRaised = !_isRaised;
-            Vector3 targetPos = _isRaised ? _raisedPos : _startPos;
+            bool goingUp = !_isRaised;
+            Vector3 targetPos = goingUp ? _raisedPos : _startPos;
+            
+            if (_collider != null)
+                _collider.enabled = goingUp;
+
+            _isRaised = goingUp;
 
             _currentTween = spikeObject.transform.DOLocalMove(targetPos, moveDuration)
-                .SetEase(easeType);
+                .SetEase(easeType)
+                .OnComplete(() =>
+                {
+                    if (!goingUp && _collider != null)
+                        _collider.enabled = false;
+                });
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!_isRaised) return;
+
+            PSBTestPlayerCode player = other.GetComponent<PSBTestPlayerCode>();
+            if (player != null)
+            {
+                Bus<TurnConsumeOnlyEvent>.Raise(new TurnConsumeOnlyEvent());
+                Debug.Log("플레이어 피격! 턴 1 소모");
+            }
         }
 
         public override Vector3Int CurrentGridPosition { get; set; }
         public override void OnCellDeoccupied() { }
         public override void OnCellOccupied(Vector3Int newPos) { }
-    
+        
     }
 }
