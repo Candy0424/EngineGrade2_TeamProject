@@ -51,7 +51,7 @@ namespace Work.PSB.Code.Test
 
             Vector3Int targetPos = CurrentGridPosition + dir;
 
-            Collider[] hits = Physics.OverlapSphere((Vector3)targetPos, 0.1f);
+            Collider[] hits = Physics.OverlapSphere((Vector3)targetPos, 0.25f);
             foreach (Collider hit in hits)
             {
                 if (hit.GetComponent<BlockPush>() != null)
