@@ -33,8 +33,9 @@ namespace Work.ISC.Code.UI
         private void UpdateText(int v)
         {
             Sequence seq = DOTween.Sequence();
-            seq.Append(DOVirtual.Float(100f, 150f, 0.2f, x => turnCountText.fontSize = x));
-            seq.Append(DOVirtual.Float(150f, 100f, 0.2f, x => turnCountText.fontSize = x));
+            seq.Append(DOVirtual.Float(60f, 100f, 0.2f, x => turnCountText.fontSize = x));
+            seq.Append(DOVirtual.Float(100f, 60f, 0.2f, x => turnCountText.fontSize = x));
+            seq.Play();
             turnCountText.SetText(v.ToString());
         }
     }
