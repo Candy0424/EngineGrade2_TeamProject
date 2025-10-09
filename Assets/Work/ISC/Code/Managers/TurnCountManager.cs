@@ -33,12 +33,14 @@ namespace Work.ISC.Code.Managers
         {
             Bus<TurnUseEvent>.OnEvent += TurnUse;
             Bus<TurnGetEvent>.OnEvent += TurnGet;
+            Bus<TurnConsumeOnlyEvent>.OnEvent += TurnConsumeOnly; 
         }
 
         private void OnDestroy()
         {
             Bus<TurnUseEvent>.OnEvent -= TurnUse;
-            Bus<TurnGetEvent>.OnEvent += TurnGet;
+            Bus<TurnGetEvent>.OnEvent -= TurnGet;
+            Bus<TurnConsumeOnlyEvent>.OnEvent -= TurnConsumeOnly; 
         }
 
         private void Start()
@@ -52,6 +54,16 @@ namespace Work.ISC.Code.Managers
         }
 
         public void TurnUse(TurnUseEvent evt)
+        {
+            if (CurrentTurnCount < 0) return;
+
+            CurrentTurnCount--;
+            
+            if (CurrentTurnCount < 0)
+                OnTurnZeroEvent?.Invoke();
+        }
+        
+        private void TurnConsumeOnly(TurnConsumeOnlyEvent evt)
         {
             if (CurrentTurnCount < 0) return;
 
