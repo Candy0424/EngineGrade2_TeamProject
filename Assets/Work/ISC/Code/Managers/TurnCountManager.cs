@@ -7,7 +7,7 @@ using Work.CUH.Code.GameEvents;
 namespace Work.ISC.Code.Managers
 {
     [Provide]
-    public class TurnCountManager : MonoBehaviour
+    public class TurnCountManager : MonoBehaviour, IDependencyProvider
     {
         [SerializeField] private int maxTurnCount;
         [SerializeField] private int currentTurnCount;
@@ -31,24 +31,22 @@ namespace Work.ISC.Code.Managers
         
         private void Awake()
         {
-            Bus<TurnUseEvent>.OnEvent += TurnUse;
-            Bus<TurnGetEvent>.OnEvent += TurnGet;
+            Initialize();
         }
 
         private void OnDestroy()
         {
             Bus<TurnUseEvent>.OnEvent -= TurnUse;
-            Bus<TurnGetEvent>.OnEvent += TurnGet;
-        }
-
-        private void Start()
-        {
-            Initialize();
+            Bus<TurnGetEvent>.OnEvent -= TurnGet;
         }
 
         private void Initialize()
         {
             currentTurnCount = maxTurnCount;
+            
+            Bus<TurnUseEvent>.OnEvent += TurnUse;
+            Bus<TurnGetEvent>.OnEvent += TurnGet;
+            
         }
 
         public void TurnUse(TurnUseEvent evt)
