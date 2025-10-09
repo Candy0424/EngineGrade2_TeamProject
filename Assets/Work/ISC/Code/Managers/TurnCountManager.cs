@@ -1,25 +1,34 @@
 ﻿using System;
 using Chuh007Lib.Dependencies;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Serialization;
 using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.GameEvents;
-using Work.ISC.Code.System;
 
 namespace Work.ISC.Code.Managers
 {
     [Provide]
-    public class TurnCountSystem : MonoBehaviour
+    public class TurnCountManager : MonoBehaviour
     {
         [SerializeField] private int maxTurnCount;
         [SerializeField] private int currentTurnCount;
         
-        public int CurrentTurnCount => currentTurnCount;
+        public int CurrentTurnCount
+        {
+            get => currentTurnCount;
+            set
+            {
+                int v = value;
+                if (v != currentTurnCount)
+                {
+                    currentTurnCount = v;
+                    OnTurnChangeEvent?.Invoke(v);
+                }
+            }
+        }
 
-        public UnityEvent OnTurnZeroEvent;
-
-
+        public Action OnTurnZeroEvent;
+        public Action<int> OnTurnChangeEvent;
+        
         private void Awake()
         {
             Bus<TurnUseEvent>.OnEvent += TurnUse;
@@ -44,22 +53,17 @@ namespace Work.ISC.Code.Managers
 
         public void TurnUse(TurnUseEvent evt)
         {
-            if (currentTurnCount < 0) return;
+            if (CurrentTurnCount < 0) return;
 
-            currentTurnCount--;
+            CurrentTurnCount--;
             
-            if (currentTurnCount < 0)
-                OnTurnZeroEvent?.Invoke();  
+            if (CurrentTurnCount < 0)
+                OnTurnZeroEvent?.Invoke();
         }
         
         private void TurnGet(TurnGetEvent evt)
         {
             currentTurnCount++;
-        }
-        
-        public void Test()
-        {
-            Debug.Log("턴 모두 소모");
         }
     }
 }
