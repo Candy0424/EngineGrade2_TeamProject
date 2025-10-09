@@ -106,7 +106,7 @@ namespace Work.CIW.Code.Grid
             {
                 GridObjectBase occupant = targetCell.Occupant;
                 
-                if (occupant is BlockPushTest block)
+                if (occupant is BlockPush block)
                 {
                     if (block.CanMove(dir))
                     {
