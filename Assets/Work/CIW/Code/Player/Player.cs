@@ -1,7 +1,9 @@
 ﻿using System;
 using UnityEngine;
 using Work.CIW.Code.Grid;
+using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.Commands;
+using Work.CUH.Code.GameEvents;
 using Work.CUH.Code.Test;
 
 namespace Work.CIW.Code.Player
@@ -59,6 +61,7 @@ namespace Work.CIW.Code.Player
             if (command.CanExecute())
             {
                 command.Execute();
+                Bus<TurnUseEvent>.Raise(new TurnUseEvent());
             }
 
             Destroy(command);
