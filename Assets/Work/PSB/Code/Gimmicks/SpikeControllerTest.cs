@@ -9,7 +9,7 @@ namespace Work.PSB.Code.Test
     {
         [Header("Spike Settings")]
         [SerializeField] private GameObject spikeObject;
-        [SerializeField] private TurnManager turnManager;
+        [SerializeField] private TurnSystem turnManager;
         [SerializeField] private float moveDistance = 3;
         [SerializeField] private float moveDuration = 0.3f;
         [SerializeField] private Ease easeType = Ease.OutQuad;
