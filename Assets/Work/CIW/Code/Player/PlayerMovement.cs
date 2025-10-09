@@ -2,6 +2,8 @@
 using UnityEngine;
 using UnityEngine.Events;
 using Work.CIW.Code.Grid;
+using Work.CUH.Code.Commands;
+using Work.CUH.Code.Test;
 
 namespace Work.CIW.Code.Player
 {
@@ -22,11 +24,13 @@ namespace Work.CIW.Code.Player
     public interface IMovement
     {
         void HandleInput(Vector2 input);
+
+        bool StartMove(Vector3Int direction);
     }
 
     #endregion
 
-    public class PlayerMovement : MonoBehaviour, IMovement
+    public class PlayerMovement : AbstractCommandable, IMovement, IMoveableTest
     {
         [Header("Dependencies - DIP")]
         [SerializeField] MonoBehaviour gridServiceMono;
@@ -42,13 +46,20 @@ namespace Work.CIW.Code.Player
         [SerializeField] float stairChkDistance = 1.01f;
         [SerializeField] LayerMask whatIsStair;
 
+        public bool isMoving
+        {
+            get => _isMoving;
+            set => _isMoving = value;
+        }
+
         //public Vector3Int CurrentGridPosition { get; private set; }
         //public GameObject GetGameObject() => gameObject;
 
         //[SerializeField] UnityEvent onMoveComplete;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             if (gridServiceMono is IGridDataService service)
             {
                 _gridService = service;
@@ -67,8 +78,9 @@ namespace Work.CIW.Code.Player
             }
         }
 
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
             Vector3Int initWorldPos = Vector3Int.RoundToInt(transform.position);
 
             Vector3Int initGridPos = initWorldPos;
@@ -78,19 +90,24 @@ namespace Work.CIW.Code.Player
             _gridObject.OnCellOccupied(initGridPos);
         }
 
+        #region Player Movement
+
+        // 입력 처리는 Player에서 해주니, 더 이상 필요 없다.
         public void HandleInput(Vector2 input)
         {
-            if (_isMoving) return;
+            StartMoveLogic(input);
 
-            Vector3Int dir = GetDirection(input);
-            if (dir == Vector3Int.zero) return;
+            //if (_isMoving) return;
 
-            if (CheckForStairs(dir)) return;
+            //Vector3Int dir = GetDirection(input);
+            //if (dir == Vector3Int.zero) return;
 
-            if (_gridService.CanMoveTo(_gridObject.CurrentGridPosition, dir, out Vector3Int targetPos))
-            {
-                StartCoroutine(MoveRoutine(targetPos));
-            }
+            //if (CheckForStairs(dir)) return;
+
+            //if (_gridService.CanMoveTo(_gridObject.CurrentGridPosition, dir, out Vector3Int targetPos))
+            //{
+            //    StartCoroutine(MoveRoutine(targetPos));
+            //}
         }
 
         private Vector3Int GetDirection(Vector2 input)
@@ -134,6 +151,35 @@ namespace Work.CIW.Code.Player
             _isMoving = false;
         }
 
+        public void StartMoveLogic(Vector2 dir)
+        {
+            if (_isMoving) return;
+
+            Vector3Int movementDir = GetDirection(dir);
+            if (movementDir == Vector3Int.zero) return;
+
+            StartMove(movementDir);
+        }
+
+        public bool StartMove(Vector3Int direction)
+        {
+            if (_isMoving) return false;
+
+            if (CheckForStairs(direction)) return true;
+
+            if (_gridService.CanMoveTo(_gridObject.CurrentGridPosition, direction, out Vector3Int targetPos))
+            {
+                StartCoroutine(MoveRoutine(targetPos));
+                return true;
+            }
+
+            return false;
+        }
+
+        #endregion
+
+        #region Check Stairs
+
         private bool CheckForStairs(Vector3Int dir)
         {
             Vector3 startPos = _gridObject.CurrentGridPosition;
@@ -160,5 +206,7 @@ namespace Work.CIW.Code.Player
         {
             _gridService.UpdateObjectPosition(_gridObject, _gridObject.CurrentGridPosition, targetPos);
         }
+
+        #endregion
     }
 }

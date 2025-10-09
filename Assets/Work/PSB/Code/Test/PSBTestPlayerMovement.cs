@@ -138,5 +138,10 @@ namespace Work.PSB.Code.Test
         {
             _gridService.UpdateObjectPosition(_gridObject, _gridObject.CurrentGridPosition, targetPos);
         }
+
+        public bool StartMove(Vector3Int direction)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
