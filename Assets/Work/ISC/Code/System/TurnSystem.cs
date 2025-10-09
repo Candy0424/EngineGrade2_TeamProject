@@ -7,7 +7,7 @@ using Work.CUH.Code.GameEvents;
 
 namespace Work.ISC.Code.System
 {
-    public class TurnManager : MonoBehaviour
+    public class TurnSystem : MonoBehaviour
     {
         public event Action OnUseTurn;
         
