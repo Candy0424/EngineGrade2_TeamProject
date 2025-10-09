@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Work.ISC.Code.Managers;
 
 namespace Work.CIW.Code.Player
@@ -13,7 +13,7 @@ namespace Work.CIW.Code.Player
     public class TurnSystemAdapter : MonoBehaviour, ITurnService
     {
         [Header("Target (Adapter Pattern)")]
-        [SerializeField] TurnCountSystem turnCntSystem;
+        [SerializeField] TurnCountManager turnCntSystem;
 
         public bool HasTurnRemaining
         {
