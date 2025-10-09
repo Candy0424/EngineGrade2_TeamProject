@@ -8,7 +8,7 @@ using Work.ISC.Code.System;
 
 namespace Work.PSB.Code.Test
 {
-    public class SpikeControllerTest : GridObjectBase
+    public class SpikeController : GridObjectBase
     {
         [Header("Spike Settings")]
         [SerializeField] private GameObject spikeObject;
@@ -67,8 +67,8 @@ namespace Work.PSB.Code.Test
             bool goingUp = !_isRaised;
             Vector3 targetPos = goingUp ? _raisedPos : _startPos;
             
-            if (_collider != null)
-                _collider.enabled = goingUp;
+            if (!goingUp && _collider != null)
+                _collider.enabled = false;
 
             _isRaised = goingUp;
 
@@ -76,8 +76,8 @@ namespace Work.PSB.Code.Test
                 .SetEase(easeType)
                 .OnComplete(() =>
                 {
-                    if (!goingUp && _collider != null)
-                        _collider.enabled = false;
+                    if (goingUp && _collider != null)
+                        _collider.enabled = true;
                 });
         }
 

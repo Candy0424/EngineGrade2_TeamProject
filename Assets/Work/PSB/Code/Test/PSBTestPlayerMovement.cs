@@ -91,7 +91,7 @@ namespace Work.PSB.Code.Test
                 {
                     if (hit == null || hit.isTrigger) continue;
 
-                    BlockPushTest block = hit.GetComponent<BlockPushTest>();
+                    BlockPush block = hit.GetComponent<BlockPush>();
                     if (block != null)
                     {
                         if (block.CanMove(dir))

@@ -6,7 +6,7 @@ using Work.CIW.Code.Player;
 
 namespace Work.PSB.Code.Test
 {
-    public class BlockPushTest : GridObjectBase
+    public class BlockPush : GridObjectBase
     {
         [SerializeField] private MonoBehaviour gridServiceMono;
         [SerializeField] private float moveTime = 0.15f;
@@ -54,7 +54,7 @@ namespace Work.PSB.Code.Test
             Collider[] hits = Physics.OverlapSphere((Vector3)targetPos, 0.1f);
             foreach (Collider hit in hits)
             {
-                if (hit.GetComponent<BlockPushTest>() != null)
+                if (hit.GetComponent<BlockPush>() != null)
                     return false;
 
                 if (hit.CompareTag("Wall") || hit.CompareTag("Spike"))
