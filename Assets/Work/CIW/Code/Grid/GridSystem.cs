@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Work.CIW.Code.Player;
+using Work.PSB.Code.Test;
 
 namespace Work.CIW.Code.Grid
 {
@@ -103,6 +104,16 @@ namespace Work.CIW.Code.Grid
             }
             if (targetCell.IsOccupant)
             {
+                GridObjectBase occupant = targetCell.Occupant;
+                
+                if (occupant is BlockPushTest block)
+                {
+                    if (block.CanMove(dir))
+                    {
+                        return false;
+                    }
+                }
+                
                 Debug.LogWarning($"[GRID CHECK] FAILED (3): Cell at {targetPos} is already occupied.");
                 return false;
             }
