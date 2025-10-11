@@ -72,7 +72,8 @@ namespace Work.ISC.Code.Managers
         
         private void TurnGet(TurnGetEvent evt)
         {
-            currentTurnCount++;
+            CurrentTurnCount++;
         }
+        
     }
 }
