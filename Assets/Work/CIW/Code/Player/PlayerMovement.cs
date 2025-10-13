@@ -182,15 +182,21 @@ namespace Work.CIW.Code.Player
 
         private bool CheckForStairs(Vector3Int dir)
         {
-            Vector3 startPos = _gridObject.CurrentGridPosition;
-            Vector3 dirVec3 = (Vector3)dir;
+            //Vector3 startPos = _gridObject.CurrentGridPosition;
+            //Vector3 dirVec3 = (Vector3)dir;
 
+            //Vector3 fixedDirection = -dirVec3;
+
+            Vector3 rayOrigin = new Vector3(_gridObject.CurrentGridPosition.x, _gridObject.CurrentGridPosition.y + 0.1f, _gridObject.CurrentGridPosition.z);
+            Vector3 dirVec3 = (Vector3)dir;
             Vector3 fixedDirection = -dirVec3;
 
-            // ... (Debug.DrawRay 및 Raycast 로직 유지) ...
+            Debug.DrawRay(rayOrigin, fixedDirection * stairChkDistance, Color.red, 1.0f);
 
-            if (Physics.Raycast(startPos, fixedDirection, out RaycastHit hit, stairChkDistance, whatIsStair))
+            if (Physics.Raycast(rayOrigin, fixedDirection, out RaycastHit hit, stairChkDistance, whatIsStair))
             {
+                Debug.Log("Stair 감지");
+
                 if (hit.collider.TryGetComponent(out StairTrigger stair))
                 {
                     Vector3Int targetGridPos = new Vector3Int(_gridObject.CurrentGridPosition.x, stair.GetTargetY(), _gridObject.CurrentGridPosition.z);
@@ -205,6 +211,7 @@ namespace Work.CIW.Code.Player
         private void TeleportToFloor(Vector3Int targetPos)
         {
             _gridService.UpdateObjectPosition(_gridObject, _gridObject.CurrentGridPosition, targetPos);
+            Debug.Log("텔포 시킴");
         }
 
         #endregion
