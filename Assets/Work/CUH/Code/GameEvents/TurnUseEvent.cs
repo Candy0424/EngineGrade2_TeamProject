@@ -2,15 +2,15 @@
 
 namespace Work.CUH.Code.GameEvents
 {
-    public class TurnUseEvent : IEvent
+    public struct TurnUseEvent : IEvent
     {
         
     }
-    public class TurnGetEvent : IEvent
+    public struct TurnGetEvent : IEvent
     {
         
     }
-    public class TurnConsumeOnlyEvent : IEvent
+    public struct TurnConsumeOnlyEvent : IEvent
     {
         
     }
