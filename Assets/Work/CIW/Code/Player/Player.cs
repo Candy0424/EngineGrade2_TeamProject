@@ -60,7 +60,8 @@ namespace Work.CIW.Code.Player
 
             if (command.CanExecute())
             {
-                command.Execute();
+                //command.Execute();
+                Bus<CommandEvent>.Raise(new CommandEvent(command));
                 Bus<TurnUseEvent>.Raise(new TurnUseEvent());
             }
 

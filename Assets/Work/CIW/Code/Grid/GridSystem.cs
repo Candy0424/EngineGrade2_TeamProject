@@ -17,7 +17,7 @@ namespace Work.CIW.Code.Grid
         [SerializeField] GridCell cellPrefab;
         [SerializeField] private Vector3Int gridCenter = new Vector3Int(0, 0, 0);
         [SerializeField] Vector3Int gridSize = new Vector3Int(10, 5, 10);
-        [SerializeField] Transform gridParent; // ���� Cell���� ��ġ�� �θ� ������Ʈ
+        [SerializeField] List<Transform> gridParent; // ���� Cell���� ��ġ�� �θ� ������Ʈ
 
         [Header("Movement Check Data")]
         [SerializeField] LayerMask whatIsWalkable;
@@ -51,27 +51,60 @@ namespace Work.CIW.Code.Grid
         // �� �ʱ�ȭ -> �� gridCell���� 3���� ������ ��ġ
         private void InitializeGrid()
         {
-            int startX = gridCenter.x + -(gridSize.x / 2);
-            int startY = gridCenter.y + -(gridSize.y / 2);
-            int startZ = gridCenter.z + -(gridSize.z / 2);
+            _gridMap = new Dictionary<Vector3Int, GridCell>();
 
-            for (int x = 0; x < gridSize.x; x++)
+            foreach (Transform parent in gridParent)
             {
-                for (int y = 0; y < gridSize.y; y++)
+                int floorY = Mathf.RoundToInt(parent.position.y);
+
+                int startX = gridCenter.x - (gridSize.x / 2);
+                int startZ = gridCenter.z - (gridSize.z / 2);
+
+                for (int x = 0; x < gridSize.x; x++)
                 {
                     for (int z = 0; z < gridSize.z; z++)
                     {
-                        Vector3Int pos = new Vector3Int(startX + x, startY + y, startZ + z);
+                        Vector3Int pos = new Vector3Int(startX + x, floorY, startZ + z);
                         Vector3 worldPos = new Vector3(pos.x, pos.y, pos.z);
 
-                        // �̰� ���߿� ������Ʈ Ǯ������ �ٲ��ٰ���
-                        GridCell newCell = Instantiate(cellPrefab, worldPos, Quaternion.identity, gridParent);
-
+                        GridCell newCell = Instantiate(cellPrefab, worldPos, Quaternion.identity, parent);
                         newCell.InitializeCoodinates(pos);
-                        _gridMap.Add(pos, newCell);
+                        
+                        if (!_gridMap.ContainsKey(pos))
+                        {
+                            _gridMap.Add(pos, newCell);
+                        }
+                        else
+                        {
+                            Debug.LogWarning($"Duplicate cell position found at {pos}. Skipping.");
+                        }
                     }
                 }
             }
+
+            Debug.Log($"Grid Initialized: {_gridMap.Count} cells created across {gridParent.Count} floor(s).");
+
+            //int startX = gridCenter.x + -(gridSize.x / 2);
+            //int startY = gridCenter.y + -(gridSize.y / 2);
+            //int startZ = gridCenter.z + -(gridSize.z / 2);
+
+            //for (int x = 0; x < gridSize.x; x++)
+            //{
+            //    for (int y = 0; y < gridSize.y; y++)
+            //    {
+            //        for (int z = 0; z < gridSize.z; z++)
+            //        {
+            //            Vector3Int pos = new Vector3Int(startX + x, startY + y, startZ + z);
+            //            Vector3 worldPos = new Vector3(pos.x, pos.y, pos.z);
+
+            //            // �̰� ���߿� ������Ʈ Ǯ������ �ٲ��ٰ���
+            //            GridCell newCell = Instantiate(cellPrefab, worldPos, Quaternion.identity, gridParent);
+
+            //            newCell.InitializeCoodinates(pos);
+            //            _gridMap.Add(pos, newCell);
+            //        }
+            //    }
+            //}
 
             //Debug.Log($"Grid Initialized: {_gridMap.Count} cells created.");
         }

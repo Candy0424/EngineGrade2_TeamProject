@@ -58,7 +58,8 @@ namespace Work.PSB.Code.Test
 
             if (command.CanExecute())
             {
-                command.Execute();
+                //command.Execute();
+                Bus<CommandEvent>.Raise(new CommandEvent(command));
                 Bus<TurnUseEvent>.Raise(new TurnUseEvent());
             }
 
