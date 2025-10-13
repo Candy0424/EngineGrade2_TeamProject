@@ -16,7 +16,7 @@ namespace Work.CIW.Code.Grid
         [Header("Group Setup")]
         [SerializeField] GridCell cellPrefab;
         [SerializeField] private Vector3Int gridCenter = new Vector3Int(0, 0, 0);
-        [SerializeField] Vector3Int gridSize = new Vector3Int(10, 5, 10);
+        [SerializeField] Vector3Int gridSize = new Vector3Int(10, 10, 10);
         [SerializeField] List<Transform> gridParent; // ���� Cell���� ��ġ�� �θ� ������Ʈ
 
         [Header("Movement Check Data")]
