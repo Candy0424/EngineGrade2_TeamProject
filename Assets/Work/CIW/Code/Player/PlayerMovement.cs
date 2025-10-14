@@ -38,6 +38,7 @@ namespace Work.CIW.Code.Player
         GridObjectBase _gridObject;
 
         bool _isMoving = false;
+        bool _hasArrived = false;
 
         [Header("Movement")]
         [SerializeField] float moveTime = 0.15f;
@@ -45,6 +46,8 @@ namespace Work.CIW.Code.Player
         [Header("Stair Collision Setting")]
         [SerializeField] float stairChkDistance = 1.01f;
         [SerializeField] LayerMask whatIsStair;
+
+        [SerializeField] LayerMask whatIsArrival;
 
         public bool isMoving
         {
@@ -93,6 +96,8 @@ namespace Work.CIW.Code.Player
         // 입력 처리는 Player에서 해주니, 더 이상 필요 없다.
         public void HandleInput(Vector2 input)
         {
+            if (_hasArrived) return;
+
             StartMoveLogic(input);
 
             //if (_isMoving) return;
@@ -161,8 +166,10 @@ namespace Work.CIW.Code.Player
 
         public bool StartMove(Vector3Int direction)
         {
+            if (_hasArrived) return false;
             if (_isMoving) return false;
 
+            if (CheckForArrival(direction)) return true;
             if (CheckForStairs(direction)) return true;
 
             if (_gridService.CanMoveTo(_gridObject.CurrentGridPosition, direction, out Vector3Int targetPos))
@@ -210,6 +217,29 @@ namespace Work.CIW.Code.Player
         {
             _gridService.UpdateObjectPosition(_gridObject, _gridObject.CurrentGridPosition, targetPos);
             Debug.Log("텔포 시킴");
+        }
+
+        private bool CheckForArrival(Vector3Int dir)
+        {
+            Vector3Int targetGridPos = _gridObject.CurrentGridPosition + dir;
+            Vector3 rayOrigin = new Vector3(targetGridPos.x, targetGridPos.y + 5f, targetGridPos.z);
+            Vector3 rayDirection = Vector3.down;
+
+            float maxDistance = 6f;
+
+            if (Physics.Raycast(rayOrigin, rayDirection, out RaycastHit hit, maxDistance, whatIsArrival))
+            {
+                if (hit.collider.GetComponent<ArrivalTrigger>() != null)
+                {
+                    Debug.Log("도착했습니다!");
+
+                    _hasArrived = true;
+                    StartCoroutine(MoveRoutine(targetGridPos));
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         #endregion

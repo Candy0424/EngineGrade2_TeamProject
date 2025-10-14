@@ -47,24 +47,42 @@ namespace Work.PSB.Code.Test
 
         public bool CanMove(Vector3Int dir)
         {
-            if (!canMoveBlock) return false;
+            #region fixed
+
+            if (!canMoveBlock)
+            {
+                Debug.Log("canMoveBlock is false");
+                return false;
+            }
 
             Vector3Int targetPos = CurrentGridPosition + dir;
-
-            Collider[] hits = Physics.OverlapSphere((Vector3)targetPos, 0.25f);
+            
+            Collider[] hits = Physics.OverlapSphere((Vector3)targetPos, 0.45f);
             foreach (Collider hit in hits)
             {
-                if (hit.GetComponent<BlockPush>() != null)
-                    return false;
+                if (hit == null) continue;
 
+                if (hit.GetComponent<BlockPush>() != null)
+                {
+                    Debug.LogError("CanMove: 블록이 밀릴 칸에 다른 BlockPush 오브젝트가 있습니다.");
+                    return false;
+                }
+                if (hit.GetComponent<SpikeController>() != null)
+                {
+                    Debug.LogError("CanMove: 블록이 밀릴 칸에 다른 Spike 오브젝트가 있습니다.");
+                    return false;
+                }
                 if (hit.CompareTag("Wall") || hit.CompareTag("Spike"))
                 {
-                    Debug.LogError("벽이나 가시가 있어 블럭을 옮길 수 없습니다.");
+                    Debug.LogError("CanMove: 블록이 밀릴 칸에 Wall/Spike가 있습니다.");
                     return false;
                 }
             }
 
+            Debug.Log("CanMove: 블록을 밀 수 있습니다. MoveRoutine 시작!");
             return true;
+
+            #endregion
         }
 
         public IEnumerator MoveRoutine(Vector3Int dir)
@@ -74,8 +92,8 @@ namespace Work.PSB.Code.Test
             Vector3Int oldPos = CurrentGridPosition;
             Vector3Int targetPos = oldPos + dir;
 
-            if (!_gridService.CanMoveTo(oldPos, dir, out _))
-                yield break;
+            /*if (!_gridService.CanMoveTo(oldPos, dir, out _))
+                yield break;*/
             
             if (!CanMove(dir)) yield break;
 
