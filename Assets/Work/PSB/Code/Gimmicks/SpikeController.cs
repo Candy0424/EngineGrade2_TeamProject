@@ -21,6 +21,7 @@ namespace Work.PSB.Code.Test
         [SerializeField] private bool startRaised = false;
 
         private bool _isRaised;
+        private bool _hasHitPlayerThisCycle = false;
         private Vector3 _startPos;
         private Vector3 _raisedPos;
         private Tween _currentTween;
@@ -77,11 +78,14 @@ namespace Work.PSB.Code.Test
 
             bool goingUp = !_isRaised;
             Vector3 targetPos = goingUp ? _raisedPos : _startPos;
-            
+
             if (!goingUp && _collider != null)
                 _collider.enabled = false;
 
             _isRaised = goingUp;
+            
+            if (goingUp)
+                _hasHitPlayerThisCycle = false;
 
             _currentTween = spikeObject.transform.DOLocalMove(targetPos, moveDuration)
                 .SetEase(easeType)
@@ -94,11 +98,12 @@ namespace Work.PSB.Code.Test
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!_isRaised) return;
-            
+            if (!_isRaised || _hasHitPlayerThisCycle) return;
+
             PSBTestPlayerCode player = other.GetComponent<PSBTestPlayerCode>();
             if (player != null)
             {
+                _hasHitPlayerThisCycle = true;
                 Bus<TurnConsumeOnlyEvent>.Raise(new TurnConsumeOnlyEvent());
                 Debug.Log("플레이어 피격! 턴 1 소모");
             }

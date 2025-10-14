@@ -89,7 +89,7 @@ namespace Work.PSB.Code.Test
             {
                 if (hit == null) continue;
                 if (hit.GetComponent<BlockPush>() != null) return false;
-                if (hit.CompareTag("Wall")) return false;
+                if (hit.CompareTag("Wall") || hit.CompareTag("Spike")) return false;
             }
 
             return true;
