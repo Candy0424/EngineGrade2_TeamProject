@@ -70,38 +70,96 @@ namespace Work.PSB.Code.Test
             if (dir == Vector3Int.zero) return;
 
             if (CheckForStairs(dir)) return;
-            
-            Vector3Int curPos = new Vector3Int(
-                _gridObject.CurrentGridPosition.x,
-                (int)transform.position.y,
-                _gridObject.CurrentGridPosition.z
-            );
-            
+
+            Vector3Int curPos = _gridObject.CurrentGridPosition;
+
+            #region fixed
+
+            Vector3Int frontPos = curPos + dir; // added
+            Vector3 worldFront = (Vector3)frontPos; // added
+
+            Collider[] hits = Physics.OverlapSphere(worldFront, 0.45f); // added
+
+            BlockPush blockToPush = null;
+            bool isWallOrSpike = false;
+
+            foreach (Collider hit in hits)
+            {
+                if (hit == null || hit.isTrigger) continue;
+
+                if (hit.CompareTag("Wall") || hit.CompareTag("Spike"))
+                {
+                    isWallOrSpike = true;
+                    break;
+                }
+
+                BlockPush block = hit.GetComponent<BlockPush>();
+                if (block != null)
+                {
+                    blockToPush = block;
+                    break;
+                }
+            }
+
+            if (isWallOrSpike)
+            {
+                Debug.Log("Wall/Spike가 감지되어 이동을 취소합니다.");
+                return;
+            }
+
+            if (blockToPush != null)
+            {
+                Debug.Log("Block 감지됨. 밀기 시도.");
+
+                if (blockToPush.CanMove(dir))
+                {
+                    StartCoroutine(blockToPush.MoveRoutine(dir));
+                    Debug.Log("블록 밀기 시작");
+                }
+                else
+                {
+                    Debug.Log("블록 밀기 실패 (뒤에 장애물).");
+                }
+            }
+
             if (_gridService.CanMoveTo(curPos, dir, out Vector3Int targetPos))
             {
                 StartMoveLogic(input);
             }
-            else
-            {
-                Vector3Int frontPos = curPos + dir;
-                Vector3 worldFront = (Vector3)frontPos;
 
-                Collider[] hits = Physics.OverlapSphere(worldFront, 0.45f);
-                foreach (Collider hit in hits)
-                {
-                    if (hit == null || hit.isTrigger) continue;
+            #endregion
 
-                    BlockPush block = hit.GetComponent<BlockPush>();
-                    if (block != null)
-                    {
-                        if (block.CanMove(dir))
-                        {
-                            StartCoroutine(block.MoveRoutine(dir));
-                        }
-                        return;
-                    }
-                }
-            }
+            //Vector3Int curPos = new Vector3Int(
+            //    _gridObject.CurrentGridPosition.x,
+            //    (int)transform.position.y,
+            //    _gridObject.CurrentGridPosition.z
+            //);
+
+            //if (_gridService.CanMoveTo(curPos, dir, out Vector3Int targetPos))
+            //{
+            //    StartMoveLogic(input);
+            //}
+            //else
+            //{
+            //    Vector3Int frontPos = curPos + dir;
+            //    Vector3 worldFront = (Vector3)frontPos;
+
+            //    Collider[] hits = Physics.OverlapSphere(worldFront, 0.45f);
+            //    foreach (Collider hit in hits)
+            //    {
+            //        if (hit == null || hit.isTrigger) continue;
+
+            //        BlockPush block = hit.GetComponent<BlockPush>();
+            //        if (block != null)
+            //        {
+            //            if (block.CanMove(dir))
+            //            {
+            //                StartCoroutine(block.MoveRoutine(dir));
+            //            }
+            //            return;
+            //        }
+            //    }
+            //}
         }
 
         private Vector3Int GetDirection(Vector2 input)

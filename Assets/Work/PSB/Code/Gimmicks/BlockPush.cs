@@ -47,24 +47,63 @@ namespace Work.PSB.Code.Test
 
         public bool CanMove(Vector3Int dir)
         {
-            if (!canMoveBlock) return false;
+            #region fixed
+
+            if (!canMoveBlock)
+            {
+                Debug.Log("canMoveBloc is false");
+                return false;
+            }
 
             Vector3Int targetPos = CurrentGridPosition + dir;
+
+            //if (!_gridService.CanMoveTo(CurrentGridPosition, dir, out _))
+            //{
+            //    Debug.Log($"CanMove: GridService.CanMoveTo 실패. (targetPos: {targetPos}) 맵 경계 밖이거나 IsWalkable=false 칸입니다.");
+            //    return false;
+            //}
 
             Collider[] hits = Physics.OverlapSphere((Vector3)targetPos, 0.25f);
             foreach (Collider hit in hits)
             {
+                if (hit == null || hit.isTrigger) continue;
+
                 if (hit.GetComponent<BlockPush>() != null)
+                {
+                    Debug.Log("CanMove: 블록이 밀릴 칸에 다른 BlockPush 오브젝트가 있습니다.");
                     return false;
+                }
 
                 if (hit.CompareTag("Wall") || hit.CompareTag("Spike"))
                 {
-                    Debug.LogError("벽이나 가시가 있어 블럭을 옮길 수 없습니다.");
+                    Debug.Log("CanMove: 블록이 밀릴 칸에 Wall/Spike가 있습니다.");
                     return false;
                 }
             }
 
+            Debug.Log("CanMove: 블록을 밀 수 있습니다. MoveRoutine 시작!");
             return true;
+
+            #endregion
+
+            //if (!canMoveBlock) return false;
+
+            //Vector3Int targetPos = CurrentGridPosition + dir;
+
+            //Collider[] hits = Physics.OverlapSphere((Vector3)targetPos, 0.25f);
+            //foreach (Collider hit in hits)
+            //{
+            //    if (hit.GetComponent<BlockPush>() != null)
+            //        return false;
+
+            //    if (hit.CompareTag("Wall") || hit.CompareTag("Spike"))
+            //    {
+            //        Debug.LogError("벽이나 가시가 있어 블럭을 옮길 수 없습니다.");
+            //        return false;
+            //    }
+            //}
+
+            //return true;
         }
 
         public IEnumerator MoveRoutine(Vector3Int dir)
@@ -74,8 +113,8 @@ namespace Work.PSB.Code.Test
             Vector3Int oldPos = CurrentGridPosition;
             Vector3Int targetPos = oldPos + dir;
 
-            if (!_gridService.CanMoveTo(oldPos, dir, out _))
-                yield break;
+            //if (!_gridService.CanMoveTo(oldPos, dir, out _))
+            //    yield break;
             
             if (!CanMove(dir)) yield break;
 
