@@ -2737,8 +2737,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 899237238}
-  - component: {fileID: 899237240}
   - component: {fileID: 899237239}
+  - component: {fileID: 899237240}
+  - component: {fileID: 899237241}
   m_Layer: 0
   m_Name: Spike4
   m_TagString: Spike
@@ -2807,6 +2808,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!65 &899237241
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899237237}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &995694383
 GameObject:
   m_ObjectHideFlags: 0
@@ -2836,7 +2858,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c21dbe22d36443c5b6638203f09323f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxTurnCount: 35
+  maxTurnCount: 1110101
   currentTurnCount: 0
 --- !u!4 &995694385
 Transform:
@@ -3209,8 +3231,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1111916181}
-  - component: {fileID: 1111916183}
   - component: {fileID: 1111916182}
+  - component: {fileID: 1111916183}
+  - component: {fileID: 1111916184}
   m_Layer: 0
   m_Name: Spike5
   m_TagString: Spike
@@ -3279,6 +3302,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!65 &1111916184
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1111916180}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &1126317383
 GameObject:
   m_ObjectHideFlags: 0
@@ -4356,8 +4400,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1540239810}
-  - component: {fileID: 1540239812}
   - component: {fileID: 1540239811}
+  - component: {fileID: 1540239812}
+  - component: {fileID: 1540239813}
   m_Layer: 0
   m_Name: Spike2
   m_TagString: Spike
@@ -4426,6 +4471,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!65 &1540239813
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1540239809}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &1567276896
 GameObject:
   m_ObjectHideFlags: 0
@@ -5928,8 +5994,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1861367929}
-  - component: {fileID: 1861367931}
   - component: {fileID: 1861367930}
+  - component: {fileID: 1861367931}
+  - component: {fileID: 1861367932}
   m_Layer: 0
   m_Name: Spike3
   m_TagString: Spike
@@ -5998,6 +6065,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!65 &1861367932
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861367928}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &1936722054
 GameObject:
   m_ObjectHideFlags: 0
@@ -7169,8 +7257,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 306689628836189822}
-  - component: {fileID: 5663288892766454197}
   - component: {fileID: 5663288892766454196}
+  - component: {fileID: 5663288892766454197}
+  - component: {fileID: 5663288892766454198}
   m_Layer: 0
   m_Name: Spike1
   m_TagString: Spike
@@ -7223,6 +7312,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!65 &5663288892766454198
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5364402215884180893}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!23 &5808741302290730423
 MeshRenderer:
   m_ObjectHideFlags: 0

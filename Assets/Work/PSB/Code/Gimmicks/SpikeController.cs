@@ -84,7 +84,7 @@ namespace Work.PSB.Code.Test
         private void OnTriggerEnter(Collider other)
         {
             if (!_isRaised) return;
-
+            
             PSBTestPlayerCode player = other.GetComponent<PSBTestPlayerCode>();
             if (player != null)
             {
