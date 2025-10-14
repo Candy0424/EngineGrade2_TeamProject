@@ -34,7 +34,7 @@ namespace Work.PSB.Code.Test
             if (spikeObject != null)
             {
                 _startPos = spikeObject.transform.localPosition;
-                _raisedPos = _startPos + Vector3.up * moveDistance;
+                _raisedPos = _startPos + Vector3.back * moveDistance;
             }
 
             _collider = spikeObject.GetComponent<Collider>();

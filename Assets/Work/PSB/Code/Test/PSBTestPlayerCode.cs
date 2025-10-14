@@ -80,14 +80,6 @@ namespace Work.PSB.Code.Test
             return Vector3Int.zero;
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.CompareTag("EndBlock"))
-            {
-                Debug.Log("End Game");
-            }
-        }
-
         public override void OnCellDeoccupied()
         {
         }
