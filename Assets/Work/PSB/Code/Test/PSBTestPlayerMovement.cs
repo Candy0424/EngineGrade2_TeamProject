@@ -85,7 +85,7 @@ namespace Work.PSB.Code.Test
 
             foreach (Collider hit in hits)
             {
-                if (hit == null || hit.isTrigger) continue;
+                if (hit == null) continue;
 
                 if (hit.CompareTag("Wall") || hit.CompareTag("Spike"))
                 {
@@ -120,6 +120,8 @@ namespace Work.PSB.Code.Test
                 {
                     Debug.Log("블록 밀기 실패 (뒤에 장애물).");
                 }
+
+                return;
             }
 
             if (_gridService.CanMoveTo(curPos, dir, out Vector3Int targetPos))
