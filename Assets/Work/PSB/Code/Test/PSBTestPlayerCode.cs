@@ -15,7 +15,7 @@ namespace Work.PSB.Code.Test
        [field: SerializeField] public PlayerInputSO InputSO { get; private set; }
         public override Vector3Int CurrentGridPosition { get; set; }
 
-        [SerializeField] MoveCommand moveCommand;
+        [SerializeField] private MoveCommand moveCommand;
 
         private IMovement _movement;
 

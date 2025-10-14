@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Chuh007Lib.Dependencies;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Work.CUH.Chuh007Lib.EventBus;
+using Work.CUH.Code.Commands;
 using Work.CUH.Code.GameEvents;
-using Work.ISC.Code.Managers;
-using Work.ISC.Code.System;
 
-namespace Work.CUH.Code.Commands
+namespace Work.CUH.Code.Command
 {
     /// <summary>
     /// 모든 커멘드가 실행되는 메니저입니다.
@@ -66,7 +64,6 @@ namespace Work.CUH.Code.Commands
             while (_executionCommands.Count > 0)
             {
                 BaseCommandSO command = _executionCommands.Dequeue();
-                Debug.Log(command);
                 if (command.CanExecute())
                 {
                     command.Tick = currentTurnCount;

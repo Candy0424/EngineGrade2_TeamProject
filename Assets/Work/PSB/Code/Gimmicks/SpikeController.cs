@@ -3,12 +3,14 @@ using DG.Tweening;
 using UnityEngine;
 using Work.CIW.Code.Grid;
 using Work.CUH.Chuh007Lib.EventBus;
+using Work.CUH.Code.Commands;
 using Work.CUH.Code.GameEvents;
 using Work.ISC.Code.System;
+using Work.PSB.Code.Commands;
 
 namespace Work.PSB.Code.Test
 {
-    public class SpikeController : GridObjectBase
+    public class SpikeController : GridObjectBase, ICommandable
     {
         [Header("Spike Settings")]
         [SerializeField] private GameObject spikeObject;
@@ -19,10 +21,13 @@ namespace Work.PSB.Code.Test
         [SerializeField] private bool startRaised = false;
 
         private bool _isRaised;
+        private bool _hasHitPlayerThisCycle = false;
         private Vector3 _startPos;
         private Vector3 _raisedPos;
         private Tween _currentTween;
         private Collider _collider;
+
+        public bool IsRaised => _isRaised;
 
         private void Awake()
         {
@@ -47,30 +52,40 @@ namespace Work.PSB.Code.Test
         private void OnEnable()
         {
             if (spikeObject == null) return;
-
             if (turnManager != null)
-                turnManager.OnUseTurn += ToggleSpike;
+                turnManager.OnUseTurn += OnTurnUse;
         }
 
         private void OnDisable()
         {
             if (turnManager != null)
-                turnManager.OnUseTurn -= ToggleSpike;
+                turnManager.OnUseTurn -= OnTurnUse;
         }
 
-        private void ToggleSpike()
+        private void OnTurnUse()
+        {
+            var command = ScriptableObject.CreateInstance<SpikeCommandSO>();
+            command.Commandable = this;
+
+            Bus<CommandEvent>.Raise(new CommandEvent(command));
+        }
+        
+        public void ToggleSpikeCommanded()
         {
             if (spikeObject == null) return;
-    
+
             _currentTween?.Kill();
 
             bool goingUp = !_isRaised;
             Vector3 targetPos = goingUp ? _raisedPos : _startPos;
-            
+
             if (!goingUp && _collider != null)
                 _collider.enabled = false;
 
             _isRaised = goingUp;
+            
+            if (goingUp)
+                _hasHitPlayerThisCycle = false;
 
             _currentTween = spikeObject.transform.DOLocalMove(targetPos, moveDuration)
                 .SetEase(easeType)
@@ -83,11 +98,12 @@ namespace Work.PSB.Code.Test
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!_isRaised) return;
-            
+            if (!_isRaised || _hasHitPlayerThisCycle) return;
+
             PSBTestPlayerCode player = other.GetComponent<PSBTestPlayerCode>();
             if (player != null)
             {
+                _hasHitPlayerThisCycle = true;
                 Bus<TurnConsumeOnlyEvent>.Raise(new TurnConsumeOnlyEvent());
                 Debug.Log("플레이어 피격! 턴 1 소모");
             }

@@ -7,21 +7,21 @@ using Work.CUH.Code.Test;
 
 namespace Work.PSB.Code.Test
 {
-    public class PSBTestPlayerMovement : AbstractCommandable, IMovement, IMoveableTest
+    public class PSBTestPlayerMovement : MonoBehaviour, ICommandable, IMovement, IMoveableTest
     {
         [Header("Dependencies - DIP")]
-        [SerializeField] MonoBehaviour gridServiceMono;
-        IGridDataService _gridService;
-        GridObjectBase _gridObject;
+        [SerializeField] private MonoBehaviour gridServiceMono;
+        private IGridDataService _gridService;
+        private GridObjectBase _gridObject;
 
-        bool _isMoving = false;
+        private bool _isMoving = false;
 
         [Header("Movement")]
-        [SerializeField] float moveTime = 0.15f;
+        [SerializeField] private float moveTime = 0.15f;
 
         [Header("Stair Collision Setting")]
-        [SerializeField] float stairChkDistance = 1.01f;
-        [SerializeField] LayerMask whatIsStair;
+        [SerializeField] private float stairChkDistance = 1.01f;
+        [SerializeField] private LayerMask whatIsStair;
 
         public bool isMoving
         {
@@ -29,9 +29,8 @@ namespace Work.PSB.Code.Test
             set => _isMoving = value;
         }
         
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
             if (gridServiceMono is IGridDataService service)
             {
                 _gridService = service;
@@ -48,13 +47,12 @@ namespace Work.PSB.Code.Test
             }
         }
 
-        protected override void Start()
+        protected void Start()
         {
-            base.Start();
             Vector3Int initWorldPos = Vector3Int.RoundToInt(transform.position);
 
             Vector3Int initGridPos = initWorldPos;
-            initGridPos.y = initGridPos.y - 1;
+            initGridPos.y -= 1;
 
             _gridService.SetObjectInitialPosition(_gridObject, initGridPos);
             _gridObject.OnCellOccupied(initGridPos);
@@ -75,24 +73,23 @@ namespace Work.PSB.Code.Test
 
             #region fixed
 
-            Vector3Int frontPos = curPos + dir; // added
-            Vector3 worldFront = (Vector3)frontPos; // added
+            Vector3Int frontPos = curPos + dir;
+            Vector3 worldFront = (Vector3)frontPos;
 
-            Collider[] hits = Physics.OverlapSphere(worldFront, 0.45f); // added
+            Collider[] hits = Physics.OverlapSphere(worldFront, 0.45f);
 
             BlockPush blockToPush = null;
-            bool isWallOrSpike = false;
+            bool isWall = false;
 
             foreach (Collider hit in hits)
             {
                 if (hit == null) continue;
 
-                if (hit.CompareTag("Wall") || hit.CompareTag("Spike"))
+                if (hit.CompareTag("Wall"))
                 {
-                    isWallOrSpike = true;
+                    isWall = true;
                     break;
                 }
-
                 BlockPush block = hit.GetComponent<BlockPush>();
                 if (block != null)
                 {
@@ -101,24 +98,16 @@ namespace Work.PSB.Code.Test
                 }
             }
 
-            if (isWallOrSpike)
+            if (isWall)
             {
-                Debug.Log("Wall/Spike가 감지되어 이동을 취소합니다.");
                 return;
             }
 
             if (blockToPush != null)
             {
-                Debug.Log("Block 감지됨. 밀기 시도.");
-
                 if (blockToPush.CanMove(dir))
                 {
-                    StartCoroutine(blockToPush.MoveRoutine(dir));
-                    Debug.Log("블록 밀기 시작");
-                }
-                else
-                {
-                    Debug.Log("블록 밀기 실패 (뒤에 장애물).");
+                    blockToPush.TryMoveByCommand(dir);
                 }
 
                 return;
@@ -130,38 +119,6 @@ namespace Work.PSB.Code.Test
             }
 
             #endregion
-
-            //Vector3Int curPos = new Vector3Int(
-            //    _gridObject.CurrentGridPosition.x,
-            //    (int)transform.position.y,
-            //    _gridObject.CurrentGridPosition.z
-            //);
-
-            //if (_gridService.CanMoveTo(curPos, dir, out Vector3Int targetPos))
-            //{
-            //    StartMoveLogic(input);
-            //}
-            //else
-            //{
-            //    Vector3Int frontPos = curPos + dir;
-            //    Vector3 worldFront = (Vector3)frontPos;
-
-            //    Collider[] hits = Physics.OverlapSphere(worldFront, 0.45f);
-            //    foreach (Collider hit in hits)
-            //    {
-            //        if (hit == null || hit.isTrigger) continue;
-
-            //        BlockPush block = hit.GetComponent<BlockPush>();
-            //        if (block != null)
-            //        {
-            //            if (block.CanMove(dir))
-            //            {
-            //                StartCoroutine(block.MoveRoutine(dir));
-            //            }
-            //            return;
-            //        }
-            //    }
-            //}
         }
 
         private Vector3Int GetDirection(Vector2 input)
