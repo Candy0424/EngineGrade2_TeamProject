@@ -30,7 +30,7 @@ namespace Work.CIW.Code.Player
 
     #endregion
 
-    public class PlayerMovement : AbstractCommandable, IMovement, IMoveableTest
+    public class PlayerMovement : MonoBehaviour, ICommandable, IMovement, IMoveableTest
     {
         [Header("Dependencies - DIP")]
         [SerializeField] MonoBehaviour gridServiceMono;
@@ -57,9 +57,8 @@ namespace Work.CIW.Code.Player
 
         //[SerializeField] UnityEvent onMoveComplete;
 
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
             if (gridServiceMono is IGridDataService service)
             {
                 _gridService = service;
@@ -78,9 +77,8 @@ namespace Work.CIW.Code.Player
             }
         }
 
-        protected override void Start()
+        protected void Start()
         {
-            base.Start();
             Vector3Int initWorldPos = Vector3Int.RoundToInt(transform.position);
 
             Vector3Int initGridPos = initWorldPos;

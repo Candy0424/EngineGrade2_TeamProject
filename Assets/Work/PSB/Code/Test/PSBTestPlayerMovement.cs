@@ -7,7 +7,7 @@ using Work.CUH.Code.Test;
 
 namespace Work.PSB.Code.Test
 {
-    public class PSBTestPlayerMovement : AbstractCommandable, IMovement, IMoveableTest
+    public class PSBTestPlayerMovement : MonoBehaviour, ICommandable, IMovement, IMoveableTest
     {
         [Header("Dependencies - DIP")]
         [SerializeField] MonoBehaviour gridServiceMono;
@@ -29,9 +29,8 @@ namespace Work.PSB.Code.Test
             set => _isMoving = value;
         }
         
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
             if (gridServiceMono is IGridDataService service)
             {
                 _gridService = service;
@@ -48,9 +47,8 @@ namespace Work.PSB.Code.Test
             }
         }
 
-        protected override void Start()
+        protected void Start()
         {
-            base.Start();
             Vector3Int initWorldPos = Vector3Int.RoundToInt(transform.position);
 
             Vector3Int initGridPos = initWorldPos;
