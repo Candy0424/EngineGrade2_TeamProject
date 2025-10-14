@@ -303,7 +303,8 @@ MonoBehaviour:
   cellPrefab: {fileID: 1516584889428346146, guid: da0ba59cce1cfab4ebd30f7be32ede80, type: 3}
   gridCenter: {x: 0, y: 0, z: 0}
   gridSize: {x: 11, y: 5, z: 11}
-  gridParent: {fileID: 865562617}
+  gridParent:
+  - {fileID: 0}
   whatIsWalkable:
     serializedVersion: 2
     m_Bits: 64
