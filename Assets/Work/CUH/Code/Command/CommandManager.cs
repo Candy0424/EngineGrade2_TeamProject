@@ -64,7 +64,6 @@ namespace Work.CUH.Code.Command
             while (_executionCommands.Count > 0)
             {
                 BaseCommandSO command = _executionCommands.Dequeue();
-                Debug.Log(command);
                 if (command.CanExecute())
                 {
                     command.Tick = currentTurnCount;

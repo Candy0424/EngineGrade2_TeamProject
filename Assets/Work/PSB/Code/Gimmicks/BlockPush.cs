@@ -1,19 +1,37 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+using Chuh007Lib.Dependencies;
+using Chuh007Lib.ObjectPool.Runtime;
 using UnityEngine;
 using Work.CIW.Code.Grid;
 using Work.CIW.Code.Player;
+using Work.CUH.Chuh007Lib.EventBus;
+using Work.CUH.Code.Commands;
+using Work.CUH.Code.GameEvents;
+using Work.CUH.Code.Test;
+using Work.ISC.Code.Effects;
 
 namespace Work.PSB.Code.Test
 {
-    public class BlockPush : GridObjectBase
+    public class BlockPush : GridObjectBase, ICommandable, IMoveableTest
     {
         [SerializeField] private MonoBehaviour gridServiceMono;
         [SerializeField] private float moveTime = 0.15f;
         [SerializeField] private bool canMoveBlock = true;
 
-        public override Vector3Int CurrentGridPosition { get; set; }
+        [SerializeField] private PoolingItemSO pushEffect;
 
+        [Inject] private PoolManagerMono _poolManager;
+
+        private IGridDataService _gridService;
+        private bool _isMoving = false;
+
+        public bool isMoving
+        {
+            get => _isMoving;
+            set => _isMoving = value;
+        }
+
+        public override Vector3Int CurrentGridPosition { get; set; }
         public override void OnCellDeoccupied()
         {
         }
@@ -22,67 +40,67 @@ namespace Work.PSB.Code.Test
         {
         }
 
-        private IGridDataService _gridService;
-        private bool _isMoving = false;
-
         private void Awake()
         {
             if (gridServiceMono is IGridDataService service)
-            {
                 _gridService = service;
-            }
             else
-            {
                 Debug.LogError("GridService가 올바르게 할당되지 않았습니다!");
-            }
         }
 
         private void Start()
         {
             CurrentGridPosition = Vector3Int.RoundToInt(transform.position);
             transform.position = CurrentGridPosition;
-
             _gridService.SetObjectInitialPosition(this, CurrentGridPosition);
+        }
+        
+        public void TryMoveByCommand(Vector3Int dir)
+        {
+            MoveCommand moveCommand = ScriptableObject.CreateInstance<MoveCommand>();
+            moveCommand.Dir = new Vector2(dir.x, dir.z);
+            moveCommand.Commandable = this;
+
+            if (moveCommand.CanExecute())
+            {
+                Bus<CommandEvent>.Raise(new CommandEvent(moveCommand));
+            }
+
+            Destroy(moveCommand);
+        }
+
+        public void HandleInput(Vector2 input)
+        {
+            if (_isMoving || !canMoveBlock)
+                return;
+
+            Vector3Int dir = new Vector3Int(Mathf.RoundToInt(input.x), 0, Mathf.RoundToInt(input.y));
+
+            if (!CanMove(dir))
+            {
+                Debug.Log("BlockPush: 이동 불가");
+                return;
+            }
+
+            StartCoroutine(MoveRoutine(dir));
         }
 
         public bool CanMove(Vector3Int dir)
         {
-            #region fixed
-
-            if (!canMoveBlock)
-            {
-                Debug.Log("canMoveBlock is false");
-                return false;
-            }
+            if (!canMoveBlock) return false;
 
             Vector3Int targetPos = CurrentGridPosition + dir;
-            
             Collider[] hits = Physics.OverlapSphere((Vector3)targetPos, 0.45f);
+
             foreach (Collider hit in hits)
             {
                 if (hit == null) continue;
-
-                if (hit.GetComponent<BlockPush>() != null)
-                {
-                    Debug.LogError("CanMove: 블록이 밀릴 칸에 다른 BlockPush 오브젝트가 있습니다.");
-                    return false;
-                }
-                if (hit.GetComponent<SpikeController>() != null)
-                {
-                    Debug.LogError("CanMove: 블록이 밀릴 칸에 다른 Spike 오브젝트가 있습니다.");
-                    return false;
-                }
-                if (hit.CompareTag("Wall") || hit.CompareTag("Spike"))
-                {
-                    Debug.LogError("CanMove: 블록이 밀릴 칸에 Wall/Spike가 있습니다.");
-                    return false;
-                }
+                if (hit.GetComponent<BlockPush>() != null) return false;
+                if (hit.CompareTag("Wall") || hit.CompareTag("Spike")) return false;
             }
 
-            Debug.Log("CanMove: 블록을 밀 수 있습니다. MoveRoutine 시작!");
+            CreateEffect();
             return true;
-
-            #endregion
         }
 
         public IEnumerator MoveRoutine(Vector3Int dir)
@@ -92,13 +110,7 @@ namespace Work.PSB.Code.Test
             Vector3Int oldPos = CurrentGridPosition;
             Vector3Int targetPos = oldPos + dir;
 
-            /*if (!_gridService.CanMoveTo(oldPos, dir, out _))
-                yield break;*/
-            
-            if (!CanMove(dir)) yield break;
-
             _isMoving = true;
-
             Vector3 start = transform.position;
             Vector3 end = (Vector3)targetPos;
 
@@ -112,17 +124,20 @@ namespace Work.PSB.Code.Test
 
             transform.position = end;
             CurrentGridPosition = targetPos;
-
             _gridService.UpdateObjectPosition(this, oldPos, targetPos);
 
             _isMoving = false;
         }
 
-        public GameObject GetObject()
+        public async void CreateEffect()
         {
-            return gameObject;
+            PoolingEffect effect = _poolManager.Pop<PoolingEffect>(pushEffect);
+            effect.PlayVFX(transform.position);
+            await Awaitable.WaitForSecondsAsync(2f);
+            _poolManager.Push(effect);
         }
-        
+
+        public GameObject GetObject() => gameObject;
         
     }
 }

@@ -15,7 +15,7 @@ namespace Work.PSB.Code.Test
        [field: SerializeField] public PlayerInputSO InputSO { get; private set; }
         public override Vector3Int CurrentGridPosition { get; set; }
 
-        [SerializeField] MoveCommand moveCommand;
+        [SerializeField] private MoveCommand moveCommand;
 
         private IMovement _movement;
 
@@ -78,14 +78,6 @@ namespace Work.PSB.Code.Test
             }
 
             return Vector3Int.zero;
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.CompareTag("EndBlock"))
-            {
-                Debug.Log("End Game");
-            }
         }
 
         public override void OnCellDeoccupied()
