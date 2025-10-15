@@ -1,8 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Work.CIW.Code;
 using Work.CIW.Code.Grid;
-using Work.CIW.Code.Player;
 using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.Commands;
 using Work.CUH.Code.GameEvents;
@@ -14,11 +12,9 @@ namespace Work.PSB.Code.Test
     {
        [field: SerializeField] public PlayerInputSO InputSO { get; private set; }
         public override Vector3Int CurrentGridPosition { get; set; }
-
+        
         [SerializeField] private MoveCommand moveCommand;
-
-        private IMovement _movement;
-
+        
         private PSBTestPlayerMovement _movementCompo;
 
         private void Awake()
@@ -31,8 +27,7 @@ namespace Work.PSB.Code.Test
                 Debug.LogError("PlayerMovement 컴포넌트가 IMoveableTest를 구현하지 않았습니다.");
                 enabled = false;
             }
-
-            _movement = GetComponent<IMovement>();
+            
         }
 
         private void OnEnable()
@@ -55,7 +50,7 @@ namespace Work.PSB.Code.Test
             Vector3Int curGridPos = CurrentGridPosition;
             Vector3Int frontGridPos = curGridPos + dir;
 
-            Collider[] hits = Physics.OverlapSphere((Vector3)frontGridPos, 0.45f);
+            Collider[] hits = Physics.OverlapSphere(frontGridPos, 0.45f);
             BlockPush blockToPush = null;
             bool isWall = false;
 
@@ -75,10 +70,13 @@ namespace Work.PSB.Code.Test
                     break;
                 }
             }
-            
+
             if (isWall)
+            {
+                Bus<TurnUseEvent>.Raise(new TurnUseEvent());
                 return;
-            
+            }
+    
             if (blockToPush != null)
             {
                 if (blockToPush.CanMove(dir))
@@ -87,6 +85,15 @@ namespace Work.PSB.Code.Test
                     Bus<TurnUseEvent>.Raise(new TurnUseEvent());
                 }
                 return;
+            }
+            
+            if (_movementCompo.gridService != null)
+            {
+                if (!_movementCompo.gridService.CanMoveTo(curGridPos, dir, out _))
+                {
+                    Bus<TurnUseEvent>.Raise(new TurnUseEvent());
+                    return;
+                }
             }
             
             MoveCommand moveCommand = ScriptableObject.CreateInstance<MoveCommand>();
@@ -98,10 +105,8 @@ namespace Work.PSB.Code.Test
                 Bus<CommandEvent>.Raise(new CommandEvent(moveCommand));
                 Bus<TurnUseEvent>.Raise(new TurnUseEvent());
             }
-
             Destroy(moveCommand);
         }
-
 
         private Vector3Int GetDirection(Vector2 input)
         {

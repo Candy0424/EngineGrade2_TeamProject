@@ -23,6 +23,8 @@ namespace Work.PSB.Code.Test
         [SerializeField] private Ease easeType = Ease.OutQuad;
         [SerializeField] private bool startRaised = false;
         
+        [Header("Command / Effect")]
+        [SerializeField] private SpikeCommandSO spikeCommand;
         [SerializeField] private TurnConsumeCommandSO turnConsumeCommand;
         [SerializeField] private PoolingItemSO bloodEffect;
 
@@ -30,6 +32,7 @@ namespace Work.PSB.Code.Test
 
         private bool _isRaised;
         private bool _hasHitPlayerThisCycle = false;
+        private bool _isFirst = true;
         private Vector3 _startPos;
         private Vector3 _raisedPos;
         private Tween _currentTween;
@@ -73,10 +76,16 @@ namespace Work.PSB.Code.Test
 
         private void OnTurnUse()
         {
-            var command = ScriptableObject.CreateInstance<SpikeCommandSO>();
+            SpikeCommandSO command = Instantiate(spikeCommand);
             command.Commandable = this;
-
             Bus<CommandEvent>.Raise(new CommandEvent(command));
+
+            if (_isFirst)
+            {
+                command.Execute();    
+            }
+            _isFirst = false;
+            Debug.Log("Spike CommandEvent Use");
         }
         
         public void ToggleSpikeCommanded()
@@ -102,6 +111,7 @@ namespace Work.PSB.Code.Test
                 {
                     if (goingUp && _collider != null)
                         _collider.enabled = true;
+                    Debug.Log("Spike Toggle Complete");
                 });
         }
 
@@ -114,8 +124,9 @@ namespace Work.PSB.Code.Test
             {
                 _hasHitPlayerThisCycle = true;
                 
-                var turnCmd = Instantiate(turnConsumeCommand);
+                TurnConsumeCommandSO turnCmd = Instantiate(turnConsumeCommand);
                 Bus<CommandEvent>.Raise(new CommandEvent(turnCmd));
+                Debug.Log("Spike Trigger CommandEvent Use");
                 
                 CreateEffect();
                 Debug.Log("플레이어 피격! 턴 1 소모");
