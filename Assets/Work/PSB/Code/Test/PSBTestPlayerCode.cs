@@ -49,22 +49,59 @@ namespace Work.PSB.Code.Test
 
         private void HandleMove(Vector2 input)
         {
-            Vector2 dir = input;
-            if (dir == Vector2.zero) return;
+            if (input == Vector2.zero) return;
 
-            MoveCommand command = ScriptableObject.CreateInstance<MoveCommand>();
-            command.Dir = dir;
-            command.Commandable = _movementCompo;
+            Vector3Int dir = GetDirection(input);
+            Vector3Int curGridPos = CurrentGridPosition;
+            Vector3Int frontGridPos = curGridPos + dir;
 
-            if (command.CanExecute())
+            Collider[] hits = Physics.OverlapSphere((Vector3)frontGridPos, 0.45f);
+            BlockPush blockToPush = null;
+            bool isWall = false;
+
+            foreach (Collider hit in hits)
             {
-                //command.Execute();
-                Bus<CommandEvent>.Raise(new CommandEvent(command));
+                if (hit == null) continue;
+
+                if (hit.CompareTag("Wall"))
+                {
+                    isWall = true;
+                    break;
+                }
+
+                if (hit.TryGetComponent(out BlockPush block))
+                {
+                    blockToPush = block;
+                    break;
+                }
+            }
+            
+            if (isWall)
+                return;
+            
+            if (blockToPush != null)
+            {
+                if (blockToPush.CanMove(dir))
+                {
+                    blockToPush.TryMoveByCommand(dir);
+                    Bus<TurnUseEvent>.Raise(new TurnUseEvent());
+                }
+                return;
+            }
+            
+            MoveCommand moveCommand = ScriptableObject.CreateInstance<MoveCommand>();
+            moveCommand.Dir = input;
+            moveCommand.Commandable = _movementCompo;
+
+            if (moveCommand.CanExecute())
+            {
+                Bus<CommandEvent>.Raise(new CommandEvent(moveCommand));
                 Bus<TurnUseEvent>.Raise(new TurnUseEvent());
             }
 
-            Destroy(command);
+            Destroy(moveCommand);
         }
+
 
         private Vector3Int GetDirection(Vector2 input)
         {
