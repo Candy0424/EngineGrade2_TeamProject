@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ef599dc11424d73bb92c3df252debb4, type: 3}
-  m_Name: PoolManager
+  m_Script: {fileID: 11500000, guid: c3a4afc4c03a454f9c1df9a315b2b0bb, type: 3}
+  m_Name: BlockPushEffect
   m_EditorClassIdentifier: 
-  itemList:
-  - {fileID: 11400000, guid: 5745c1e9c6e97c640bcb6666057fad26, type: 2}
-  - {fileID: 11400000, guid: f59841e02f9311a4b9a52d18a2f0f53e, type: 2}
+  poolingName: BlockPushEffect
+  prefab: {fileID: 5379604513349847685, guid: c6bd198b8fbe7f94da3d2461c13e066f, type: 3}
+  initCount: 5

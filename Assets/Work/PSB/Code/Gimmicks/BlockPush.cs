@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using Chuh007Lib.Dependencies;
+using Chuh007Lib.ObjectPool.Runtime;
 using UnityEngine;
 using Work.CIW.Code.Grid;
 using Work.CIW.Code.Player;
@@ -6,6 +8,7 @@ using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.Commands;
 using Work.CUH.Code.GameEvents;
 using Work.CUH.Code.Test;
+using Work.ISC.Code.Effects;
 
 namespace Work.PSB.Code.Test
 {
@@ -14,6 +17,10 @@ namespace Work.PSB.Code.Test
         [SerializeField] private MonoBehaviour gridServiceMono;
         [SerializeField] private float moveTime = 0.15f;
         [SerializeField] private bool canMoveBlock = true;
+
+        [SerializeField] private PoolingItemSO pushEffect;
+
+        [Inject] private PoolManagerMono _poolManager;
 
         private IGridDataService _gridService;
         private bool _isMoving = false;
@@ -92,6 +99,7 @@ namespace Work.PSB.Code.Test
                 if (hit.CompareTag("Wall") || hit.CompareTag("Spike")) return false;
             }
 
+            CreateEffect();
             return true;
         }
 
@@ -119,6 +127,14 @@ namespace Work.PSB.Code.Test
             _gridService.UpdateObjectPosition(this, oldPos, targetPos);
 
             _isMoving = false;
+        }
+
+        public async void CreateEffect()
+        {
+            PoolingEffect effect = _poolManager.Pop<PoolingEffect>(pushEffect);
+            effect.PlayVFX(transform.position);
+            await Awaitable.WaitForSecondsAsync(2f);
+            _poolManager.Push(effect);
         }
 
         public GameObject GetObject() => gameObject;

@@ -170,6 +170,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 0
+  pushEffect: {fileID: 0}
 --- !u!54 &8280087
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -322,6 +323,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 0
+  pushEffect: {fileID: 0}
 --- !u!54 &61636753
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -474,6 +476,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 0
+  pushEffect: {fileID: 0}
 --- !u!54 &65996345
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -626,6 +629,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 0
+  pushEffect: {fileID: 0}
 --- !u!54 &84502197
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -940,6 +944,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 0
+  pushEffect: {fileID: 0}
 --- !u!54 &108326200
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1092,6 +1097,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 0
+  pushEffect: {fileID: 0}
 --- !u!54 &133934319
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1193,6 +1199,51 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 133934316}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &211910647
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 211910648}
+  - component: {fileID: 211910649}
+  m_Layer: 0
+  m_Name: PoolManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &211910648
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211910647}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &211910649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211910647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65c72b8110d049c199b59d4f0f74dad9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolManager: {fileID: 11400000, guid: 7f6b4e67a6cfa2e42bac3f9fb5c4907e, type: 2}
 --- !u!1 &238686287
 GameObject:
   m_ObjectHideFlags: 0
@@ -1240,6 +1291,7 @@ GameObject:
   - component: {fileID: 266134592}
   - component: {fileID: 266134591}
   - component: {fileID: 266134590}
+  - component: {fileID: 266134594}
   m_Layer: 0
   m_Name: EndingBlock
   m_TagString: EndBlock
@@ -1363,6 +1415,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 266134587}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &266134594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266134587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0410e7a1c95951546bca15268ef82280, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &429434312
 GameObject:
   m_ObjectHideFlags: 0
@@ -1414,6 +1478,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 0
+  pushEffect: {fileID: 0}
 --- !u!54 &429434315
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1566,6 +1631,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 0
+  pushEffect: {fileID: 0}
 --- !u!54 &442159019
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1804,6 +1870,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 0
+  pushEffect: {fileID: 0}
 --- !u!54 &499960661
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1956,6 +2023,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 0
+  pushEffect: {fileID: 0}
 --- !u!54 &543570538
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2108,6 +2176,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 0
+  pushEffect: {fileID: 0}
 --- !u!54 &674934783
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2578,6 +2647,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 1
+  pushEffect: {fileID: 11400000, guid: 5745c1e9c6e97c640bcb6666057fad26, type: 2}
 --- !u!65 &807378046
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2781,6 +2851,8 @@ MonoBehaviour:
   moveDuration: 0.1
   easeType: 6
   startRaised: 1
+  turnConsumeCommand: {fileID: 11400000, guid: f3fadf90c1317384a887bb51e1246d52, type: 2}
+  bloodEffect: {fileID: 11400000, guid: f59841e02f9311a4b9a52d18a2f0f53e, type: 2}
 --- !u!54 &899237240
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3148,6 +3220,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 1
+  pushEffect: {fileID: 11400000, guid: 5745c1e9c6e97c640bcb6666057fad26, type: 2}
 --- !u!65 &1094414301
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3275,6 +3348,8 @@ MonoBehaviour:
   moveDuration: 0.1
   easeType: 6
   startRaised: 1
+  turnConsumeCommand: {fileID: 11400000, guid: f3fadf90c1317384a887bb51e1246d52, type: 2}
+  bloodEffect: {fileID: 11400000, guid: f59841e02f9311a4b9a52d18a2f0f53e, type: 2}
 --- !u!54 &1111916183
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3374,6 +3449,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 0
+  pushEffect: {fileID: 0}
 --- !u!54 &1126317386
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3570,6 +3646,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 0
+  pushEffect: {fileID: 0}
 --- !u!54 &1162453159
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3722,6 +3799,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 0
+  pushEffect: {fileID: 0}
 --- !u!54 &1269438761
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4029,6 +4107,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 0
+  pushEffect: {fileID: 0}
 --- !u!54 &1463729151
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4181,6 +4260,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 0
+  pushEffect: {fileID: 0}
 --- !u!54 &1467912367
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4444,6 +4524,8 @@ MonoBehaviour:
   moveDuration: 0.1
   easeType: 6
   startRaised: 1
+  turnConsumeCommand: {fileID: 11400000, guid: f3fadf90c1317384a887bb51e1246d52, type: 2}
+  bloodEffect: {fileID: 11400000, guid: f59841e02f9311a4b9a52d18a2f0f53e, type: 2}
 --- !u!54 &1540239812
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4543,6 +4625,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 0
+  pushEffect: {fileID: 0}
 --- !u!54 &1567276899
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4695,6 +4778,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 0
+  pushEffect: {fileID: 0}
 --- !u!54 &1588041152
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4847,6 +4931,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 0
+  pushEffect: {fileID: 0}
 --- !u!54 &1639805965
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5106,6 +5191,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 0
+  pushEffect: {fileID: 0}
 --- !u!54 &1712209103
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5285,6 +5371,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 1
+  pushEffect: {fileID: 11400000, guid: 5745c1e9c6e97c640bcb6666057fad26, type: 2}
 --- !u!65 &1716245721
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5410,6 +5497,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 0
+  pushEffect: {fileID: 0}
 --- !u!54 &1759318153
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5562,6 +5650,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 0
+  pushEffect: {fileID: 0}
 --- !u!54 &1769500405
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5884,6 +5973,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 0
+  pushEffect: {fileID: 0}
 --- !u!54 &1800240083
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6038,6 +6128,8 @@ MonoBehaviour:
   moveDuration: 0.1
   easeType: 6
   startRaised: 0
+  turnConsumeCommand: {fileID: 11400000, guid: f3fadf90c1317384a887bb51e1246d52, type: 2}
+  bloodEffect: {fileID: 11400000, guid: f59841e02f9311a4b9a52d18a2f0f53e, type: 2}
 --- !u!54 &1861367931
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6577,6 +6669,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 1
+  pushEffect: {fileID: 11400000, guid: 5745c1e9c6e97c640bcb6666057fad26, type: 2}
 --- !u!65 &2008268073
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6702,6 +6795,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 0
+  pushEffect: {fileID: 0}
 --- !u!54 &2033867805
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6881,6 +6975,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 1
+  pushEffect: {fileID: 11400000, guid: 5745c1e9c6e97c640bcb6666057fad26, type: 2}
 --- !u!65 &2053781583
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7213,6 +7308,63 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1001 &4360012261829158692
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4754760284240762837, guid: c6bd198b8fbe7f94da3d2461c13e066f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4754760284240762837, guid: c6bd198b8fbe7f94da3d2461c13e066f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4754760284240762837, guid: c6bd198b8fbe7f94da3d2461c13e066f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4754760284240762837, guid: c6bd198b8fbe7f94da3d2461c13e066f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4754760284240762837, guid: c6bd198b8fbe7f94da3d2461c13e066f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4754760284240762837, guid: c6bd198b8fbe7f94da3d2461c13e066f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4754760284240762837, guid: c6bd198b8fbe7f94da3d2461c13e066f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4754760284240762837, guid: c6bd198b8fbe7f94da3d2461c13e066f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4754760284240762837, guid: c6bd198b8fbe7f94da3d2461c13e066f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4754760284240762837, guid: c6bd198b8fbe7f94da3d2461c13e066f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5379604513349847685, guid: c6bd198b8fbe7f94da3d2461c13e066f, type: 3}
+      propertyPath: m_Name
+      value: BlockPushEffect
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c6bd198b8fbe7f94da3d2461c13e066f, type: 3}
 --- !u!54 &4879569461635825667
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7285,6 +7437,8 @@ MonoBehaviour:
   moveDuration: 0.1
   easeType: 6
   startRaised: 0
+  turnConsumeCommand: {fileID: 11400000, guid: f3fadf90c1317384a887bb51e1246d52, type: 2}
+  bloodEffect: {fileID: 11400000, guid: f59841e02f9311a4b9a52d18a2f0f53e, type: 2}
 --- !u!54 &5663288892766454197
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7414,6 +7568,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 0
+  pushEffect: {fileID: 0}
 --- !u!65 &6376540957976980313
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7498,6 +7653,7 @@ MonoBehaviour:
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
   canMoveBlock: 1
+  pushEffect: {fileID: 11400000, guid: 5745c1e9c6e97c640bcb6666057fad26, type: 2}
 --- !u!4 &8895568109832573539
 Transform:
   m_ObjectHideFlags: 0
@@ -7530,3 +7686,5 @@ SceneRoots:
   - {fileID: 886064900}
   - {fileID: 1155382158}
   - {fileID: 1966986365}
+  - {fileID: 4360012261829158692}
+  - {fileID: 211910648}

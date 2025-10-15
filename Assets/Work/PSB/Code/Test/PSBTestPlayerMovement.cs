@@ -71,54 +71,10 @@ namespace Work.PSB.Code.Test
 
             Vector3Int curPos = _gridObject.CurrentGridPosition;
 
-            #region fixed
-
-            Vector3Int frontPos = curPos + dir;
-            Vector3 worldFront = (Vector3)frontPos;
-
-            Collider[] hits = Physics.OverlapSphere(worldFront, 0.45f);
-
-            BlockPush blockToPush = null;
-            bool isWall = false;
-
-            foreach (Collider hit in hits)
-            {
-                if (hit == null) continue;
-
-                if (hit.CompareTag("Wall"))
-                {
-                    isWall = true;
-                    break;
-                }
-                BlockPush block = hit.GetComponent<BlockPush>();
-                if (block != null)
-                {
-                    blockToPush = block;
-                    break;
-                }
-            }
-
-            if (isWall)
-            {
-                return;
-            }
-
-            if (blockToPush != null)
-            {
-                if (blockToPush.CanMove(dir))
-                {
-                    blockToPush.TryMoveByCommand(dir);
-                }
-
-                return;
-            }
-
             if (_gridService.CanMoveTo(curPos, dir, out Vector3Int targetPos))
             {
                 StartMoveLogic(input);
             }
-
-            #endregion
         }
 
         private Vector3Int GetDirection(Vector2 input)
