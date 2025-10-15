@@ -53,12 +53,12 @@ namespace Work.CIW.Code.Grid
         {
             _gridMap = new Dictionary<Vector3Int, GridCell>();
 
+            int startX = gridCenter.x - (gridSize.x / 2);
+            int startZ = gridCenter.z - (gridSize.z / 2);
+
             foreach (Transform parent in gridParent)
             {
                 int floorY = Mathf.RoundToInt(parent.position.y);
-
-                int startX = gridCenter.x - (gridSize.x / 2);
-                int startZ = gridCenter.z - (gridSize.z / 2);
 
                 for (int x = 0; x < gridSize.x; x++)
                 {
@@ -67,7 +67,8 @@ namespace Work.CIW.Code.Grid
                         Vector3Int pos = new Vector3Int(startX + x, floorY, startZ + z);
                         Vector3 worldPos = new Vector3(pos.x, pos.y, pos.z);
 
-                        GridCell newCell = Instantiate(cellPrefab, worldPos, Quaternion.identity, parent);
+                        GridCell newCell = Instantiate(cellPrefab, worldPos, Quaternion.identity);
+                        newCell.transform.SetParent(parent, true);
                         newCell.InitializeCoodinates(pos);
                         
                         if (!_gridMap.ContainsKey(pos))
