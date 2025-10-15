@@ -16,19 +16,24 @@ namespace Work.CUH.Code.Command
     [Provide]
     public class CommandManager : MonoBehaviour
     {
-        [SerializeField] private int currentTurnCount = 0;
+        private int _currentTurnCount = 0;
 
+        [Header("Settings")]
+        [SerializeField] private int leftUndoCount;
+        
         private Queue<BaseCommandSO> _executionCommands;
         private Stack<BaseCommandSO> _undoCommands;
+        private Stack<BaseCommandSO> _tempStack;
         
         private void Awake()
         {
             _executionCommands = new Queue<BaseCommandSO>();
             _undoCommands = new Stack<BaseCommandSO>();
+            _tempStack = new Stack<BaseCommandSO>();
             Bus<CommandEvent>.OnEvent += HandleCommand;
             Bus<TurnUseEvent>.OnEvent += TurnUse;
         }
-
+        
         private void OnDestroy()
         {
             Bus<CommandEvent>.OnEvent -= HandleCommand;
@@ -38,19 +43,27 @@ namespace Work.CUH.Code.Command
         [ContextMenu("Undo")]
         public void Undo()
         {
-            if (_undoCommands.Count <= 0 || currentTurnCount <= 0) return;
+            if (_undoCommands.Count <= 0 || _currentTurnCount <= 0) return;
             if (!_undoCommands.Peek().CanExecute()) return;
+            if (leftUndoCount <= 0) return;
             bool undo = false;
-            while (_undoCommands.Count > 0 && _undoCommands.Peek().Tick == currentTurnCount)
+            while (_undoCommands.Count > 0 && _undoCommands.Peek().Tick == _currentTurnCount)
             {
                 undo = true;
                 var command = _undoCommands.Pop();
-                command.Undo();
+                _tempStack.Push(command);
             }
 
+            while (_tempStack.Count > 0)
+            {
+                var command = _tempStack.Pop();
+                command.Undo();
+            }
+            
             if (undo)
             {
-                currentTurnCount--;
+                leftUndoCount--;
+                _currentTurnCount--;
                 Bus<TurnGetEvent>.Raise(new TurnGetEvent());
             }
         }
@@ -60,13 +73,13 @@ namespace Work.CUH.Code.Command
         // 실행하면서 생기는 커맨드들도 여따가 넣는다.
         public void TurnUse(TurnUseEvent evt)
         {
-            currentTurnCount++;
+            _currentTurnCount++;
             while (_executionCommands.Count > 0)
             {
                 BaseCommandSO command = _executionCommands.Dequeue();
                 if (command.CanExecute())
                 {
-                    command.Tick = currentTurnCount;
+                    command.Tick = _currentTurnCount;
                     command.Execute();
                     _undoCommands.Push(command);
                 }
@@ -90,6 +103,11 @@ namespace Work.CUH.Code.Command
             if (Keyboard.current.zKey.wasPressedThisFrame)
             {
                 Undo();
+            }
+
+            if (Keyboard.current.rKey.wasPressedThisFrame)
+            {
+                Reset();
             }
         }
     }
