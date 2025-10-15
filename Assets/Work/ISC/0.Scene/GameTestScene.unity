@@ -1554,6 +1554,7 @@ MonoBehaviour:
   moveDuration: 0.3
   easeType: 6
   startRaised: 1
+  spikeCommand: {fileID: 0}
   turnConsumeCommand: {fileID: 0}
   bloodEffect: {fileID: 0}
 --- !u!54 &899237240
@@ -2637,6 +2638,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 894760160}
     m_Modifications:
+    - target: {fileID: 1260756539998183374, guid: 2864075b7432f864bbaa69e5e6809296, type: 3}
+      propertyPath: m_Type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1260756539998183374, guid: 2864075b7432f864bbaa69e5e6809296, type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1260756539998183374, guid: 2864075b7432f864bbaa69e5e6809296, type: 3}
+      propertyPath: m_FillMethod
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3993407792119883127, guid: 2864075b7432f864bbaa69e5e6809296, type: 3}
       propertyPath: m_Name
       value: GamePanel
@@ -2720,6 +2733,10 @@ PrefabInstance:
     - target: {fileID: 5236593430827471641, guid: 2864075b7432f864bbaa69e5e6809296, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6465726729998302207, guid: 2864075b7432f864bbaa69e5e6809296, type: 3}
+      propertyPath: m_Color.a
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3040,6 +3057,7 @@ MonoBehaviour:
   moveDuration: 0.3
   easeType: 6
   startRaised: 0
+  spikeCommand: {fileID: 0}
   turnConsumeCommand: {fileID: 0}
   bloodEffect: {fileID: 0}
 --- !u!54 &1540239812
@@ -4015,6 +4033,7 @@ MonoBehaviour:
   moveDuration: 0.3
   easeType: 6
   startRaised: 0
+  spikeCommand: {fileID: 0}
   turnConsumeCommand: {fileID: 0}
   bloodEffect: {fileID: 0}
 --- !u!54 &1861367931
@@ -5058,6 +5077,7 @@ MonoBehaviour:
   moveDuration: 0.3
   easeType: 6
   startRaised: 0
+  spikeCommand: {fileID: 0}
   turnConsumeCommand: {fileID: 0}
   bloodEffect: {fileID: 0}
 --- !u!54 &5663288892766454197
