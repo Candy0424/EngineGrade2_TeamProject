@@ -121,10 +121,6 @@ namespace Work.PSB.Code.Test
             if (player != null)
             {
                 _hasHitPlayerThisCycle = true;
-                
-                TurnConsumeCommandSO turnCmd = Instantiate(turnConsumeCommand);
-                Bus<CommandEvent>.Raise(new CommandEvent(turnCmd));
-                
                 CreateEffect();
                 Debug.Log("플레이어 피격! 턴 1 소모");
             }

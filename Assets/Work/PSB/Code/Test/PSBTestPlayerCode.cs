@@ -5,6 +5,7 @@ using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.Commands;
 using Work.CUH.Code.GameEvents;
 using Work.CUH.Code.Test;
+using Work.PSB.Code.Commands;
 
 namespace Work.PSB.Code.Test
 {
@@ -14,6 +15,7 @@ namespace Work.PSB.Code.Test
         public override Vector3Int CurrentGridPosition { get; set; }
         
         [SerializeField] private MoveCommand moveCommand;
+        [SerializeField] private TurnConsumeCommandSO turnConsumeCommand;
         
         private PSBTestPlayerMovement _movementCompo;
 
@@ -53,6 +55,7 @@ namespace Work.PSB.Code.Test
             Collider[] hits = Physics.OverlapSphere(frontGridPos, 0.45f);
             BlockPush blockToPush = null;
             bool isWall = false;
+            bool isSpike = false;
 
             foreach (Collider hit in hits)
             {
@@ -61,6 +64,12 @@ namespace Work.PSB.Code.Test
                 if (hit.CompareTag("Wall"))
                 {
                     isWall = true;
+                    break;
+                }
+
+                if (hit.CompareTag("Spike"))
+                {
+                    isSpike = true;
                     break;
                 }
 
@@ -75,6 +84,12 @@ namespace Work.PSB.Code.Test
             {
                 Bus<TurnUseEvent>.Raise(new TurnUseEvent());
                 return;
+            }
+
+            if (isSpike)
+            {
+                TurnConsumeCommandSO turnCmd = Instantiate(turnConsumeCommand);
+                Bus<CommandEvent>.Raise(new CommandEvent(turnCmd));
             }
     
             if (blockToPush != null)
