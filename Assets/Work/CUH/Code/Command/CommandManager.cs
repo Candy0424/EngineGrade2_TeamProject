@@ -20,15 +20,17 @@ namespace Work.CUH.Code.Command
 
         private Queue<BaseCommandSO> _executionCommands;
         private Stack<BaseCommandSO> _undoCommands;
+        private Stack<BaseCommandSO> _tempStack;
         
         private void Awake()
         {
             _executionCommands = new Queue<BaseCommandSO>();
             _undoCommands = new Stack<BaseCommandSO>();
+            _tempStack = new Stack<BaseCommandSO>();
             Bus<CommandEvent>.OnEvent += HandleCommand;
             Bus<TurnUseEvent>.OnEvent += TurnUse;
         }
-
+        
         private void OnDestroy()
         {
             Bus<CommandEvent>.OnEvent -= HandleCommand;
@@ -45,9 +47,15 @@ namespace Work.CUH.Code.Command
             {
                 undo = true;
                 var command = _undoCommands.Pop();
-                command.Undo();
+                _tempStack.Push(command);
             }
 
+            while (_tempStack.Count > 0)
+            {
+                var command = _tempStack.Pop();
+                command.Undo();
+            }
+            
             if (undo)
             {
                 currentTurnCount--;
