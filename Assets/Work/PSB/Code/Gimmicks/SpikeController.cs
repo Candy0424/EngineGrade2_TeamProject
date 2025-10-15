@@ -85,7 +85,6 @@ namespace Work.PSB.Code.Test
                 command.Execute();    
             }
             _isFirst = false;
-            Debug.Log("Spike CommandEvent Use");
         }
         
         public void ToggleSpikeCommanded()
@@ -111,7 +110,6 @@ namespace Work.PSB.Code.Test
                 {
                     if (goingUp && _collider != null)
                         _collider.enabled = true;
-                    Debug.Log("Spike Toggle Complete");
                 });
         }
 
@@ -126,7 +124,6 @@ namespace Work.PSB.Code.Test
                 
                 TurnConsumeCommandSO turnCmd = Instantiate(turnConsumeCommand);
                 Bus<CommandEvent>.Raise(new CommandEvent(turnCmd));
-                Debug.Log("Spike Trigger CommandEvent Use");
                 
                 CreateEffect();
                 Debug.Log("플레이어 피격! 턴 1 소모");
