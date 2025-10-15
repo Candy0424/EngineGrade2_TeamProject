@@ -2,8 +2,16 @@
 
 namespace Work.CUH.Code.SwitchSystem
 {
-    public class Door : MonoBehaviour
+    public class Door : MonoBehaviour, IActivatable
     {
-        
+        public void Activate()
+        {
+            
+        }
+
+        public void Deactivate()
+        {
+            
+        }
     }
 }
