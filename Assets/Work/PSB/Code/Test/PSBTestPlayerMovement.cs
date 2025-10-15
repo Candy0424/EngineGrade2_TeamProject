@@ -11,7 +11,7 @@ namespace Work.PSB.Code.Test
     {
         [Header("Dependencies - DIP")]
         [SerializeField] private MonoBehaviour gridServiceMono;
-        private IGridDataService _gridService;
+        public IGridDataService gridService;
         private GridObjectBase _gridObject;
 
         private bool _isMoving = false;
@@ -33,7 +33,7 @@ namespace Work.PSB.Code.Test
         {
             if (gridServiceMono is IGridDataService service)
             {
-                _gridService = service;
+                gridService = service;
             }
             else
             {
@@ -54,7 +54,7 @@ namespace Work.PSB.Code.Test
             Vector3Int initGridPos = initWorldPos;
             initGridPos.y -= 1;
 
-            _gridService.SetObjectInitialPosition(_gridObject, initGridPos);
+            gridService.SetObjectInitialPosition(_gridObject, initGridPos);
             _gridObject.OnCellOccupied(initGridPos);
         }
 
@@ -71,7 +71,7 @@ namespace Work.PSB.Code.Test
 
             Vector3Int curPos = _gridObject.CurrentGridPosition;
 
-            if (_gridService.CanMoveTo(curPos, dir, out Vector3Int targetPos))
+            if (gridService.CanMoveTo(curPos, dir, out _))
             {
                 StartMoveLogic(input);
             }
@@ -111,7 +111,7 @@ namespace Work.PSB.Code.Test
             
             transform.position = finalWorldPos;
 
-            _gridService.UpdateObjectPosition(_gridObject, oldPos, targetPos);
+            gridService.UpdateObjectPosition(_gridObject, oldPos, targetPos);
 
             _isMoving = false;
         }
@@ -132,7 +132,7 @@ namespace Work.PSB.Code.Test
 
             if (CheckForStairs(direction)) return true;
 
-            if (_gridService.CanMoveTo(_gridObject.CurrentGridPosition, direction, out Vector3Int targetPos))
+            if (gridService.CanMoveTo(_gridObject.CurrentGridPosition, direction, out Vector3Int targetPos))
             {
                 StartCoroutine(MoveRoutine(targetPos));
                 return true;
@@ -148,7 +148,7 @@ namespace Work.PSB.Code.Test
         private bool CheckForStairs(Vector3Int dir)
         {
             Vector3 startPos = _gridObject.CurrentGridPosition;
-            Vector3 dirVec3 = (Vector3)dir;
+            Vector3 dirVec3 = dir;
 
             Vector3 fixedDirection = -dirVec3;
 
@@ -167,7 +167,7 @@ namespace Work.PSB.Code.Test
 
         private void TeleportToFloor(Vector3Int targetPos)
         {
-            _gridService.UpdateObjectPosition(_gridObject, _gridObject.CurrentGridPosition, targetPos);
+            gridService.UpdateObjectPosition(_gridObject, _gridObject.CurrentGridPosition, targetPos);
         }
 
         #endregion
