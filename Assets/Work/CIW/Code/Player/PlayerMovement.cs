@@ -39,6 +39,7 @@ namespace Work.CIW.Code.Player
 
         bool _isMoving = false;
         bool _hasArrived = false;
+        bool _isChangingFloor = false;
 
         [Header("Movement")]
         [SerializeField] float moveTime = 0.15f;
@@ -97,6 +98,7 @@ namespace Work.CIW.Code.Player
         public void HandleInput(Vector2 input)
         {
             if (_hasArrived) return;
+            //if (_isChangingFloor) return;
 
             StartMoveLogic(input);
 
@@ -187,36 +189,83 @@ namespace Work.CIW.Code.Player
 
         private bool CheckForStairs(Vector3Int dir)
         {
-            //Vector3 startPos = _gridObject.CurrentGridPosition;
-            //Vector3 dirVec3 = (Vector3)dir;
+            Vector3Int targetGridPos = _gridObject.CurrentGridPosition + dir;
+            Vector3 boxCenter = new Vector3(targetGridPos.x, targetGridPos.y + 0.5f, targetGridPos.z);
+            Vector3 boxHalfExtents = new Vector3(0.49f, 0.49f, 0.49f);
 
-            //Vector3 fixedDirection = -dirVec3;
+            Collider[] hits = Physics.OverlapBox(boxCenter, boxHalfExtents, Quaternion.identity, whatIsStair);
 
-            Vector3 rayOrigin = new Vector3(_gridObject.CurrentGridPosition.x, _gridObject.CurrentGridPosition.y + 0.1f, _gridObject.CurrentGridPosition.z);
-            Vector3 dirVec3 = (Vector3)dir;
-            Vector3 fixedDirection = -dirVec3;
-
-            Debug.DrawRay(rayOrigin, fixedDirection * stairChkDistance, Color.red, 1.0f);
-
-            if (Physics.Raycast(rayOrigin, fixedDirection, out RaycastHit hit, stairChkDistance, whatIsStair))
+            if (hits.Length > 0)
             {
                 Debug.Log("Stair 감지");
 
-                if (hit.collider.TryGetComponent(out StairTrigger stair))
+                if (hits[0].TryGetComponent(out StairTrigger stair))
                 {
-                    Vector3Int targetGridPos = new Vector3Int(_gridObject.CurrentGridPosition.x, stair.GetTargetY(), _gridObject.CurrentGridPosition.z);
+                    Vector3Int teleportPos = new Vector3Int(_gridObject.CurrentGridPosition.x, stair.GetTargetY(), _gridObject.CurrentGridPosition.z);
 
-                    TeleportToFloor(targetGridPos);
+                    TeleportToFloor(teleportPos, dir);
+
                     return true;
                 }
             }
+
             return false;
+
+            //Vector3 targetGridPos = _gridObject.CurrentGridPosition + dir;
+
+            //Vector3 rayOrigin = new Vector3(targetGridPos.x, targetGridPos.y + 1f, targetGridPos.z);
+            //Vector3 rayDirection = Vector3.down;
+
+            //float maxDistance = 2f;
+
+            //if (Physics.Raycast(rayOrigin, rayDirection, out RaycastHit hit, maxDistance, whatIsStair))
+            //{
+            //    Debug.DrawRay(rayOrigin, rayDirection * maxDistance, Color.red, 1.0f);
+            //    Debug.Log("Stair 감지");
+
+            //    if (hit.collider.TryGetComponent(out StairTrigger stair))
+            //    {
+            //        Vector3Int targetFloorPos = new Vector3Int(_gridObject.CurrentGridPosition.x, stair.GetTargetY(), _gridObject.CurrentGridPosition.z);
+            //        Vector3Int teleportPos = new Vector3Int(_gridObject.CurrentGridPosition.x, stair.GetTargetY(), _gridObject.CurrentGridPosition.z);
+
+            //        TeleportToFloor(teleportPos, dir);
+
+            //        return true;
+            //    }
+
+            //}
+
+            //return false;
+
         }
 
-        private void TeleportToFloor(Vector3Int targetPos)
+        private void TeleportToFloor(Vector3Int targetPos, Vector3Int dir)
         {
-            _gridService.UpdateObjectPosition(_gridObject, _gridObject.CurrentGridPosition, targetPos);
-            Debug.Log("텔포 시킴");
+            Vector3Int oldPos = _gridObject.CurrentGridPosition;
+            _gridService.UpdateObjectPosition(_gridObject, oldPos, targetPos);
+
+            float targetWorldY = targetPos.y + 1f;
+            Vector3 finalWorldPos = new Vector3(targetPos.x, targetWorldY, targetPos.z);
+            transform.position = finalWorldPos;
+
+            Debug.Log($"텔포 시킴. 현재 위치는 {_gridObject.CurrentGridPosition}");
+
+            Vector3Int newTargetPos = targetPos + dir;
+
+            if (_gridService.CanMoveTo(targetPos, dir, out Vector3Int finalMovePos))
+            {
+                _gridService.UpdateObjectPosition(_gridObject, targetPos, finalMovePos);
+
+                float finalWorldY = finalMovePos.y + 1f;
+                Vector3 finalFinalWorldPos = new Vector3(finalMovePos.x, finalWorldY, finalMovePos.z);
+                transform.position = finalFinalWorldPos;
+
+                Debug.Log($"텔포 후 강제 이동. 최종 위치는 {_gridObject.CurrentGridPosition}");
+            }
+            else
+            {
+                Debug.LogWarning("텔레포트 후 강제 이동 실패. 다음 칸이 막혀있거나 경계 밖. 계단에 남아있을 수 있습니다.");
+            }
         }
 
         private bool CheckForArrival(Vector3Int dir)
