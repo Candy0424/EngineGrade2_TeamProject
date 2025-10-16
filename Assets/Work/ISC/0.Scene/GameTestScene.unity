@@ -1165,7 +1165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b99a56b7ed9d4e27ad7fa57e000bb8cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentTurnCount: 0
+  leftUndoCount: 0
 --- !u!4 &746091141
 Transform:
   m_ObjectHideFlags: 0
@@ -1555,7 +1555,6 @@ MonoBehaviour:
   easeType: 6
   startRaised: 1
   spikeCommand: {fileID: 0}
-  turnConsumeCommand: {fileID: 0}
   bloodEffect: {fileID: 0}
 --- !u!54 &899237240
 Rigidbody:
@@ -2743,6 +2742,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2864075b7432f864bbaa69e5e6809296, type: 3}
+--- !u!1001 &1418422105
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 533511785826925564, guid: 0463fc9c3e05c7e41ada7e3bfb6e1deb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.029
+      objectReference: {fileID: 0}
+    - target: {fileID: 533511785826925564, guid: 0463fc9c3e05c7e41ada7e3bfb6e1deb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 533511785826925564, guid: 0463fc9c3e05c7e41ada7e3bfb6e1deb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.879
+      objectReference: {fileID: 0}
+    - target: {fileID: 533511785826925564, guid: 0463fc9c3e05c7e41ada7e3bfb6e1deb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 533511785826925564, guid: 0463fc9c3e05c7e41ada7e3bfb6e1deb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 533511785826925564, guid: 0463fc9c3e05c7e41ada7e3bfb6e1deb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 533511785826925564, guid: 0463fc9c3e05c7e41ada7e3bfb6e1deb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 533511785826925564, guid: 0463fc9c3e05c7e41ada7e3bfb6e1deb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 533511785826925564, guid: 0463fc9c3e05c7e41ada7e3bfb6e1deb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 533511785826925564, guid: 0463fc9c3e05c7e41ada7e3bfb6e1deb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 877281124584448326, guid: 0463fc9c3e05c7e41ada7e3bfb6e1deb, type: 3}
+      propertyPath: m_Name
+      value: Character
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0463fc9c3e05c7e41ada7e3bfb6e1deb, type: 3}
 --- !u!1 &1501156627
 GameObject:
   m_ObjectHideFlags: 0
@@ -3058,7 +3114,6 @@ MonoBehaviour:
   easeType: 6
   startRaised: 0
   spikeCommand: {fileID: 0}
-  turnConsumeCommand: {fileID: 0}
   bloodEffect: {fileID: 0}
 --- !u!54 &1540239812
 Rigidbody:
@@ -4034,7 +4089,6 @@ MonoBehaviour:
   easeType: 6
   startRaised: 0
   spikeCommand: {fileID: 0}
-  turnConsumeCommand: {fileID: 0}
   bloodEffect: {fileID: 0}
 --- !u!54 &1861367931
 Rigidbody:
@@ -4527,6 +4581,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <InputSO>k__BackingField: {fileID: 11400000, guid: 50aa76c636a6be64ba2ef49f7e560820, type: 2}
   moveCommand: {fileID: 11400000, guid: 9ec45ea6ee1f3154bb41b5ae0585e6e6, type: 2}
+  turnConsumeCommand: {fileID: 0}
 --- !u!114 &1953696882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4541,10 +4596,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridServiceMono: {fileID: 85991417}
   moveTime: 0.15
-  stairChkDistance: 0.9
   whatIsStair:
     serializedVersion: 2
     m_Bits: 128
+  whatIsArrival:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!54 &1953696883
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5078,7 +5135,6 @@ MonoBehaviour:
   easeType: 6
   startRaised: 0
   spikeCommand: {fileID: 0}
-  turnConsumeCommand: {fileID: 0}
   bloodEffect: {fileID: 0}
 --- !u!54 &5663288892766454197
 Rigidbody:
@@ -5306,3 +5362,4 @@ SceneRoots:
   - {fileID: 894760160}
   - {fileID: 608081340}
   - {fileID: 39405764}
+  - {fileID: 1418422105}
