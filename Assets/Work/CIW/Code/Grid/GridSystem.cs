@@ -18,6 +18,9 @@ namespace Work.CIW.Code.Grid
         [SerializeField] private Vector3Int gridCenter = new Vector3Int(0, 0, 0);
         [SerializeField] Vector3Int gridSize = new Vector3Int(10, 10, 10);
         [SerializeField] List<Transform> gridParent; // ���� Cell���� ��ġ�� �θ� ������Ʈ
+        [SerializeField] GameObject cellObjPrefab;
+        [SerializeField] Vector3 gridStartWorldPosition = Vector3.zero;
+        float _cellSize = 1f;
 
         [Header("Movement Check Data")]
         [SerializeField] LayerMask whatIsWalkable;
@@ -45,7 +48,25 @@ namespace Work.CIW.Code.Grid
                 Debug.LogError("ITurnService dependency not met. Assign TurnSystemAdapter to turnServiceMono.");
             }
 
+            InitializeCellSize();
             InitializeGrid();
+        }
+
+        /// <summary>
+        /// Cell 프리팹의 크기를 기반으로 Grid의 셀 크기 계산
+        /// </summary>
+        private void InitializeCellSize()
+        {
+            if (cellObjPrefab == null)
+            {
+                Debug.LogError("Cell Prefab 빼먹었다 멍청한 놈아");
+                return;
+            }
+
+            Debug.Log($"Calculated Cell Size : {_cellSize}");
+
+            gridStartWorldPosition = Vector3.zero;
+            //gridStartWorldPosition = new Vector3(_cellSize / 2f, 0f, _cellSize / 2f);
         }
 
         // �� �ʱ�ȭ -> �� gridCell���� 3���� ������ ��ġ
@@ -58,18 +79,26 @@ namespace Work.CIW.Code.Grid
 
             foreach (Transform parent in gridParent)
             {
-                int floorY = Mathf.RoundToInt(parent.position.y);
+                float currentFloorY = parent.position.y;
 
                 for (int x = 0; x < gridSize.x; x++)
                 {
                     for (int z = 0; z < gridSize.z; z++)
                     {
-                        Vector3Int pos = new Vector3Int(startX + x, floorY, startZ + z);
+                        Vector3Int pos = new Vector3Int(startX + x, Mathf.RoundToInt(currentFloorY), startZ + z);
 
-                        Vector3 worldPos = new Vector3((float)pos.x, (float)pos.y, (float)pos.z);
+                        float worldX = pos.x * _cellSize;
+                        float worldY = currentFloorY + gridStartWorldPosition.y;
+                        float worldZ = pos.z * _cellSize;
 
-                        GridCell newCell = Instantiate(cellPrefab, worldPos, Quaternion.identity);
-                        newCell.transform.SetParent(parent, true);
+                        Vector3 worldPos = new Vector3(worldX, worldY, worldZ);
+
+                        Quaternion rotation = Quaternion.Euler(-90f, 0f, 0f);
+
+                        GameObject visualObj = Instantiate(cellObjPrefab, worldPos, rotation);
+                        visualObj.transform.SetParent(parent, true);
+
+                        GridCell newCell = visualObj.AddComponent<GridCell>();
 
                         newCell.InitializeCoodinates(pos);
 
@@ -86,40 +115,6 @@ namespace Work.CIW.Code.Grid
             }
 
             Debug.Log($"Grid Initialized: {_gridMap.Count} cells created across {gridParent.Count} floor(s).");
-
-            //_gridMap = new Dictionary<Vector3Int, GridCell>();
-
-            //int startX = gridCenter.x - (gridSize.x / 2);
-            //int startZ = gridCenter.z - (gridSize.z / 2);
-
-            //foreach (Transform parent in gridParent)
-            //{
-            //    int floorY = Mathf.RoundToInt(parent.position.y);
-
-            //    for (int x = 0; x < gridSize.x; x++)
-            //    {
-            //        for (int z = 0; z < gridSize.z; z++)
-            //        {
-            //            Vector3Int pos = new Vector3Int(startX + x, floorY, startZ + z);
-            //            Vector3 worldPos = new Vector3(pos.x, pos.y, pos.z);
-
-            //            GridCell newCell = Instantiate(cellPrefab, worldPos, Quaternion.identity);
-            //            newCell.transform.SetParent(parent, true);
-            //            newCell.InitializeCoodinates(pos);
-
-            //            if (!_gridMap.ContainsKey(pos))
-            //            {
-            //                _gridMap.Add(pos, newCell);
-            //            }
-            //            else
-            //            {
-            //                Debug.LogWarning($"Duplicate cell position found at {pos}. Skipping.");
-            //            }
-            //        }
-            //    }
-            //}
-
-            //Debug.Log($"Grid Initialized: {_gridMap.Count} cells created across {gridParent.Count} floor(s).");
         }
 
         #region I Grid Data Service ����
@@ -220,7 +215,7 @@ namespace Work.CIW.Code.Grid
                 movingObj.OnCellOccupied(newPos);
             }
             else
-            {
+            {   
                 Debug.LogError($"[GridSystem] Target position {newPos} is not a valid cell in the grid map!");
             }
         }
