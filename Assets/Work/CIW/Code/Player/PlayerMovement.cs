@@ -232,33 +232,6 @@ namespace Work.CIW.Code.Player
             }
 
             return false;
-
-            //Vector3 targetGridPos = _gridObject.CurrentGridPosition + dir;
-
-            //Vector3 rayOrigin = new Vector3(targetGridPos.x, targetGridPos.y + 1f, targetGridPos.z);
-            //Vector3 rayDirection = Vector3.down;
-
-            //float maxDistance = 2f;
-
-            //if (Physics.Raycast(rayOrigin, rayDirection, out RaycastHit hit, maxDistance, whatIsStair))
-            //{
-            //    Debug.DrawRay(rayOrigin, rayDirection * maxDistance, Color.red, 1.0f);
-            //    Debug.Log("Stair 감지");
-
-            //    if (hit.collider.TryGetComponent(out StairTrigger stair))
-            //    {
-            //        Vector3Int targetFloorPos = new Vector3Int(_gridObject.CurrentGridPosition.x, stair.GetTargetY(), _gridObject.CurrentGridPosition.z);
-            //        Vector3Int teleportPos = new Vector3Int(_gridObject.CurrentGridPosition.x, stair.GetTargetY(), _gridObject.CurrentGridPosition.z);
-
-            //        TeleportToFloor(teleportPos, dir);
-
-            //        return true;
-            //    }
-
-            //}
-
-            //return false;
-
         }
 
         private void TeleportToFloor(Vector3Int targetPos, Vector3Int dir)
@@ -279,12 +252,11 @@ namespace Work.CIW.Code.Player
                 effectiveDir.z *= -1;
             }
 
-            //Vector3Int newTargetPos = targetPos + dir;
 
             if (_gridService.CanMoveTo(targetPos, effectiveDir, out Vector3Int finalMovePos))
             {
                 _gridService.UpdateObjectPosition(_gridObject, targetPos, finalMovePos);
-
+                    
                 float finalWorldY = finalMovePos.y;
                 Vector3 finalFinalWorldPos = new Vector3(finalMovePos.x, finalWorldY, finalMovePos.z);
                 transform.position = finalFinalWorldPos;
