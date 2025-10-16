@@ -83,13 +83,22 @@ namespace Work.CIW.Code.Player
 
         protected void Start()
         {
-            Vector3Int initWorldPos = Vector3Int.RoundToInt(transform.position);
+            Vector3 curWorldPos = transform.position;
+            Vector3Int initGridPos = new Vector3Int(Mathf.RoundToInt(curWorldPos.x), Mathf.RoundToInt(curWorldPos.y) - 1, Mathf.RoundToInt(curWorldPos.z));
 
-            Vector3Int initGridPos = initWorldPos;
-            initGridPos.y = initGridPos.y - 1;
-
+            _gridObject.CurrentGridPosition = initGridPos;
             _gridService.SetObjectInitialPosition(_gridObject, initGridPos);
             _gridObject.OnCellOccupied(initGridPos);
+
+            transform.position = new Vector3(initGridPos.x, initGridPos.y + 1f, initGridPos.z);
+
+            //Vector3Int initWorldPos = Vector3Int.RoundToInt(transform.position);
+
+            //Vector3Int initGridPos = initWorldPos;
+            //initGridPos.y = initGridPos.y - 1;
+
+            //_gridService.SetObjectInitialPosition(_gridObject, initGridPos);
+            //_gridObject.OnCellOccupied(initGridPos);
         }
 
         #region Player Movement

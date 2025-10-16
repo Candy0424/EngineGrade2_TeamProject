@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Work.CUH.Code.Commandable;
+using Work.CUH.Code.SwitchSystem;
 
 namespace Work.CUH.Code.Commands
 {
@@ -14,13 +14,13 @@ namespace Work.CUH.Code.Commands
         public override void Execute()
         {
             ISwitch iSwitch = Commandable as ISwitch;
-            iSwitch.Activate();
+            iSwitch.SwitchOn();
         }
 
         public override void Undo()
         {
             ISwitch iSwitch = Commandable as ISwitch;
-            iSwitch.UnActivate();
+            iSwitch.SwitchOff();
         }
     }
 }
