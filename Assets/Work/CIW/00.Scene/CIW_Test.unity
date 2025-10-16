@@ -373,7 +373,7 @@ Transform:
   m_GameObject: {fileID: 534531592}
   serializedVersion: 2
   m_LocalRotation: {x: 0.60876137, y: 0, z: 0, w: 0.7933534}
-  m_LocalPosition: {x: -3, y: 16.807108, z: -7.5034533}
+  m_LocalPosition: {x: 0, y: 16.80711, z: -4.5034537}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -612,6 +612,8 @@ MonoBehaviour:
   gridParent:
   - {fileID: 2117554529}
   - {fileID: 1639101466}
+  cellObjPrefab: {fileID: 3270377010408336698, guid: 6c197db2159a050419b8ca3a6203f48e, type: 3}
+  gridStartWorldPosition: {x: 0, y: 0, z: 0}
   whatIsWalkable:
     serializedVersion: 2
     m_Bits: 64
@@ -844,7 +846,7 @@ Transform:
   m_GameObject: {fileID: 1606634153}
   serializedVersion: 2
   m_LocalRotation: {x: 0.60876137, y: 0, z: 0, w: 0.7933534}
-  m_LocalPosition: {x: -3, y: 16.807108, z: -7.5034533}
+  m_LocalPosition: {x: 0, y: 16.80711, z: -4.5034537}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1383,7 +1385,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5450244953140444539, guid: ac6bdc6037952b04ba1205a4774962f4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5450244953140444539, guid: ac6bdc6037952b04ba1205a4774962f4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1391,7 +1393,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5450244953140444539, guid: ac6bdc6037952b04ba1205a4774962f4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5450244953140444539, guid: ac6bdc6037952b04ba1205a4774962f4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1498,6 +1500,10 @@ PrefabInstance:
     - target: {fileID: 3270377010408336698, guid: 6c197db2159a050419b8ca3a6203f48e, type: 3}
       propertyPath: m_Name
       value: Cell
+      objectReference: {fileID: 0}
+    - target: {fileID: 3270377010408336698, guid: 6c197db2159a050419b8ca3a6203f48e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4930777019254005616, guid: 6c197db2159a050419b8ca3a6203f48e, type: 3}
       propertyPath: m_LocalPosition.x
