@@ -39,13 +39,13 @@ namespace Work.CIW.Code.Player
 
         bool _isMoving = false;
         bool _hasArrived = false;
-        bool _isChangingFloor = false;
+        //bool _isChangingFloor = false;
 
         [Header("Movement")]
         [SerializeField] float moveTime = 0.15f;
 
         [Header("Stair Collision Setting")]
-        [SerializeField] float stairChkDistance = 1.01f;
+        //[SerializeField] float stairChkDistance = 1.01f;
         [SerializeField] LayerMask whatIsStair;
 
         [SerializeField] LayerMask whatIsArrival;
@@ -84,13 +84,13 @@ namespace Work.CIW.Code.Player
         protected void Start()
         {
             Vector3 curWorldPos = transform.position;
-            Vector3Int initGridPos = new Vector3Int(Mathf.RoundToInt(curWorldPos.x), Mathf.RoundToInt(curWorldPos.y) - 1, Mathf.RoundToInt(curWorldPos.z));
+            Vector3Int initGridPos = new Vector3Int(Mathf.RoundToInt(curWorldPos.x), Mathf.RoundToInt(curWorldPos.y), Mathf.RoundToInt(curWorldPos.z));
 
             _gridObject.CurrentGridPosition = initGridPos;
             _gridService.SetObjectInitialPosition(_gridObject, initGridPos);
             _gridObject.OnCellOccupied(initGridPos);
 
-            transform.position = new Vector3(initGridPos.x, initGridPos.y + 1f, initGridPos.z);
+            transform.position = new Vector3(initGridPos.x, initGridPos.y, initGridPos.z);
 
             //Vector3Int initWorldPos = Vector3Int.RoundToInt(transform.position);
 
@@ -140,12 +140,12 @@ namespace Work.CIW.Code.Player
             _isMoving = true;
             Vector3Int oldPos = _gridObject.CurrentGridPosition;
 
-            float startWorldY = oldPos.y + 1f;
+            float startWorldY = oldPos.y;
             Vector3 start = new Vector3(oldPos.x, startWorldY, oldPos.z);
 
             transform.position = start;
 
-            float targetWorldY = targetPos.y + 1f;
+            float targetWorldY = targetPos.y;
             Vector3 finalWorldPos = new Vector3(targetPos.x, targetWorldY, targetPos.z);
 
             float elapsed = 0f;
@@ -161,6 +161,11 @@ namespace Work.CIW.Code.Player
 
             // GridSystem에 오프셋이 없는 순수한 Grid 좌표(targetPos)를 전달
             _gridService.UpdateObjectPosition(_gridObject, oldPos, targetPos);
+            //if (transform.position.y != targetPos.y)
+            //{
+            //    transform.position = new Vector3(finalWorldPos.x, targetPos.y, finalWorldPos.z);
+            //    Debug.LogWarning($"[Y CORRECTION] GridObjectBase overrode Y position. Reverted to Y={targetPos.y}.");
+            //}
 
             _isMoving = false;
         }
@@ -185,6 +190,14 @@ namespace Work.CIW.Code.Player
 
             if (_gridService.CanMoveTo(_gridObject.CurrentGridPosition, direction, out Vector3Int targetPos))
             {
+                Vector3 worldDirection = new Vector3(direction.x, 0, direction.z);
+
+                if (worldDirection != Vector3.zero)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(worldDirection, Vector3.up);
+                    transform.rotation = targetRotation;
+                }
+
                 StartCoroutine(MoveRoutine(targetPos));
                 return true;
             }
@@ -253,19 +266,26 @@ namespace Work.CIW.Code.Player
             Vector3Int oldPos = _gridObject.CurrentGridPosition;
             _gridService.UpdateObjectPosition(_gridObject, oldPos, targetPos);
 
-            float targetWorldY = targetPos.y + 1f;
+            float targetWorldY = targetPos.y;
             Vector3 finalWorldPos = new Vector3(targetPos.x, targetWorldY, targetPos.z);
             transform.position = finalWorldPos;
 
             Debug.Log($"텔포 시킴. 현재 위치는 {_gridObject.CurrentGridPosition}");
 
-            Vector3Int newTargetPos = targetPos + dir;
+            Vector3Int effectiveDir = dir;
+            if (dir.y < 0)
+            {
+                effectiveDir.x *= -1;
+                effectiveDir.z *= -1;
+            }
 
-            if (_gridService.CanMoveTo(targetPos, dir, out Vector3Int finalMovePos))
+            //Vector3Int newTargetPos = targetPos + dir;
+
+            if (_gridService.CanMoveTo(targetPos, effectiveDir, out Vector3Int finalMovePos))
             {
                 _gridService.UpdateObjectPosition(_gridObject, targetPos, finalMovePos);
 
-                float finalWorldY = finalMovePos.y + 1f;
+                float finalWorldY = finalMovePos.y;
                 Vector3 finalFinalWorldPos = new Vector3(finalMovePos.x, finalWorldY, finalMovePos.z);
                 transform.position = finalFinalWorldPos;
 

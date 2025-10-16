@@ -164,13 +164,25 @@ namespace Work.CIW.Code.Grid
                 return false;
             }
 
-            Vector3 startPos = curPos;
+            Vector3 rayOrigin = new Vector3(targetPos.x, targetPos.y + 0.5f, targetPos.z);
+            Vector3 rayDir = Vector3.down;
+            float maxDistance = targetPos.y + 6f;
+            //Vector3 startPos = curPos;
 
             // ���� ĭ���� �̵����� �� ���� ��� ������ �ִ°�?
-            if (Physics.Raycast(startPos, dir, out RaycastHit hit, raycastDistance, whatIsWalkable))
+            if (Physics.Raycast(rayOrigin, rayDir, out RaycastHit hit, maxDistance, whatIsWalkable))
             {
                 //Debug.Log($"[GRID CHECK] SUCCESS! Raycast hit: {hit.collider.gameObject.name}. Move is approved.");
-                return true;
+
+                if (Mathf.Abs(hit.point.y - targetPos.y) < 0.1f)
+                {
+                    return true;
+                }
+                else
+                {
+                    Debug.LogWarning($"[GRID CHECK] FAILED (4a): Raycast hit an object at Y={hit.point.y}, but expected Y={targetPos.y}.");
+                    return false;
+                }
             }
 
             Debug.LogWarning($"[GRID CHECK] FAILED (4): Raycast failed to hit 'whatIsWalkable' ground at {targetPos}. Check LayerMask!");
