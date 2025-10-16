@@ -4,10 +4,11 @@ namespace Work.CUH.Code.SwitchSystem
 {
     public interface ISwitch
     {
-        bool isActive { get; }
-        event Action<bool> OnSwitchChanged;
+        bool IsActive { get; }
         
-        void SwitchOn();
-        void SwitchOff();
+        IActivatable activatable { get; }
+        
+        void ToggleSwitch();
+        void UndoSwitch();
     }
 }

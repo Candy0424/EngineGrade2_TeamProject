@@ -3,8 +3,8 @@ using Work.CUH.Code.SwitchSystem;
 
 namespace Work.CUH.Code.Commands
 {
-    [CreateAssetMenu(fileName = "FILENAME", menuName = "SO/Commands/Operate", order = 0)]
-    public class OperateCommandSO : BaseCommandSO
+    [CreateAssetMenu(fileName = "SwitchCommandSO", menuName = "SO/Commands/Switch", order = 0)]
+    public class SwitchCommandSO : BaseCommandSO
     {
         public override bool CanExecute()
         {
@@ -14,13 +14,13 @@ namespace Work.CUH.Code.Commands
         public override void Execute()
         {
             ISwitch iSwitch = Commandable as ISwitch;
-            iSwitch.SwitchOn();
+            iSwitch.ToggleSwitch();
         }
 
         public override void Undo()
         {
             ISwitch iSwitch = Commandable as ISwitch;
-            iSwitch.SwitchOff();
+            iSwitch.UndoSwitch();
         }
     }
 }

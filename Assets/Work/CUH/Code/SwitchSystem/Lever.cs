@@ -7,20 +7,34 @@ namespace Work.CUH.Code.SwitchSystem
 {
     public class Lever : GridObjectBase, ICommandable, ISwitch
     {
-        public bool isActive { get; private set; }
         
-        public event Action<bool> OnSwitchChanged;
-        
-        public void SwitchOn()
+        public bool IsActive
         {
-            isActive = !isActive;
+            get => _isActive;
+            private set
+            {
+                _isActive = value;
+                if (_isActive) activatable.Activate();
+                else activatable.Deactivate();
+            }
+        }
+        
+        public IActivatable activatable { get; private set; }
+        
+        private bool _isActive;
+        
+        public void ToggleSwitch()
+        {
+            IsActive = !IsActive;
         }
 
-        public void SwitchOff()
+        public void UndoSwitch()
         {
-            isActive = !isActive;
+            IsActive = !IsActive;
         }
-
+        
+        #region Grid
+        
         public override Vector3Int CurrentGridPosition { get; set; }
         public override void OnCellDeoccupied()
         {
@@ -29,5 +43,8 @@ namespace Work.CUH.Code.SwitchSystem
         public override void OnCellOccupied(Vector3Int newPos)
         {
         }
+        
+        #endregion
+
     }
 }
