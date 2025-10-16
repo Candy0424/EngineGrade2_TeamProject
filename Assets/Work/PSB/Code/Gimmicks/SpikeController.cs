@@ -44,8 +44,7 @@ namespace Work.PSB.Code.Test
             if (spikeObject != null)
             {
                 _startPos = spikeObject.transform.localPosition;
-                //_raisedPos = _startPos + Vector3.back * moveDistance;
-                _raisedPos = _startPos + Vector3.up * moveDistance;
+                _raisedPos = _startPos + Vector3.back * moveDistance;
             }
 
             _collider = spikeObject.GetComponent<Collider>();
@@ -54,7 +53,7 @@ namespace Work.PSB.Code.Test
         private void Start()
         {
             _isRaised = startRaised;
-            spikeObject.transform.localPosition = _isRaised ? _raisedPos : _startPos;
+            spikeObject.transform.localPosition = _isRaised ? _startPos : _raisedPos;
             
             if (_collider != null)
                 _collider.enabled = _isRaised;
@@ -93,7 +92,7 @@ namespace Work.PSB.Code.Test
             _currentTween?.Kill();
 
             bool goingUp = !_isRaised;
-            Vector3 targetPos = goingUp ? _raisedPos : _startPos;
+            Vector3 targetPos = goingUp ? _startPos : _raisedPos;
 
             if (!goingUp && _collider != null)
                 _collider.enabled = false;
