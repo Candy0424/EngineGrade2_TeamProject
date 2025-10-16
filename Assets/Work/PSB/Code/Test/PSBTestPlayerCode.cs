@@ -74,7 +74,6 @@ namespace Work.PSB.Code.Test
                         Collider childCollider = child.GetComponent<Collider>();
                         if (childCollider != null && !childCollider.enabled)
                         {
-                            Debug.Log($"Spike 감지됨: {child.name}");
                             isSpike = true;
                             break;
                         }
@@ -96,7 +95,6 @@ namespace Work.PSB.Code.Test
 
             if (isSpike)
             {
-                Debug.Log("isSpike");
                 TurnConsumeCommandSO turnCmd = Instantiate(turnConsumeCommand);
                 Bus<CommandEvent>.Raise(new CommandEvent(turnCmd));
             }
