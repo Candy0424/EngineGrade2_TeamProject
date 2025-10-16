@@ -65,12 +65,14 @@ namespace Work.CIW.Code.Grid
                     for (int z = 0; z < gridSize.z; z++)
                     {
                         Vector3Int pos = new Vector3Int(startX + x, floorY, startZ + z);
-                        Vector3 worldPos = new Vector3(pos.x, pos.y, pos.z);
+
+                        Vector3 worldPos = new Vector3((float)pos.x, (float)pos.y, (float)pos.z);
 
                         GridCell newCell = Instantiate(cellPrefab, worldPos, Quaternion.identity);
                         newCell.transform.SetParent(parent, true);
+
                         newCell.InitializeCoodinates(pos);
-                        
+
                         if (!_gridMap.ContainsKey(pos))
                         {
                             _gridMap.Add(pos, newCell);
@@ -85,29 +87,39 @@ namespace Work.CIW.Code.Grid
 
             Debug.Log($"Grid Initialized: {_gridMap.Count} cells created across {gridParent.Count} floor(s).");
 
-            //int startX = gridCenter.x + -(gridSize.x / 2);
-            //int startY = gridCenter.y + -(gridSize.y / 2);
-            //int startZ = gridCenter.z + -(gridSize.z / 2);
+            //_gridMap = new Dictionary<Vector3Int, GridCell>();
 
-            //for (int x = 0; x < gridSize.x; x++)
+            //int startX = gridCenter.x - (gridSize.x / 2);
+            //int startZ = gridCenter.z - (gridSize.z / 2);
+
+            //foreach (Transform parent in gridParent)
             //{
-            //    for (int y = 0; y < gridSize.y; y++)
+            //    int floorY = Mathf.RoundToInt(parent.position.y);
+
+            //    for (int x = 0; x < gridSize.x; x++)
             //    {
             //        for (int z = 0; z < gridSize.z; z++)
             //        {
-            //            Vector3Int pos = new Vector3Int(startX + x, startY + y, startZ + z);
+            //            Vector3Int pos = new Vector3Int(startX + x, floorY, startZ + z);
             //            Vector3 worldPos = new Vector3(pos.x, pos.y, pos.z);
 
-            //            // �̰� ���߿� ������Ʈ Ǯ������ �ٲ��ٰ���
-            //            GridCell newCell = Instantiate(cellPrefab, worldPos, Quaternion.identity, gridParent);
-
+            //            GridCell newCell = Instantiate(cellPrefab, worldPos, Quaternion.identity);
+            //            newCell.transform.SetParent(parent, true);
             //            newCell.InitializeCoodinates(pos);
-            //            _gridMap.Add(pos, newCell);
+
+            //            if (!_gridMap.ContainsKey(pos))
+            //            {
+            //                _gridMap.Add(pos, newCell);
+            //            }
+            //            else
+            //            {
+            //                Debug.LogWarning($"Duplicate cell position found at {pos}. Skipping.");
+            //            }
             //        }
             //    }
             //}
 
-            //Debug.Log($"Grid Initialized: {_gridMap.Count} cells created.");
+            //Debug.Log($"Grid Initialized: {_gridMap.Count} cells created across {gridParent.Count} floor(s).");
         }
 
         #region I Grid Data Service ����
