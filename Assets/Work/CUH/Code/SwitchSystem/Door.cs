@@ -1,11 +1,14 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Work.CIW.Code.Grid;
 
 namespace Work.CUH.Code.SwitchSystem
 {
     public class Door : GridObjectBase, IActivatable
     {
+        [SerializeField] private GameObject onVisual;
+        [SerializeField] private GameObject offVisual;
         
         private Collider _collider;
 
@@ -17,11 +20,15 @@ namespace Work.CUH.Code.SwitchSystem
         public void Activate()
         {
             _collider.enabled = false;
+            onVisual.SetActive(false);
+            offVisual.SetActive(true);
         }
 
         public void Deactivate()
         {
             _collider.enabled = true;
+            offVisual.SetActive(false);
+            onVisual.SetActive(true);
         }
         
         #region Grid

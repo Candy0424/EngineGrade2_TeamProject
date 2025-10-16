@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Work.CIW.Code.Grid;
 using Work.CUH.Code.Commands;
 
@@ -7,6 +8,20 @@ namespace Work.CUH.Code.SwitchSystem
 {
     public class Lever : GridObjectBase, ICommandable, ISwitch
     {
+        [SerializeField] private GameObject operateObject;
+        
+        public GameObject activeObject
+        {
+            get => operateObject;
+            private set
+            {
+                if (operateObject.TryGetComponent(out IActivatable activate))
+                {
+                    operateObject = value;
+                    activatable = activate;
+                }
+            }
+        }
         
         public bool IsActive
         {
@@ -14,7 +29,7 @@ namespace Work.CUH.Code.SwitchSystem
             private set
             {
                 _isActive = value;
-                if (_isActive) activatable.Activate();
+                if (!_isActive) activatable.Activate();
                 else activatable.Deactivate();
             }
         }
@@ -23,6 +38,7 @@ namespace Work.CUH.Code.SwitchSystem
         
         private bool _isActive;
         
+        [ContextMenu("Activate")]
         public void ToggleSwitch()
         {
             IsActive = !IsActive;
@@ -46,5 +62,19 @@ namespace Work.CUH.Code.SwitchSystem
         
         #endregion
 
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (operateObject.TryGetComponent(out IActivatable activate))
+            {
+                activeObject = operateObject;
+            }
+            else
+            {
+                operateObject = null;
+                Debug.LogError("This Object is not ActivateObject");
+            }
+        }
+#endif
     }
 }
