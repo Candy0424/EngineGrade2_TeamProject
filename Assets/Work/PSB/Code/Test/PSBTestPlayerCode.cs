@@ -66,11 +66,19 @@ namespace Work.PSB.Code.Test
                     isWall = true;
                     break;
                 }
-
-                if (hit.CompareTag("Spike"))
+                
+                foreach (Transform child in hit.transform)
                 {
-                    isSpike = true;
-                    break;
+                    if (child.CompareTag("Spike"))
+                    {
+                        Collider childCollider = child.GetComponent<Collider>();
+                        if (childCollider != null && !childCollider.enabled)
+                        {
+                            Debug.Log($"Spike 감지됨: {child.name}");
+                            isSpike = true;
+                            break;
+                        }
+                    }
                 }
 
                 if (hit.TryGetComponent(out BlockPush block))
@@ -88,6 +96,7 @@ namespace Work.PSB.Code.Test
 
             if (isSpike)
             {
+                Debug.Log("isSpike");
                 TurnConsumeCommandSO turnCmd = Instantiate(turnConsumeCommand);
                 Bus<CommandEvent>.Raise(new CommandEvent(turnCmd));
             }

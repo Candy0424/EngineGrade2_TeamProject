@@ -25,7 +25,6 @@ namespace Work.PSB.Code.Test
         
         [Header("Command / Effect")]
         [SerializeField] private SpikeCommandSO spikeCommand;
-        [SerializeField] private TurnConsumeCommandSO turnConsumeCommand;
         [SerializeField] private PoolingItemSO bloodEffect;
 
         [Inject] private PoolManagerMono _poolManager;
@@ -122,7 +121,6 @@ namespace Work.PSB.Code.Test
             {
                 _hasHitPlayerThisCycle = true;
                 CreateEffect();
-                Debug.Log("플레이어 피격! 턴 1 소모");
             }
         }
         
