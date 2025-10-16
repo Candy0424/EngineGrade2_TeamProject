@@ -66,11 +66,18 @@ namespace Work.PSB.Code.Test
                     isWall = true;
                     break;
                 }
-
-                if (hit.CompareTag("Spike"))
+                
+                foreach (Transform child in hit.transform)
                 {
-                    isSpike = true;
-                    break;
+                    if (child.CompareTag("Spike"))
+                    {
+                        Collider childCollider = child.GetComponent<Collider>();
+                        if (childCollider != null && !childCollider.enabled)
+                        {
+                            isSpike = true;
+                            break;
+                        }
+                    }
                 }
 
                 if (hit.TryGetComponent(out BlockPush block))

@@ -2307,7 +2307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b99a56b7ed9d4e27ad7fa57e000bb8cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentTurnCount: 0
+  leftUndoCount: 15
 --- !u!4 &746091141
 Transform:
   m_ObjectHideFlags: 0
@@ -2809,10 +2809,9 @@ GameObject:
   - component: {fileID: 899237238}
   - component: {fileID: 899237239}
   - component: {fileID: 899237240}
-  - component: {fileID: 899237241}
   m_Layer: 0
   m_Name: Spike4
-  m_TagString: Spike
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2852,7 +2851,6 @@ MonoBehaviour:
   easeType: 6
   startRaised: 1
   spikeCommand: {fileID: 11400000, guid: 54a77ad2f123b2b4fbd04ecfc3005aa9, type: 2}
-  turnConsumeCommand: {fileID: 11400000, guid: f3fadf90c1317384a887bb51e1246d52, type: 2}
   bloodEffect: {fileID: 11400000, guid: f59841e02f9311a4b9a52d18a2f0f53e, type: 2}
 --- !u!54 &899237240
 Rigidbody:
@@ -2881,27 +2879,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!65 &899237241
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 899237237}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.4, y: 1, z: 0.4}
-  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &995694383
 GameObject:
   m_ObjectHideFlags: 0
@@ -3307,10 +3284,9 @@ GameObject:
   - component: {fileID: 1111916181}
   - component: {fileID: 1111916182}
   - component: {fileID: 1111916183}
-  - component: {fileID: 1111916184}
   m_Layer: 0
   m_Name: Spike5
-  m_TagString: Spike
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3350,7 +3326,6 @@ MonoBehaviour:
   easeType: 6
   startRaised: 1
   spikeCommand: {fileID: 11400000, guid: 54a77ad2f123b2b4fbd04ecfc3005aa9, type: 2}
-  turnConsumeCommand: {fileID: 11400000, guid: f3fadf90c1317384a887bb51e1246d52, type: 2}
   bloodEffect: {fileID: 11400000, guid: f59841e02f9311a4b9a52d18a2f0f53e, type: 2}
 --- !u!54 &1111916183
 Rigidbody:
@@ -3379,27 +3354,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!65 &1111916184
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1111916180}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.4, y: 1, z: 0.4}
-  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &1126317383
 GameObject:
   m_ObjectHideFlags: 0
@@ -4487,7 +4441,7 @@ GameObject:
   - component: {fileID: 1540239813}
   m_Layer: 0
   m_Name: Spike2
-  m_TagString: Spike
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4527,7 +4481,6 @@ MonoBehaviour:
   easeType: 6
   startRaised: 1
   spikeCommand: {fileID: 11400000, guid: 54a77ad2f123b2b4fbd04ecfc3005aa9, type: 2}
-  turnConsumeCommand: {fileID: 11400000, guid: f3fadf90c1317384a887bb51e1246d52, type: 2}
   bloodEffect: {fileID: 11400000, guid: f59841e02f9311a4b9a52d18a2f0f53e, type: 2}
 --- !u!54 &1540239812
 Rigidbody:
@@ -6089,10 +6042,9 @@ GameObject:
   - component: {fileID: 1861367929}
   - component: {fileID: 1861367930}
   - component: {fileID: 1861367931}
-  - component: {fileID: 1861367932}
   m_Layer: 0
   m_Name: Spike3
-  m_TagString: Spike
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6132,7 +6084,6 @@ MonoBehaviour:
   easeType: 6
   startRaised: 0
   spikeCommand: {fileID: 11400000, guid: 54a77ad2f123b2b4fbd04ecfc3005aa9, type: 2}
-  turnConsumeCommand: {fileID: 11400000, guid: f3fadf90c1317384a887bb51e1246d52, type: 2}
   bloodEffect: {fileID: 11400000, guid: f59841e02f9311a4b9a52d18a2f0f53e, type: 2}
 --- !u!54 &1861367931
 Rigidbody:
@@ -6161,27 +6112,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!65 &1861367932
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1861367928}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.4, y: 1, z: 0.4}
-  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &1936722054
 GameObject:
   m_ObjectHideFlags: 0
@@ -6340,6 +6270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <InputSO>k__BackingField: {fileID: 11400000, guid: 50aa76c636a6be64ba2ef49f7e560820, type: 2}
   moveCommand: {fileID: 11400000, guid: 9ec45ea6ee1f3154bb41b5ae0585e6e6, type: 2}
+  turnConsumeCommand: {fileID: 11400000, guid: f3fadf90c1317384a887bb51e1246d52, type: 2}
 --- !u!114 &1953696882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7361,7 +7292,7 @@ GameObject:
   - component: {fileID: 5663288892766454198}
   m_Layer: 0
   m_Name: Spike1
-  m_TagString: Spike
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7385,7 +7316,6 @@ MonoBehaviour:
   easeType: 6
   startRaised: 0
   spikeCommand: {fileID: 11400000, guid: 54a77ad2f123b2b4fbd04ecfc3005aa9, type: 2}
-  turnConsumeCommand: {fileID: 11400000, guid: f3fadf90c1317384a887bb51e1246d52, type: 2}
   bloodEffect: {fileID: 11400000, guid: f59841e02f9311a4b9a52d18a2f0f53e, type: 2}
 --- !u!54 &5663288892766454197
 Rigidbody:
