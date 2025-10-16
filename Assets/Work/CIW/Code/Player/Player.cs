@@ -90,7 +90,7 @@ namespace Work.CIW.Code.Player
         public override void OnCellOccupied(Vector3Int newPos)
         {
             CurrentGridPosition = newPos;
-            transform.position = new Vector3(newPos.x, newPos.y + 1f, newPos.z);
+            transform.position = new Vector3(newPos.x, newPos.y, newPos.z);
         }
     }
 }

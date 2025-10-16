@@ -29,7 +29,6 @@ namespace Work.PSB.Code.Test
                 Debug.LogError("PlayerMovement 컴포넌트가 IMoveableTest를 구현하지 않았습니다.");
                 enabled = false;
             }
-            
         }
 
         private void OnEnable()
@@ -51,6 +50,13 @@ namespace Work.PSB.Code.Test
             Vector3Int dir = GetDirection(input);
             Vector3Int curGridPos = CurrentGridPosition;
             Vector3Int frontGridPos = curGridPos + dir;
+            
+            Vector3 worldDirection = new Vector3(dir.x, 0, dir.z);
+            if (worldDirection != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(worldDirection, Vector3.up);
+                transform.rotation = targetRotation;
+            }
 
             Collider[] hits = Physics.OverlapSphere(frontGridPos, 0.45f);
             BlockPush blockToPush = null;
@@ -60,13 +66,11 @@ namespace Work.PSB.Code.Test
             foreach (Collider hit in hits)
             {
                 if (hit == null) continue;
-
                 if (hit.CompareTag("Wall"))
                 {
                     isWall = true;
                     break;
                 }
-                
                 foreach (Transform child in hit.transform)
                 {
                     if (child.CompareTag("Spike"))
@@ -92,7 +96,6 @@ namespace Work.PSB.Code.Test
                 Bus<TurnUseEvent>.Raise(new TurnUseEvent());
                 return;
             }
-
             if (isSpike)
             {
                 TurnConsumeCommandSO turnCmd = Instantiate(turnConsumeCommand);
@@ -108,7 +111,6 @@ namespace Work.PSB.Code.Test
                 }
                 return;
             }
-            
             if (_movementCompo.gridService != null)
             {
                 if (!_movementCompo.gridService.CanMoveTo(curGridPos, dir, out _))
@@ -151,7 +153,7 @@ namespace Work.PSB.Code.Test
         public override void OnCellOccupied(Vector3Int newPos)
         {
             CurrentGridPosition = newPos;
-            transform.position = new Vector3(newPos.x, newPos.y + 1f, newPos.z);
+            transform.position = new Vector3(newPos.x, newPos.y, newPos.z);
         }
         
     }
