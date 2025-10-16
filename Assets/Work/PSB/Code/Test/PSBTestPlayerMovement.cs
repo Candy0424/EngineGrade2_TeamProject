@@ -15,13 +15,14 @@ namespace Work.PSB.Code.Test
         private GridObjectBase _gridObject;
 
         private bool _isMoving = false;
+        bool _hasArrived = false;
 
         [Header("Movement")]
         [SerializeField] private float moveTime = 0.15f;
 
         [Header("Stair Collision Setting")]
-        [SerializeField] private float stairChkDistance = 1.01f;
         [SerializeField] private LayerMask whatIsStair;
+        [SerializeField] private LayerMask whatIsArrival;
 
         public bool isMoving
         {
@@ -49,13 +50,14 @@ namespace Work.PSB.Code.Test
 
         protected void Start()
         {
-            Vector3Int initWorldPos = Vector3Int.RoundToInt(transform.position);
+            Vector3 curWorldPos = transform.position;
+            Vector3Int initGridPos = new Vector3Int(Mathf.RoundToInt(curWorldPos.x), Mathf.RoundToInt(curWorldPos.y), Mathf.RoundToInt(curWorldPos.z));
 
-            Vector3Int initGridPos = initWorldPos;
-            initGridPos.y -= 1;
-
+            _gridObject.CurrentGridPosition = initGridPos;
             gridService.SetObjectInitialPosition(_gridObject, initGridPos);
             _gridObject.OnCellOccupied(initGridPos);
+
+            transform.position = new Vector3(initGridPos.x, initGridPos.y, initGridPos.z);
         }
 
         #region Player Movement
@@ -63,6 +65,7 @@ namespace Work.PSB.Code.Test
         public void HandleInput(Vector2 input)
         {
             if (_isMoving) return;
+            if (_hasArrived) return;
 
             Vector3Int dir = GetDirection(input);
             if (dir == Vector3Int.zero) return;
@@ -93,12 +96,12 @@ namespace Work.PSB.Code.Test
             _isMoving = true;
             Vector3Int oldPos = _gridObject.CurrentGridPosition;
 
-            float startWorldY = oldPos.y + 1f;
+            float startWorldY = oldPos.y;
             Vector3 start = new Vector3(oldPos.x, startWorldY, oldPos.z);
 
             transform.position = start;
 
-            float targetWorldY = targetPos.y + 1f;
+            float targetWorldY = targetPos.y;
             Vector3 finalWorldPos = new Vector3(targetPos.x, targetWorldY, targetPos.z);
 
             float elapsed = 0f;
@@ -128,12 +131,22 @@ namespace Work.PSB.Code.Test
 
         public bool StartMove(Vector3Int direction)
         {
+            if (_hasArrived) return false;
             if (_isMoving) return false;
 
+            if (CheckForArrival(direction)) return true;
             if (CheckForStairs(direction)) return true;
 
             if (gridService.CanMoveTo(_gridObject.CurrentGridPosition, direction, out Vector3Int targetPos))
             {
+                Vector3 worldDirection = new Vector3(direction.x, 0, direction.z);
+
+                if (worldDirection != Vector3.zero)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(worldDirection, Vector3.up);
+                    transform.rotation = targetRotation;
+                }
+
                 StartCoroutine(MoveRoutine(targetPos));
                 return true;
             }
@@ -147,27 +160,84 @@ namespace Work.PSB.Code.Test
 
         private bool CheckForStairs(Vector3Int dir)
         {
-            Vector3 startPos = _gridObject.CurrentGridPosition;
-            Vector3 dirVec3 = dir;
+            Vector3Int targetGridPos = _gridObject.CurrentGridPosition + dir;
+            Vector3 boxCenter = new Vector3(targetGridPos.x, targetGridPos.y + 0.5f, targetGridPos.z);
+            Vector3 boxHalfExtents = new Vector3(0.49f, 0.49f, 0.49f);
 
-            Vector3 fixedDirection = -dirVec3;
+            Collider[] hits = Physics.OverlapBox(boxCenter, boxHalfExtents, Quaternion.identity, whatIsStair);
 
-            if (Physics.Raycast(startPos, fixedDirection, out RaycastHit hit, stairChkDistance, whatIsStair))
+            if (hits.Length > 0)
             {
-                if (hit.collider.TryGetComponent(out StairTrigger stair))
-                {
-                    Vector3Int targetGridPos = new Vector3Int(_gridObject.CurrentGridPosition.x, stair.GetTargetY(), _gridObject.CurrentGridPosition.z);
+                Debug.Log("Stair 감지");
 
-                    TeleportToFloor(targetGridPos);
+                if (hits[0].TryGetComponent(out StairTrigger stair))
+                {
+                    Vector3Int teleportPos = new Vector3Int(_gridObject.CurrentGridPosition.x, stair.GetTargetY(), _gridObject.CurrentGridPosition.z);
+
+                    TeleportToFloor(teleportPos, dir);
+
                     return true;
                 }
             }
+
             return false;
         }
 
-        private void TeleportToFloor(Vector3Int targetPos)
+        private void TeleportToFloor(Vector3Int targetPos, Vector3Int dir)
         {
-            gridService.UpdateObjectPosition(_gridObject, _gridObject.CurrentGridPosition, targetPos);
+            Vector3Int oldPos = _gridObject.CurrentGridPosition;
+            gridService.UpdateObjectPosition(_gridObject, oldPos, targetPos);
+
+            float targetWorldY = targetPos.y;
+            Vector3 finalWorldPos = new Vector3(targetPos.x, targetWorldY, targetPos.z);
+            transform.position = finalWorldPos;
+
+            Debug.Log($"텔포 시킴. 현재 위치는 {_gridObject.CurrentGridPosition}");
+
+            Vector3Int effectiveDir = dir;
+            if (dir.y < 0)
+            {
+                effectiveDir.x *= -1;
+                effectiveDir.z *= -1;
+            }
+
+            if (gridService.CanMoveTo(targetPos, effectiveDir, out Vector3Int finalMovePos))
+            {
+                gridService.UpdateObjectPosition(_gridObject, targetPos, finalMovePos);
+
+                float finalWorldY = finalMovePos.y;
+                Vector3 finalFinalWorldPos = new Vector3(finalMovePos.x, finalWorldY, finalMovePos.z);
+                transform.position = finalFinalWorldPos;
+
+                Debug.Log($"텔포 후 강제 이동. 최종 위치는 {_gridObject.CurrentGridPosition}");
+            }
+            else
+            {
+                Debug.LogWarning("텔레포트 후 강제 이동 실패. 다음 칸이 막혀있거나 경계 밖. 계단에 남아있을 수 있습니다.");
+            }
+        }
+
+        private bool CheckForArrival(Vector3Int dir)
+        {
+            Vector3Int targetGridPos = _gridObject.CurrentGridPosition + dir;
+            Vector3 rayOrigin = new Vector3(targetGridPos.x, targetGridPos.y + 5f, targetGridPos.z);
+            Vector3 rayDirection = Vector3.down;
+
+            float maxDistance = 6f;
+
+            if (Physics.Raycast(rayOrigin, rayDirection, out RaycastHit hit, maxDistance, whatIsArrival))
+            {
+                if (hit.collider.GetComponent<ArrivalTrigger>() != null)
+                {
+                    Debug.Log("도착했습니다!");
+
+                    _hasArrived = true;
+                    StartCoroutine(MoveRoutine(targetGridPos));
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         #endregion
