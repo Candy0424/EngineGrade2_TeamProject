@@ -220,7 +220,7 @@ namespace Work.CIW.Code.Grid
                 movingObj.OnCellOccupied(newPos);
             }
             else
-            {
+            {   
                 Debug.LogError($"[GridSystem] Target position {newPos} is not a valid cell in the grid map!");
             }
         }
