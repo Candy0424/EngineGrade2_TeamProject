@@ -1281,6 +1281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b99a56b7ed9d4e27ad7fa57e000bb8cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  undoCooldown: 0.2
   leftUndoCount: 0
 --- !u!4 &746091141
 Transform:
@@ -1779,7 +1780,6 @@ MonoBehaviour:
   moveDuration: 0.3
   easeType: 6
   startRaised: 1
-  spikeCommand: {fileID: 0}
   bloodEffect: {fileID: 0}
 --- !u!54 &899237240
 Rigidbody:
@@ -1990,7 +1990,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c21dbe22d36443c5b6638203f09323f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxTurnCount: 100
+  maxTurnCount: 35
   currentTurnCount: 0
 --- !u!4 &995694385
 Transform:
@@ -2862,6 +2862,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 894760160}
     m_Modifications:
+    - target: {fileID: 1260756539998183374, guid: 2864075b7432f864bbaa69e5e6809296, type: 3}
+      propertyPath: m_Color.b
+      value: 0.122641504
+      objectReference: {fileID: 0}
+    - target: {fileID: 1260756539998183374, guid: 2864075b7432f864bbaa69e5e6809296, type: 3}
+      propertyPath: m_Color.g
+      value: 0.122641504
+      objectReference: {fileID: 0}
+    - target: {fileID: 1260756539998183374, guid: 2864075b7432f864bbaa69e5e6809296, type: 3}
+      propertyPath: m_Color.r
+      value: 0.122641504
+      objectReference: {fileID: 0}
     - target: {fileID: 1652841877073286673, guid: 2864075b7432f864bbaa69e5e6809296, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -2940,7 +2952,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5236593430827471641, guid: 2864075b7432f864bbaa69e5e6809296, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 17.3
       objectReference: {fileID: 0}
     - target: {fileID: 5236593430827471641, guid: 2864075b7432f864bbaa69e5e6809296, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2958,11 +2970,26 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8899664455583760982, guid: 2864075b7432f864bbaa69e5e6809296, type: 3}
+      propertyPath: image
+      value: 
+      objectReference: {fileID: 1413026763}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2864075b7432f864bbaa69e5e6809296, type: 3}
+--- !u!114 &1413026763 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1260756539998183374, guid: 2864075b7432f864bbaa69e5e6809296, type: 3}
+  m_PrefabInstance: {fileID: 1413026762}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1501156627
 GameObject:
   m_ObjectHideFlags: 0
@@ -3365,7 +3392,6 @@ MonoBehaviour:
   moveDuration: 0.3
   easeType: 6
   startRaised: 0
-  spikeCommand: {fileID: 0}
   bloodEffect: {fileID: 0}
 --- !u!54 &1540239812
 Rigidbody:
@@ -4340,7 +4366,6 @@ MonoBehaviour:
   moveDuration: 0.3
   easeType: 6
   startRaised: 0
-  spikeCommand: {fileID: 0}
   bloodEffect: {fileID: 0}
 --- !u!54 &1861367931
 Rigidbody:
@@ -4832,8 +4857,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <InputSO>k__BackingField: {fileID: 11400000, guid: 50aa76c636a6be64ba2ef49f7e560820, type: 2}
-  moveCommand: {fileID: 11400000, guid: 9ec45ea6ee1f3154bb41b5ae0585e6e6, type: 2}
-  turnConsumeCommand: {fileID: 0}
 --- !u!114 &1953696882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5386,7 +5409,6 @@ MonoBehaviour:
   moveDuration: 0.3
   easeType: 6
   startRaised: 0
-  spikeCommand: {fileID: 0}
   bloodEffect: {fileID: 0}
 --- !u!54 &5663288892766454197
 Rigidbody:
