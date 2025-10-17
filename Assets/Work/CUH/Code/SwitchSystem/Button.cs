@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Work.CIW.Code.Grid;
 using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.Commands;
@@ -8,8 +7,20 @@ using Work.CUH.Code.GameEvents;
 
 namespace Work.CUH.Code.SwitchSystem
 {
-    public class Lever : GridObjectBase, ICommandable, ISwitch
+    public class Button : GridObjectBase, ICommandable, ISwitch
     {
+        #region Grid
+        public override Vector3Int CurrentGridPosition { get; set; }
+        public override void OnCellDeoccupied()
+        {
+        }
+
+        public override void OnCellOccupied(Vector3Int newPos)
+        {
+        }
+        
+        #endregion
+        
         [SerializeField] private GameObject operateObject;
         
         public GameObject activeObject
@@ -26,41 +37,66 @@ namespace Work.CUH.Code.SwitchSystem
         }
         
         private bool _isActive;
-        
+        private GameObject _upObject;
         public bool IsActive
         {
             get => _isActive;
             private set
             {
                 _isActive = value;
+                Debug.Log(_isActive);
                 if (_isActive) activatable.Activate();
                 else activatable.Deactivate();
             }
         }
-        
         public IActivatable activatable { get; private set; }
         
-
         private void Awake()
         {
             activatable = operateObject.GetComponent<IActivatable>();
             Bus<PlayerPosChangeEvent>.OnEvent += HandlePlayerPosChange;
+            Bus<TargetPosChangeEvent>.OnEvent += HandleTargetPosChange;
+        }
+
+        private void Start()
+        {
+            CurrentGridPosition = Vector3Int.RoundToInt(transform.position);
+            transform.position = CurrentGridPosition;
         }
 
         private void OnDestroy()
         {
             Bus<PlayerPosChangeEvent>.OnEvent -= HandlePlayerPosChange;
+            Bus<TargetPosChangeEvent>.OnEvent -= HandleTargetPosChange;
         }
         
         private void HandlePlayerPosChange(PlayerPosChangeEvent evt)
         {
+            if (_upObject != null) return;
             if (Vector3.Distance(evt.position, transform.position) <= 0.05f)
+            {
+                Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
+            }
+            else if (IsActive)
             {
                 Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
             }
         }
         
-        [ContextMenu("Activate")]
+        private void HandleTargetPosChange(TargetPosChangeEvent evt)
+        {
+            if (_upObject != null && evt.transform.gameObject != _upObject) return;
+            if (Vector3.Distance(evt.transform.position + evt.direction, transform.position) <= 0.05f)
+            {
+                Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
+                _upObject = evt.transform.gameObject;
+            }
+            else if (IsActive)
+            {
+                Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
+            }
+        }
+        
         public void ToggleSwitch()
         {
             IsActive = !IsActive;
@@ -71,19 +107,6 @@ namespace Work.CUH.Code.SwitchSystem
             IsActive = !IsActive;
         }
         
-        #region Grid
-        
-        public override Vector3Int CurrentGridPosition { get; set; }
-        public override void OnCellDeoccupied()
-        {
-        }
-
-        public override void OnCellOccupied(Vector3Int newPos)
-        {
-        }
-        
-        #endregion
-
 #if UNITY_EDITOR
         private void OnValidate()
         {

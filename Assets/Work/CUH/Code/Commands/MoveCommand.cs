@@ -30,25 +30,26 @@ namespace Work.CUH.Code.Commands
         public override void Execute()
         {
             IMoveableTest movement = Commandable as IMoveableTest;
-            movement.HandleInput(Dir); 
+            movement.HandleInput(Dir);
+            
             if (Commandable is IMovement)
                 Bus<PlayerPosChangeEvent>.Raise(
                     new PlayerPosChangeEvent(movement.transform.position + new Vector3(Dir.x, 0, Dir.y)));
             else
                 Bus<TargetPosChangeEvent>.Raise(
-                    new TargetPosChangeEvent(movement.transform.position + new Vector3(Dir.x, 0, Dir.y)));
+                    new TargetPosChangeEvent(movement.transform, new Vector3(Dir.x, 0, Dir.y)));
         }
         
         public override void Undo()
         {
             IMoveableTest movement = Commandable as IMoveableTest;
-            movement.HandleInput(-Dir); 
+            movement.HandleInput(-Dir);
             if (Commandable is IMovement)
                 Bus<PlayerPosChangeEvent>.Raise(
                     new PlayerPosChangeEvent(movement.transform.position + new Vector3(Dir.x, 0, Dir.y)));
             else
                 Bus<TargetPosChangeEvent>.Raise(
-                    new TargetPosChangeEvent(movement.transform.position - new Vector3(Dir.x, 0, Dir.y)));
+                    new TargetPosChangeEvent(movement.transform, - new Vector3(Dir.x, 0, Dir.y)));
         }
     }
 }
