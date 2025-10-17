@@ -2,7 +2,9 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 using Work.CIW.Code.Grid;
+using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.Commands;
+using Work.CUH.Code.GameEvents;
 
 namespace Work.CUH.Code.SwitchSystem
 {
@@ -37,6 +39,24 @@ namespace Work.CUH.Code.SwitchSystem
         public IActivatable activatable { get; private set; }
         
         private bool _isActive;
+
+        private void Awake()
+        {
+            Bus<PlayerPosChangeEvent>.OnEvent += HandlePlayerPosChange;
+        }
+
+        private void OnDestroy()
+        {
+            Bus<PlayerPosChangeEvent>.OnEvent -= HandlePlayerPosChange;
+        }
+        
+        private void HandlePlayerPosChange(PlayerPosChangeEvent evt)
+        {
+            if (Vector3.Distance(evt.position, transform.position) <= 0.05f)
+            {
+                Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
+            }
+        }
         
         [ContextMenu("Activate")]
         public void ToggleSwitch()
@@ -65,6 +85,7 @@ namespace Work.CUH.Code.SwitchSystem
 #if UNITY_EDITOR
         private void OnValidate()
         {
+            if(operateObject == null) return;
             if (operateObject.TryGetComponent(out IActivatable activate))
             {
                 activeObject = operateObject;

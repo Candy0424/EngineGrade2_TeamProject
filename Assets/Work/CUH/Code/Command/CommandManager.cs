@@ -21,15 +21,15 @@ namespace Work.CUH.Code.Command
         [Header("Settings")]
         [SerializeField] private int leftUndoCount;
         
-        private Queue<BaseCommandSO> _executionCommands;
-        private Stack<BaseCommandSO> _undoCommands;
-        private Stack<BaseCommandSO> _tempStack;
+        private Queue<BaseCommand> _executionCommands;
+        private Stack<BaseCommand> _undoCommands;
+        private Stack<BaseCommand> _tempStack;
         
         private void Awake()
         {
-            _executionCommands = new Queue<BaseCommandSO>();
-            _undoCommands = new Stack<BaseCommandSO>();
-            _tempStack = new Stack<BaseCommandSO>();
+            _executionCommands = new Queue<BaseCommand>();
+            _undoCommands = new Stack<BaseCommand>();
+            _tempStack = new Stack<BaseCommand>();
             Bus<CommandEvent>.OnEvent += HandleCommand;
             Bus<TurnUseEvent>.OnEvent += TurnUse;
         }
@@ -76,7 +76,7 @@ namespace Work.CUH.Code.Command
             _currentTurnCount++;
             while (_executionCommands.Count > 0)
             {
-                BaseCommandSO command = _executionCommands.Dequeue();
+                BaseCommand command = _executionCommands.Dequeue();
                 if (command.CanExecute())
                 {
                     command.Tick = _currentTurnCount;

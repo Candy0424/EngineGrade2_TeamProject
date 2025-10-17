@@ -237,6 +237,18 @@ namespace Work.CIW.Code.Grid
             }
         }
 
+        public void RemoveObjectPosition(GridObjectBase obj, Vector3Int targetPos)
+        {
+            if (_gridMap.TryGetValue(targetPos, out GridCell oldCell))
+            {
+                if (oldCell.Occupant != null)
+                {
+                    oldCell.SetOccupant(null); 
+                    obj.OnCellDeoccupied();
+                }
+            }
+        }
+        
         // Grid Cell�� ��ǥ�� �ʱ�ȭ���ش�
         public GridCell GetCell(Vector3Int pos)
         {

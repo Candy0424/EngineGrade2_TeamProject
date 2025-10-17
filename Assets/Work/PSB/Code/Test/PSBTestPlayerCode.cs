@@ -14,8 +14,7 @@ namespace Work.PSB.Code.Test
        [field: SerializeField] public PlayerInputSO InputSO { get; private set; }
         public override Vector3Int CurrentGridPosition { get; set; }
         
-        [SerializeField] private MoveCommand moveCommand;
-        [SerializeField] private TurnConsumeCommandSO turnConsumeCommand;
+        [SerializeField] private TurnConsumeCommand turnConsumeCommand;
         
         private PSBTestPlayerMovement _movementCompo;
 
@@ -71,18 +70,6 @@ namespace Work.PSB.Code.Test
                     isWall = true;
                     break;
                 }
-                foreach (Transform child in hit.transform)
-                {
-                    if (child.CompareTag("Spike"))
-                    {
-                        Collider childCollider = child.GetComponent<Collider>();
-                        if (childCollider != null && !childCollider.enabled)
-                        {
-                            isSpike = true;
-                            break;
-                        }
-                    }
-                }
 
                 if (hit.TryGetComponent(out BlockPush block))
                 {
@@ -95,11 +82,6 @@ namespace Work.PSB.Code.Test
             {
                 Bus<TurnUseEvent>.Raise(new TurnUseEvent());
                 return;
-            }
-            if (isSpike)
-            {
-                TurnConsumeCommandSO turnCmd = Instantiate(turnConsumeCommand);
-                Bus<CommandEvent>.Raise(new CommandEvent(turnCmd));
             }
     
             if (blockToPush != null)
@@ -119,17 +101,14 @@ namespace Work.PSB.Code.Test
                     return;
                 }
             }
-            
-            MoveCommand moveCommand = ScriptableObject.CreateInstance<MoveCommand>();
-            moveCommand.Dir = input;
-            moveCommand.Commandable = _movementCompo;
 
+            MoveCommand moveCommand = new MoveCommand(_movementCompo, input);
+            
             if (moveCommand.CanExecute())
             {
                 Bus<CommandEvent>.Raise(new CommandEvent(moveCommand));
                 Bus<TurnUseEvent>.Raise(new TurnUseEvent());
             }
-            Destroy(moveCommand);
         }
 
         private Vector3Int GetDirection(Vector2 input)

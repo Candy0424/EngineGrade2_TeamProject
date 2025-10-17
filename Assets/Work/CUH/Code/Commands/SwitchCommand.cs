@@ -1,11 +1,16 @@
 ﻿using UnityEngine;
+using Work.CUH.Code.Command;
 using Work.CUH.Code.SwitchSystem;
 
 namespace Work.CUH.Code.Commands
 {
-    [CreateAssetMenu(fileName = "SwitchCommandSO", menuName = "SO/Commands/Switch", order = 0)]
-    public class SwitchCommandSO : BaseCommandSO
+    public class SwitchCommand : BaseCommand
     {
+        public SwitchCommand(ICommandable commandable) : base(commandable)
+        {
+            
+        }
+
         public override bool CanExecute()
         {
             return Commandable is ISwitch;

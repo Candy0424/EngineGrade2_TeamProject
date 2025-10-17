@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
 using Work.CUH.Chuh007Lib.EventBus;
+using Work.CUH.Code.Command;
 using Work.CUH.Code.Commands;
 using Work.CUH.Code.GameEvents;
 
 namespace Work.PSB.Code.Commands
 {
-    [CreateAssetMenu(fileName = "TurnConsumeCommand", menuName = "SO/Commands/TurnConsume", order = 20)]
-    public class TurnConsumeCommandSO : BaseCommandSO
+    public class TurnConsumeCommand : BaseCommand
     {
+        public TurnConsumeCommand(ICommandable commandable = null) : base(commandable)
+        {
+        }
+
         public override bool CanExecute() => true;
 
         public override void Execute()

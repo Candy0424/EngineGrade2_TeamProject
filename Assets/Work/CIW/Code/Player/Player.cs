@@ -14,9 +14,7 @@ namespace Work.CIW.Code.Player
 
         //[SerializeField] Vector3Int initialPosition = Vector3Int.zero;
         public override Vector3Int CurrentGridPosition { get; set; }
-
-        [SerializeField] MoveCommand moveCommand;
-
+        
         IMovement _movement;
 
         PlayerMovement _movementCompo;
@@ -53,10 +51,8 @@ namespace Work.CIW.Code.Player
             Vector2 dir = input;
             if (dir == Vector2.zero) return;
 
-            MoveCommand command = ScriptableObject.CreateInstance<MoveCommand>();
-            command.Dir = dir;
+            MoveCommand command = new MoveCommand(_movementCompo, dir);
 
-            command.Commandable = _movementCompo;
 
             if (command.CanExecute())
             {
@@ -64,8 +60,6 @@ namespace Work.CIW.Code.Player
                 Bus<CommandEvent>.Raise(new CommandEvent(command));
                 Bus<TurnUseEvent>.Raise(new TurnUseEvent());
             }
-
-            Destroy(command);
         }
 
         private Vector3Int GetDirection(Vector2 input)

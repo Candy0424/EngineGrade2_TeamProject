@@ -24,7 +24,7 @@ namespace Work.PSB.Code.Test
         [SerializeField] private bool startRaised = false;
         
         [Header("Command / Effect")]
-        [SerializeField] private SpikeCommandSO spikeCommand;
+        [SerializeField] private SpikeCommand spikeCommand;
         [SerializeField] private PoolingItemSO bloodEffect;
 
         [Inject] private PoolManagerMono _poolManager;
@@ -48,6 +48,7 @@ namespace Work.PSB.Code.Test
             }
 
             _collider = spikeObject.GetComponent<Collider>();
+            Bus<PlayerPosChangeEvent>.OnEvent += HandlePlayerPosChange;
         }
 
         private void Start()
@@ -71,11 +72,15 @@ namespace Work.PSB.Code.Test
             if (turnManager != null)
                 turnManager.OnUseTurn -= OnTurnUse;
         }
-
+        
+        private void OnDestroy()
+        {
+            Bus<PlayerPosChangeEvent>.OnEvent -= HandlePlayerPosChange;
+        }
+        
         private void OnTurnUse()
         {
-            SpikeCommandSO command = Instantiate(spikeCommand);
-            command.Commandable = this;
+            SpikeCommand command = new SpikeCommand(this);
             Bus<CommandEvent>.Raise(new CommandEvent(command));
 
             if (_isFirst)
@@ -130,7 +135,15 @@ namespace Work.PSB.Code.Test
             await Awaitable.WaitForSecondsAsync(2f);
             _poolManager.Push(effect);
         }
-
+        
+        private void HandlePlayerPosChange(PlayerPosChangeEvent evt)
+        {
+            if (Vector3.Distance(evt.position, transform.position) <= 0.05f)
+            {
+                Bus<CommandEvent>.Raise(new CommandEvent(new TurnConsumeCommand()));
+            }
+        }
+        
         public override Vector3Int CurrentGridPosition { get; set; }
         public override void OnCellDeoccupied() { }
         public override void OnCellOccupied(Vector3Int newPos) { }

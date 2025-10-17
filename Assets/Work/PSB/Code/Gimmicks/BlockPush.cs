@@ -57,16 +57,13 @@ namespace Work.PSB.Code.Test
         
         public void TryMoveByCommand(Vector3Int dir)
         {
-            MoveCommand moveCommand = ScriptableObject.CreateInstance<MoveCommand>();
-            moveCommand.Dir = new Vector2(dir.x, dir.z);
-            moveCommand.Commandable = this;
-
+            MoveCommand moveCommand = new MoveCommand(this, new Vector2(dir.x, dir.z));
+            
             if (moveCommand.CanExecute())
             {
                 Bus<CommandEvent>.Raise(new CommandEvent(moveCommand));
             }
 
-            Destroy(moveCommand);
         }
 
         public void HandleInput(Vector2 input)

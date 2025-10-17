@@ -1,13 +1,18 @@
 ﻿using UnityEngine;
+using Work.CUH.Code.Command;
 using Work.CUH.Code.Commands;
 using Work.PSB.Code.Test;
 
 namespace Work.PSB.Code.Commands
 {
-    [CreateAssetMenu(fileName = "SpikeCommand", menuName = "SO/Commands/Spike", order = 10)]
-    public class SpikeCommandSO : BaseCommandSO
+    public class SpikeCommand : BaseCommand
     {
         private bool _wasRaisedBefore;
+
+        public SpikeCommand(ICommandable commandable) : base(commandable)
+        {
+            
+        }
 
         public override bool CanExecute()
         {
