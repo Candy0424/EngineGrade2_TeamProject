@@ -60,7 +60,6 @@ namespace Work.PSB.Code.Test
             Collider[] hits = Physics.OverlapSphere(frontGridPos, 0.45f);
             BlockPush blockToPush = null;
             bool isWall = false;
-            bool isSpike = false;
 
             foreach (Collider hit in hits)
             {

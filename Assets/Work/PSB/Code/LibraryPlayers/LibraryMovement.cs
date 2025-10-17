@@ -5,36 +5,61 @@ namespace Work.PSB.Code.LibraryPlayers
 {
     public class LibraryMovement : MonoBehaviour, IEntityComponent, IAfterInitialize
     {
-        [SerializeField] private float moveSpeed = 8f;
-        [SerializeField] private float rotationSpeed = 4f;
-        [SerializeField] private float mouseSensitivity = 3f;
-        [SerializeField] private float gravity = -9.8f;
+        [SerializeField] private Transform cameraPivot;
+
+        [Header("Movement Settings")]
+        [SerializeField] private float moveSpeed = 6f;
+        [SerializeField] private float acceleration = 10f;
+        [SerializeField] private float deceleration = 8f;
+        [SerializeField] private float gravity = -18f;
         [SerializeField] private CharacterController controller;
-        
+
+        [Header("Mouse Settings")]
+        [SerializeField] private float mouseSensitivity = 3f;
+        [SerializeField] private float rotationSmoothTime = 0.05f;
+
+        [Header("Head Bob Settings")]
+        [SerializeField] private float walkBobFrequency = 6f;
+        [SerializeField] private float walkBobAmplitude = 0.05f;
+        [SerializeField] private float runBobFrequency = 9f;
+        [SerializeField] private float runBobAmplitude = 0.08f;
+        private Vector3 _cameraInitialLocalPos;
+        private float _bobTimer = 0f;
+
         public bool IsGround => controller.isGrounded;
         public bool CanManualMovement { get; set; } = true;
-        
-        private Vector3 _autoMovement;
-        private float _autoMoveStartTime;
-        
-        private float _moveSpeed = 8f;
+
         private Vector3 _velocity;
-        public Vector3 Velocity => _velocity;
+        private Vector3 _currentMoveVelocity;
         private float _verticalVelocity;
         private Vector3 _movementDirection;
 
+        private float _cameraPitch = 0f;
+        private float _currentMouseDeltaX;
+        private float _mouseDeltaVelocity;
         private LibraryPlayer _entity;
+
+        private bool _isRunning;
 
         public void Initialize(Entity entity)
         {
             _entity = entity as LibraryPlayer;
         }
 
-        public void AfterInitialize() { }
+        public void AfterInitialize()
+        {
+            if (cameraPivot != null)
+                _cameraInitialLocalPos = cameraPivot.localPosition;
+        }
 
         public void SetMovementDirection(Vector2 movementInput)
         {
             _movementDirection = new Vector3(movementInput.x, 0, movementInput.y).normalized;
+        }
+
+        public void SetRunning(bool isRunning)
+        {
+            _isRunning = isRunning;
         }
 
         private void Update()
@@ -47,36 +72,44 @@ namespace Work.PSB.Code.LibraryPlayers
             CalculateMovement();
             ApplyGravity();
             Move();
+            HandleHeadBob();
         }
 
         private void HandleMouseRotation()
         {
             if (!CanManualMovement || _entity.PlayerInput == null) return;
-            
+
             Vector2 mouseDelta = _entity.PlayerInput.AimDelta;
 
-            if (Mathf.Abs(mouseDelta.x) > 0.001f)
-            {
-                Vector3 euler = _entity.transform.eulerAngles;
-                euler.y += mouseDelta.x * mouseSensitivity * Time.deltaTime;
-                _entity.transform.eulerAngles = euler;
-            }
+            _currentMouseDeltaX = Mathf.SmoothDamp(
+                _currentMouseDeltaX,
+                mouseDelta.x,
+                ref _mouseDeltaVelocity,
+                rotationSmoothTime
+            );
+
+            _entity.transform.Rotate(Vector3.up, _currentMouseDeltaX * mouseSensitivity * Time.deltaTime);
+
+            _cameraPitch -= mouseDelta.y * mouseSensitivity * Time.deltaTime;
+            _cameraPitch = Mathf.Clamp(_cameraPitch, -60f, 35f);
+
+            if (cameraPivot != null)
+                cameraPivot.localRotation = Quaternion.Euler(_cameraPitch, 0f, 0f);
         }
 
         private void CalculateMovement()
         {
-            if (CanManualMovement)
-            {
-                _velocity = _entity.transform.rotation * _movementDirection;
-                _velocity *= _moveSpeed * Time.fixedDeltaTime;
-            }
-            else
-            {
-                float normalizedTime = (Time.time - _autoMoveStartTime) / 0.5f;
-                float currentSpeed = 5 * normalizedTime;
-                Vector3 currentMovement = _autoMovement * currentSpeed;
-                _velocity = currentMovement * Time.fixedDeltaTime;
-            }
+            if (!CanManualMovement) return;
+
+            Vector3 targetVelocity = _entity.transform.rotation * _movementDirection * (moveSpeed * (_isRunning ? 1.6f : 1f));
+
+            _currentMoveVelocity = Vector3.MoveTowards(
+                _currentMoveVelocity,
+                targetVelocity,
+                (targetVelocity.magnitude > _currentMoveVelocity.magnitude ? acceleration : deceleration) * Time.fixedDeltaTime
+            );
+
+            _velocity = _currentMoveVelocity;
         }
 
         private void ApplyGravity()
@@ -91,12 +124,38 @@ namespace Work.PSB.Code.LibraryPlayers
 
         private void Move()
         {
-            controller.Move(_velocity);
+            controller.Move(_velocity * Time.fixedDeltaTime);
+        }
+
+        private void HandleHeadBob()
+        {
+            float idleFrequency = 1.2f;
+            float idleAmplitude = 0.03f;
+            
+            if (!CanManualMovement || !IsGround)
+            {
+                cameraPivot.localPosition = Vector3.Lerp(cameraPivot.localPosition, _cameraInitialLocalPos, Time.deltaTime * 5f);
+                _bobTimer = 0f;
+                return;
+            }
+
+            bool isMoving = _movementDirection.magnitude >= 0.1f;
+            
+            float frequency = isMoving ? (_isRunning ? runBobFrequency : walkBobFrequency) : idleFrequency;
+            float amplitude = isMoving ? (_isRunning ? runBobAmplitude : walkBobAmplitude) : idleAmplitude;
+
+            _bobTimer += Time.deltaTime * frequency;
+
+            float bobOffsetY = Mathf.Sin(_bobTimer) * amplitude;
+            float bobOffsetZ = isMoving ? Mathf.Cos(_bobTimer * 0.5f) * amplitude * 0.5f : 0f;
+
+            cameraPivot.localPosition = _cameraInitialLocalPos + new Vector3(0, bobOffsetY, bobOffsetZ);
         }
 
         public void StopImmediately()
         {
             _movementDirection = Vector3.zero;
+            _currentMoveVelocity = Vector3.zero;
         }
         
         
