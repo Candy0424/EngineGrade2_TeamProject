@@ -16,6 +16,7 @@ namespace Work.CUH.Code.Command
     [Provide]
     public class CommandManager : MonoBehaviour
     {
+        [SerializeField] private float undoCooldown = 0.2f;
         private int _currentTurnCount = 0;
 
         [Header("Settings")]
@@ -24,6 +25,7 @@ namespace Work.CUH.Code.Command
         private Queue<BaseCommand> _executionCommands;
         private Stack<BaseCommand> _undoCommands;
         private Stack<BaseCommand> _tempStack;
+        private float _lastUndoTime;
         
         private void Awake()
         {
@@ -100,8 +102,9 @@ namespace Work.CUH.Code.Command
 
         private void Update()
         {
-            if (Keyboard.current.zKey.wasPressedThisFrame)
+            if (Keyboard.current.zKey.isPressed && Time.time > undoCooldown + _lastUndoTime)
             {
+                _lastUndoTime = Time.time;
                 Undo();
             }
 

@@ -17,7 +17,6 @@ namespace Work.CUH.Code.SwitchSystem
         private void Awake()
         {
             _collider = GetComponent<Collider>();
-
         }
 
         private void Start()
@@ -30,16 +29,16 @@ namespace Work.CUH.Code.SwitchSystem
         public void Activate()
         {
             _collider.enabled = false;
-            onVisual.SetActive(false);
-            offVisual.SetActive(true);
+            onVisual.SetActive(true);
+            offVisual.SetActive(false);
             GridSystem.Instance.RemoveObjectPosition(this, CurrentGridPosition);
         }
 
         public void Deactivate()
         {
             _collider.enabled = true;
-            offVisual.SetActive(false);
-            onVisual.SetActive(true);
+            onVisual.SetActive(false);
+            offVisual.SetActive(true);
             GridSystem.Instance.SetObjectInitialPosition(this, CurrentGridPosition);
         }
         

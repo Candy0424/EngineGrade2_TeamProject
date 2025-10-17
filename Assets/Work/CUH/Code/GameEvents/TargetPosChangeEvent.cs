@@ -5,11 +5,13 @@ namespace Work.CUH.Code.GameEvents
 {
     public struct TargetPosChangeEvent : IEvent
     {
-        public Vector3 position { get; private set; }
+        public Transform transform { get; private set; }
+        public Vector3 direction { get; private set; }
 
-        public TargetPosChangeEvent(Vector3 pos)
+        public TargetPosChangeEvent(Transform trm, Vector3 dir)
         {
-            position = pos;
+            transform = trm;
+            direction = dir;
         }
     }
 }
