@@ -125,6 +125,7 @@ namespace Work.PSB.Code.Test
             {
                 _hasHitPlayerThisCycle = true;
                 CreateEffect();
+                Debug.Log("Hit");
             }
         }
         

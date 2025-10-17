@@ -1,0 +1,48 @@
+﻿using System;
+using Blade.Entities;
+using Blade.FSM;
+using UnityEngine;
+using Work.PSB.Code.LibraryPlayer;
+
+namespace Work.PSB.Code.LibraryPlayers
+{
+    public class LibraryPlayer : Entity
+    {
+        [field: SerializeField] public LibraryPlayerInputSO PlayerInput { get; private set; }
+        [SerializeField] private StateDataSO[] states;
+        private EntityStateMachine _stateMachine;
+        
+        protected override void Awake()
+        {
+            base.Awake();
+            _stateMachine = new EntityStateMachine(this, states);
+
+            PlayerInput.OnInteractionPressed += HandleInteractPressed;
+        }
+
+        private void OnDestroy()
+        {
+            PlayerInput.OnInteractionPressed -= HandleInteractPressed;
+        }
+
+        private void HandleInteractPressed()
+        {
+            _stateMachine.ChangeState("INTERACT");
+        }
+
+        protected override void Start()
+        {
+            _stateMachine.ChangeState("IDLE");
+        }
+
+        private void Update()
+        {
+            _stateMachine.UpdateStateMachine();
+        }
+
+        public void ChangeState(string newStateName, bool forced = false) 
+            => _stateMachine.ChangeState(newStateName, forced);
+
+        
+    }
+}

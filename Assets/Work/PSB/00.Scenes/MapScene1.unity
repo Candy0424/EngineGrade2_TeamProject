@@ -371,6 +371,8 @@ MonoBehaviour:
   gridSize: {x: 15, y: 5, z: 11}
   gridParent:
   - {fileID: 1501577102}
+  cellObjPrefab: {fileID: 3270377010408336698, guid: 6c197db2159a050419b8ca3a6203f48e, type: 3}
+  gridStartWorldPosition: {x: 0, y: 0, z: 0}
   whatIsWalkable:
     serializedVersion: 2
     m_Bits: 64
@@ -826,7 +828,6 @@ MonoBehaviour:
   moveDuration: 0.3
   easeType: 6
   startRaised: 1
-  spikeCommand: {fileID: 11400000, guid: 54a77ad2f123b2b4fbd04ecfc3005aa9, type: 2}
   bloodEffect: {fileID: 11400000, guid: f59841e02f9311a4b9a52d18a2f0f53e, type: 2}
 --- !u!65 &298468983
 BoxCollider:
@@ -1282,7 +1283,6 @@ MonoBehaviour:
   moveDuration: 0.3
   easeType: 6
   startRaised: 0
-  spikeCommand: {fileID: 11400000, guid: 54a77ad2f123b2b4fbd04ecfc3005aa9, type: 2}
   bloodEffect: {fileID: 11400000, guid: f59841e02f9311a4b9a52d18a2f0f53e, type: 2}
 --- !u!65 &511466034
 BoxCollider:
@@ -1987,6 +1987,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1093263581}
     m_Modifications:
+    - target: {fileID: 1652841877073286673, guid: 2864075b7432f864bbaa69e5e6809296, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3993407792119883127, guid: 2864075b7432f864bbaa69e5e6809296, type: 3}
       propertyPath: m_Name
       value: GamePanel
@@ -4214,7 +4218,6 @@ MonoBehaviour:
   moveDuration: 0.3
   easeType: 6
   startRaised: 1
-  spikeCommand: {fileID: 11400000, guid: 54a77ad2f123b2b4fbd04ecfc3005aa9, type: 2}
   bloodEffect: {fileID: 11400000, guid: f59841e02f9311a4b9a52d18a2f0f53e, type: 2}
 --- !u!65 &1730484096
 BoxCollider:
@@ -4951,7 +4954,6 @@ MonoBehaviour:
   moveDuration: 0.3
   easeType: 6
   startRaised: 0
-  spikeCommand: {fileID: 11400000, guid: 54a77ad2f123b2b4fbd04ecfc3005aa9, type: 2}
   bloodEffect: {fileID: 11400000, guid: f59841e02f9311a4b9a52d18a2f0f53e, type: 2}
 --- !u!65 &2073558671
 BoxCollider:
