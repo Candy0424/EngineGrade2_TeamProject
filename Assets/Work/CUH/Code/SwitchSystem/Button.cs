@@ -1,4 +1,5 @@
 ﻿using System;
+using DG.Tweening;
 using UnityEngine;
 using Work.CIW.Code.Grid;
 using Work.CUH.Chuh007Lib.EventBus;
@@ -20,7 +21,9 @@ namespace Work.CUH.Code.SwitchSystem
         }
         
         #endregion
-        
+
+        [SerializeField] private GameObject visual;
+        [Header("Target")]
         [SerializeField] private GameObject operateObject;
         
         public GameObject activeObject
@@ -44,9 +47,16 @@ namespace Work.CUH.Code.SwitchSystem
             private set
             {
                 _isActive = value;
-                Debug.Log(_isActive);
-                if (_isActive) activatable.Activate();
-                else activatable.Deactivate();
+                if (_isActive)
+                {
+                    visual.transform.DOLocalMoveY(-0.1f, 0.1f);
+                    activatable.Activate();
+                }
+                else
+                {
+                    visual.transform.DOLocalMoveY(-0.025f, 0.1f);
+                    activatable.Deactivate();
+                }
             }
         }
         public IActivatable activatable { get; private set; }
@@ -73,7 +83,7 @@ namespace Work.CUH.Code.SwitchSystem
         private void HandlePlayerPosChange(PlayerPosChangeEvent evt)
         {
             if (_upObject != null) return;
-            if (Vector3.Distance(evt.position, transform.position) <= 0.05f)
+            if (Vector3.Distance(evt.transform.position + evt.direction, transform.position) <= 0.05f)
             {
                 Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
             }
@@ -94,6 +104,7 @@ namespace Work.CUH.Code.SwitchSystem
             else if (IsActive)
             {
                 Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
+                _upObject = null;
             }
         }
         

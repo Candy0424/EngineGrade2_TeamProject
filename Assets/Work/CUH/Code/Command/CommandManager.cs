@@ -52,8 +52,7 @@ namespace Work.CUH.Code.Command
             while (_undoCommands.Count > 0 && _undoCommands.Peek().Tick == _currentTurnCount)
             {
                 undo = true;
-                var command = _undoCommands.Pop();
-                _tempStack.Push(command);
+                _tempStack.Push(_undoCommands.Pop());
             }
 
             while (_tempStack.Count > 0)
@@ -88,10 +87,7 @@ namespace Work.CUH.Code.Command
             }
         }
 
-        public void Reset()
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
+
         
         // 커멘드를 넣는 작업
         // 플레이어의 행동 커멘드는 TurnUse보다 먼저 들어와야 한다.
@@ -110,7 +106,7 @@ namespace Work.CUH.Code.Command
 
             if (Keyboard.current.rKey.wasPressedThisFrame)
             {
-                Reset();
+                Bus<ResetUIOpenEvent>.Raise(new ResetUIOpenEvent());
             }
         }
     }
