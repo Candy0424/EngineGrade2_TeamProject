@@ -10,6 +10,9 @@ namespace Work.CUH.Code.SwitchSystem
 {
     public class Lever : GridObjectBase, ICommandable, ISwitch
     {
+        [SerializeField] private GameObject onVisual;
+        [SerializeField] private GameObject offVisual;
+        [Header("Target")]
         [SerializeField] private GameObject operateObject;
         
         public GameObject activeObject
@@ -33,8 +36,18 @@ namespace Work.CUH.Code.SwitchSystem
             private set
             {
                 _isActive = value;
-                if (_isActive) activatable.Activate();
-                else activatable.Deactivate();
+                if (_isActive)
+                {
+                    onVisual.SetActive(true);
+                    offVisual.SetActive(false);
+                    activatable.Activate();
+                }
+                else
+                {
+                    onVisual.SetActive(false);
+                    offVisual.SetActive(true);
+                    activatable.Deactivate();
+                }
             }
         }
         
@@ -54,8 +67,10 @@ namespace Work.CUH.Code.SwitchSystem
         
         private void HandlePlayerPosChange(PlayerPosChangeEvent evt)
         {
-            if (Vector3.Distance(evt.position, transform.position) <= 0.05f)
+            Debug.Log(Vector3.Distance(evt.transform.position + evt.direction, transform.position));
+            if (Vector3.Distance(evt.transform.position + evt.direction, transform.position) <= 0.05f)
             {
+                Debug.Log($"동작역");
                 Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
             }
         }
@@ -63,11 +78,13 @@ namespace Work.CUH.Code.SwitchSystem
         [ContextMenu("Activate")]
         public void ToggleSwitch()
         {
+            Debug.Log("밍");
             IsActive = !IsActive;
         }
 
         public void UndoSwitch()
         {
+            Debug.Log("언두");
             IsActive = !IsActive;
         }
         

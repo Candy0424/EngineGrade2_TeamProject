@@ -139,7 +139,7 @@ namespace Work.PSB.Code.Test
         
         private void HandlePlayerPosChange(PlayerPosChangeEvent evt)
         {
-            if (Vector3.Distance(evt.position, transform.position) <= 0.05f)
+            if (Vector3.Distance(evt.transform.position + evt.direction, transform.position) <= 0.05f)
             {
                 Bus<CommandEvent>.Raise(new CommandEvent(new TurnConsumeCommand()));
             }

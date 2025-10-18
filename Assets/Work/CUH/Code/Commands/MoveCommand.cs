@@ -34,7 +34,7 @@ namespace Work.CUH.Code.Commands
             
             if (Commandable is IMovement)
                 Bus<PlayerPosChangeEvent>.Raise(
-                    new PlayerPosChangeEvent(movement.transform.position + new Vector3(Dir.x, 0, Dir.y)));
+                    new PlayerPosChangeEvent(movement.transform, new Vector3(Dir.x, 0, Dir.y)));
             else
                 Bus<TargetPosChangeEvent>.Raise(
                     new TargetPosChangeEvent(movement.transform, new Vector3(Dir.x, 0, Dir.y)));
@@ -44,12 +44,6 @@ namespace Work.CUH.Code.Commands
         {
             IMoveableTest movement = Commandable as IMoveableTest;
             movement.HandleInput(-Dir);
-            if (Commandable is IMovement)
-                Bus<PlayerPosChangeEvent>.Raise(
-                    new PlayerPosChangeEvent(movement.transform.position + new Vector3(Dir.x, 0, Dir.y)));
-            else
-                Bus<TargetPosChangeEvent>.Raise(
-                    new TargetPosChangeEvent(movement.transform, - new Vector3(Dir.x, 0, Dir.y)));
         }
     }
 }
