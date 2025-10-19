@@ -1,16 +1,31 @@
-﻿using System;
+﻿using Blade.Entities;
+using Blade.FSM;
+using System;
 using UnityEngine;
 using Work.CIW.Code.Grid;
 using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.Commands;
 using Work.CUH.Code.GameEvents;
 using Work.CUH.Code.Test;
+using Work.ISC.Code.Managers;
 
 namespace Work.CIW.Code.Player
 {
     public class Player : GridObjectBase
     {
         [field: SerializeField] public PlayerInputSO InputSO { get; private set; }
+
+        [Header("FSM settings")]
+        [SerializeField] StateDataSO[] states;
+        EntityStateMachine _stateMachine;
+        PlayerFSMHost _fsmHost;
+        public EntityAnimator Animator { get; private set; }
+
+        public event Action OnAnimationEnd;
+
+        [Header("Manager")]
+        [SerializeField] TurnCountManager turnManager;
+        [SerializeField] TurnSystemAdapter turnAdapter;
 
         //[SerializeField] Vector3Int initialPosition = Vector3Int.zero;
         public override Vector3Int CurrentGridPosition { get; set; }
@@ -32,18 +47,76 @@ namespace Work.CIW.Code.Player
             }
 
             _movement = GetComponent<IMovement>();
+
+                _fsmHost = GetComponent<PlayerFSMHost>();
+            if (_fsmHost == null)
+            {
+                Debug.LogError("PlayerFSMHost Player에 없음. 나 작동 안해");
+                enabled = false;
+                return;
+            }
+
+            //_stateMachine = new EntityStateMachine(_fsmHost, states);
+
+            InputSO.OnMovement += HandleMove;
         }
 
-        private void OnEnable()
+        //private void OnEnable()
+        //{
+        //    if (InputSO != null)
+        //        InputSO.OnMovement += HandleMove;
+        //}
+
+        //private void OnDisable()
+        //{
+        //    if (InputSO != null)
+        //        InputSO.OnMovement -= HandleMove;
+        //}
+
+        private void OnDestroy()
         {
-            if (InputSO != null)
-                InputSO.OnMovement += HandleMove;
+            InputSO.OnMovement -= HandleMove;
+
+            if (turnManager != null)
+            {
+                turnManager.OnTurnZeroEvent -= HandleTurnZero;
+            }
         }
 
-        private void OnDisable()
+        private void Start()
         {
-            if (InputSO != null)
-                InputSO.OnMovement -= HandleMove;
+            _stateMachine = new EntityStateMachine(_fsmHost, states);
+
+            Animator = GetComponentInChildren<EntityAnimator>();
+
+            if (turnManager != null)
+            {
+                turnManager.OnTurnZeroEvent += HandleTurnZero;
+            }
+            else
+            {
+                Debug.LogError("TurnCountManager 연결 안됨");
+            }
+
+            _stateMachine.ChangeState("IDLE");
+        }
+
+        private void Update()
+        {
+            if (!turnAdapter.HasTurnRemaining)
+            {
+                _stateMachine.ChangeState("DEAD");
+            }
+
+            _stateMachine.UpdateStateMachine();
+        }
+
+        public void ChangeState(string stateName, bool forecd = false) => _stateMachine.ChangeState(stateName, forecd);
+
+        public void HandleAnimationEndEvent()
+        {
+            _stateMachine.CurrentState?.AnimationEndTrigger();
+            OnAnimationEnd?.Invoke();
         }
 
         private void HandleMove(Vector2 input)
@@ -60,6 +133,12 @@ namespace Work.CIW.Code.Player
                 Bus<CommandEvent>.Raise(new CommandEvent(command));
                 Bus<TurnUseEvent>.Raise(new TurnUseEvent());
             }
+        }
+
+        private void HandleTurnZero()
+        {
+            //ChangeState("DEAD", true);
+            Debug.Log("주금");
         }
 
         private Vector3Int GetDirection(Vector2 input)

@@ -56,6 +56,8 @@ namespace Work.CIW.Code.Player
             set => _isMoving = value;
         }
 
+        Player _player;
+
         //public Vector3Int CurrentGridPosition { get; private set; }
         //public GameObject GetGameObject() => gameObject;
 
@@ -137,6 +139,12 @@ namespace Work.CIW.Code.Player
 
         private IEnumerator MoveRoutine(Vector3Int targetPos)
         {
+            Player player = GetComponent<Player>();
+            if (player != null)
+            {
+                player.ChangeState("MOVE");
+            }
+
             _isMoving = true;
             Vector3Int oldPos = _gridObject.CurrentGridPosition;
 
@@ -168,6 +176,11 @@ namespace Work.CIW.Code.Player
             //}
 
             _isMoving = false;
+
+            if (player != null)
+            {
+                player.ChangeState("IDLE");
+            }
         }
 
         public void StartMoveLogic(Vector2 dir)
