@@ -78,7 +78,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_4c9fff0318fa45498b22685ecf373a98_Texture_1_Texture2D:
-        m_Texture: {fileID: 2800000, guid: 12524c6c35e004e44b7ffea9d12ae9cf, type: 3}
+        m_Texture: {fileID: 2800000, guid: 72e3c64674aaf384b963972544920766, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_6a380bcdb8f94650bc4cb5a5def69b01_Texture_1_Texture2D:
@@ -143,6 +143,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _Smooth: 0.1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -159,8 +160,8 @@ Material:
     - _UIMaskSoftnessY: 1
     - _WorkflowMode: 1
     - _ZWrite: 1
-    - _gage: 283.1
-    - _maxgage: 200
+    - _gage: 21
+    - _maxgage: 35
     - _normalSpd: 0.2
     - _vorInvalid: -1
     - _vorSpd: 10
@@ -169,7 +170,7 @@ Material:
     - _ClipRect: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _MinusColor: {r: 0.8018868, g: 0.7981043, b: 0.7981043, a: 1}
+    - _MinusColor: {r: 0.4528302, g: 0.4528302, b: 0.4528302, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _vorColor: {r: 1, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
