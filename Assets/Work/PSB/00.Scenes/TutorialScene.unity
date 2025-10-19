@@ -460,9 +460,9 @@ GameObject:
   - component: {fileID: 73763788}
   - component: {fileID: 73763787}
   - component: {fileID: 73763786}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (9)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -810,8 +810,8 @@ Transform:
   m_Children:
   - {fileID: 1155382158}
   - {fileID: 211910648}
-  - {fileID: 85991418}
   - {fileID: 2069892846}
+  - {fileID: 85991418}
   - {fileID: 746091141}
   - {fileID: 886064900}
   m_Father: {fileID: 0}
@@ -1000,9 +1000,9 @@ GameObject:
   - component: {fileID: 203318944}
   - component: {fileID: 203318943}
   - component: {fileID: 203318942}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1330,9 +1330,9 @@ GameObject:
   - component: {fileID: 269135548}
   - component: {fileID: 269135547}
   - component: {fileID: 269135546}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (13)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1473,6 +1473,9 @@ MonoBehaviour:
   easeType: 6
   startRaised: 1
   bloodEffect: {fileID: 11400000, guid: f59841e02f9311a4b9a52d18a2f0f53e, type: 2}
+  OnPlayerHit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &298468983
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1587,9 +1590,9 @@ GameObject:
   - component: {fileID: 311196148}
   - component: {fileID: 311196147}
   - component: {fileID: 311196146}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (17)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2141,6 +2144,9 @@ MonoBehaviour:
   easeType: 6
   startRaised: 0
   bloodEffect: {fileID: 11400000, guid: f59841e02f9311a4b9a52d18a2f0f53e, type: 2}
+  OnPlayerHit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &511466034
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2255,9 +2261,9 @@ GameObject:
   - component: {fileID: 545475436}
   - component: {fileID: 545475435}
   - component: {fileID: 545475434}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (10)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2625,9 +2631,9 @@ GameObject:
   - component: {fileID: 681284492}
   - component: {fileID: 681284491}
   - component: {fileID: 681284490}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (15)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2940,6 +2946,9 @@ MonoBehaviour:
   easeType: 6
   startRaised: 1
   bloodEffect: {fileID: 11400000, guid: f59841e02f9311a4b9a52d18a2f0f53e, type: 2}
+  OnPlayerHit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &712489462
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3468,6 +3477,9 @@ MonoBehaviour:
   easeType: 6
   startRaised: 1
   bloodEffect: {fileID: 11400000, guid: f59841e02f9311a4b9a52d18a2f0f53e, type: 2}
+  OnPlayerHit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &772327058
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3706,9 +3718,9 @@ GameObject:
   - component: {fileID: 870163089}
   - component: {fileID: 870163088}
   - component: {fileID: 870163087}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (6)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3805,9 +3817,9 @@ GameObject:
   - component: {fileID: 883627550}
   - component: {fileID: 883627549}
   - component: {fileID: 883627548}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3949,9 +3961,9 @@ GameObject:
   - component: {fileID: 985626062}
   - component: {fileID: 985626061}
   - component: {fileID: 985626060}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (4)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4691,9 +4703,9 @@ GameObject:
   - component: {fileID: 1107326668}
   - component: {fileID: 1107326667}
   - component: {fileID: 1107326666}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (8)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6062,9 +6074,9 @@ GameObject:
   - component: {fileID: 1443987502}
   - component: {fileID: 1443987501}
   - component: {fileID: 1443987500}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (16)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6464,9 +6476,9 @@ GameObject:
   - component: {fileID: 1565177205}
   - component: {fileID: 1565177204}
   - component: {fileID: 1565177203}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (12)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6649,9 +6661,9 @@ GameObject:
   - component: {fileID: 1611667202}
   - component: {fileID: 1611667201}
   - component: {fileID: 1611667200}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (7)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7221,9 +7233,9 @@ GameObject:
   - component: {fileID: 1725860016}
   - component: {fileID: 1725860015}
   - component: {fileID: 1725860014}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (3)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7364,6 +7376,9 @@ MonoBehaviour:
   easeType: 6
   startRaised: 1
   bloodEffect: {fileID: 11400000, guid: f59841e02f9311a4b9a52d18a2f0f53e, type: 2}
+  OnPlayerHit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &1730484096
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7478,9 +7493,9 @@ GameObject:
   - component: {fileID: 1730924491}
   - component: {fileID: 1730924490}
   - component: {fileID: 1730924489}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (18)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7869,9 +7884,9 @@ GameObject:
   - component: {fileID: 1914795638}
   - component: {fileID: 1914795637}
   - component: {fileID: 1914795636}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (11)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7968,9 +7983,9 @@ GameObject:
   - component: {fileID: 1951745604}
   - component: {fileID: 1951745603}
   - component: {fileID: 1951745602}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (14)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8390,6 +8405,9 @@ MonoBehaviour:
   easeType: 6
   startRaised: 0
   bloodEffect: {fileID: 11400000, guid: f59841e02f9311a4b9a52d18a2f0f53e, type: 2}
+  OnPlayerHit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &2073558671
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8590,9 +8608,9 @@ GameObject:
   - component: {fileID: 2140238895}
   - component: {fileID: 2140238894}
   - component: {fileID: 2140238893}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (5)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9397,6 +9415,9 @@ MonoBehaviour:
   easeType: 6
   startRaised: 1
   bloodEffect: {fileID: 11400000, guid: f59841e02f9311a4b9a52d18a2f0f53e, type: 2}
+  OnPlayerHit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1813841399963161208
 Transform:
   m_ObjectHideFlags: 0
@@ -9522,9 +9543,9 @@ GameObject:
   - component: {fileID: 9066254647294185885}
   - component: {fileID: 6034367599689239895}
   - component: {fileID: 1700701574075152469}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

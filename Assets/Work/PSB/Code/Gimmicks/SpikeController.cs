@@ -3,6 +3,7 @@ using Chuh007Lib.Dependencies;
 using Chuh007Lib.ObjectPool.Runtime;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 using Work.CIW.Code.Grid;
 using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.Commands;
@@ -27,10 +28,12 @@ namespace Work.PSB.Code.Test
         [SerializeField] private SpikeCommand spikeCommand;
         [SerializeField] private PoolingItemSO bloodEffect;
 
+        [Header("Event")] 
+        public UnityEvent OnPlayerHit;
+
         [Inject] private PoolManagerMono _poolManager;
 
         private bool _isRaised;
-        private bool _hasHitPlayerThisCycle = false;
         private bool _isFirst = true;
         private Vector3 _startPos;
         private Vector3 _raisedPos;
@@ -103,9 +106,6 @@ namespace Work.PSB.Code.Test
                 _collider.enabled = false;
 
             _isRaised = goingUp;
-            
-            if (goingUp)
-                _hasHitPlayerThisCycle = false;
 
             _currentTween = spikeObject.transform.DOLocalMove(targetPos, moveDuration)
                 .SetEase(easeType)
@@ -114,19 +114,6 @@ namespace Work.PSB.Code.Test
                     if (goingUp && _collider != null)
                         _collider.enabled = true;
                 });
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (!_isRaised || _hasHitPlayerThisCycle) return;
-
-            PSBTestPlayerCode player = other.GetComponent<PSBTestPlayerCode>();
-            if (player != null)
-            {
-                _hasHitPlayerThisCycle = true;
-                CreateEffect();
-                Debug.Log("Hit");
-            }
         }
         
         public async void CreateEffect()
@@ -139,9 +126,13 @@ namespace Work.PSB.Code.Test
         
         private void HandlePlayerPosChange(PlayerPosChangeEvent evt)
         {
+            if (!_isRaised) return;
+            
             if (Vector3.Distance(evt.transform.position + evt.direction, transform.position) <= 0.05f)
             {
                 Bus<CommandEvent>.Raise(new CommandEvent(new TurnConsumeCommand()));
+                CreateEffect();
+                OnPlayerHit?.Invoke();
             }
         }
         
