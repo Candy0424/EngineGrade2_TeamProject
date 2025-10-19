@@ -24,14 +24,12 @@ namespace Work.CUH.Code.Command
         
         private Queue<BaseCommand> _executionCommands;
         private Stack<BaseCommand> _undoCommands;
-        private Stack<BaseCommand> _tempStack;
         private float _lastUndoTime;
         
         private void Awake()
         {
             _executionCommands = new Queue<BaseCommand>();
             _undoCommands = new Stack<BaseCommand>();
-            _tempStack = new Stack<BaseCommand>();
             Bus<CommandEvent>.OnEvent += HandleCommand;
             Bus<TurnUseEvent>.OnEvent += TurnUse;
         }
@@ -52,15 +50,8 @@ namespace Work.CUH.Code.Command
             while (_undoCommands.Count > 0 && _undoCommands.Peek().Tick == _currentTurnCount)
             {
                 undo = true;
-                _tempStack.Push(_undoCommands.Pop());
+                _undoCommands.Pop().Undo();
             }
-
-            while (_tempStack.Count > 0)
-            {
-                var command = _tempStack.Pop();
-                command.Undo();
-            }
-            
             if (undo)
             {
                 leftUndoCount--;

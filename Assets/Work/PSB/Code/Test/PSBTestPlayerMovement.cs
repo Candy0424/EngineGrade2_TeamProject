@@ -2,7 +2,9 @@
 using UnityEngine;
 using Work.CIW.Code.Grid;
 using Work.CIW.Code.Player;
+using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.Commands;
+using Work.CUH.Code.GameEvents;
 using Work.CUH.Code.Test;
 
 namespace Work.PSB.Code.Test
@@ -66,14 +68,14 @@ namespace Work.PSB.Code.Test
         {
             if (_isMoving) return;
             if (_hasArrived) return;
-
+            
             Vector3Int dir = GetDirection(input);
             if (dir == Vector3Int.zero) return;
-
+            
             if (CheckForStairs(dir)) return;
 
             Vector3Int curPos = _gridObject.CurrentGridPosition;
-
+            Debug.Log(curPos);
             if (gridService.CanMoveTo(curPos, dir, out _))
             {
                 StartMoveLogic(input);
@@ -172,9 +174,11 @@ namespace Work.PSB.Code.Test
                 if (hits[0].TryGetComponent(out StairTrigger stair))
                 {
                     Vector3Int teleportPos = new Vector3Int(_gridObject.CurrentGridPosition.x, stair.GetTargetY(), _gridObject.CurrentGridPosition.z);
-
-                    TeleportToFloor(teleportPos, dir);
-
+                    Debug.Log(_gridObject.CurrentGridPosition);
+                    Debug.Log(teleportPos);
+                    Bus<CommandEvent>.Raise(new CommandEvent(new StairCommand(
+                        this, _gridObject.CurrentGridPosition, teleportPos, dir)));
+                    
                     return true;
                 }
             }
@@ -182,7 +186,7 @@ namespace Work.PSB.Code.Test
             return false;
         }
 
-        private void TeleportToFloor(Vector3Int targetPos, Vector3Int dir)
+        public void TeleportToFloor(Vector3Int targetPos, Vector3Int dir)
         {
             Vector3Int oldPos = _gridObject.CurrentGridPosition;
             gridService.UpdateObjectPosition(_gridObject, oldPos, targetPos);
