@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 namespace Work.CIW.Code.Grid
 {
@@ -8,12 +8,12 @@ namespace Work.CIW.Code.Grid
 
         public Transform Transform => transform;
 
-        // ¼¿ Á¡À¯/ÇØÁ¦ ½Ã ÇÊ¿äÇÑ ·ÎÁ÷À» ±¸ÇöÇÏ½Ã¸é µË´Ï´Ù.
+        // ì…€ ì ìœ /í•´ì œ ì‹œ í•„ìš”í•œ ë¡œì§ì„ êµ¬í˜„í•˜ì‹œë©´ ë©ë‹ˆë‹¤.
         public abstract void OnCellDeoccupied();
         public abstract void OnCellOccupied(Vector3Int newPos);
 
         /// <summary>
-        /// °øÅë ·ÎÁ÷ ±¸ÇöÇÏ¸é µÊ.
+        /// ê³µí†µ ë¡œì§ êµ¬í˜„í•˜ë©´ ë¨.
         /// </summary>
         protected virtual void Initialize()
         {
