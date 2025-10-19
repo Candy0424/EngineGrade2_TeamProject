@@ -19,10 +19,13 @@ namespace Work.PSB.Code.Test
         [Header("Spike Settings")]
         [SerializeField] private GameObject spikeObject;
         [SerializeField] private TurnSystem turnManager;
+        [SerializeField] private bool startRaised = false;
+        [SerializeField] private bool isWork = true;
+        
+        [Header("DoTween Settings")]
         [SerializeField] private float moveDistance = 3;
         [SerializeField] private float moveDuration = 0.3f;
         [SerializeField] private Ease easeType = Ease.OutQuad;
-        [SerializeField] private bool startRaised = false;
         
         [Header("Command / Effect")]
         [SerializeField] private SpikeCommand spikeCommand;
@@ -66,13 +69,13 @@ namespace Work.PSB.Code.Test
         private void OnEnable()
         {
             if (spikeObject == null) return;
-            if (turnManager != null)
+            if (turnManager != null && isWork)
                 turnManager.OnUseTurn += OnTurnUse;
         }
 
         private void OnDisable()
         {
-            if (turnManager != null)
+            if (turnManager != null && isWork)
                 turnManager.OnUseTurn -= OnTurnUse;
         }
         

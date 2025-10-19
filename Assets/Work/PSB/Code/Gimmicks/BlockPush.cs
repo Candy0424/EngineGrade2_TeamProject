@@ -63,7 +63,6 @@ namespace Work.PSB.Code.Test
             {
                 Bus<CommandEvent>.Raise(new CommandEvent(moveCommand));
             }
-
         }
 
         public void HandleInput(Vector2 input)

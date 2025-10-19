@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 5707614}
   m_Layer: 0
   m_Name: Trap Plane (5)
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -484,7 +484,7 @@ GameObject:
   - component: {fileID: 88418793}
   m_Layer: 0
   m_Name: Trap Plane (6)
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -641,7 +641,7 @@ GameObject:
   - component: {fileID: 146975291}
   - component: {fileID: 146975290}
   - component: {fileID: 146975289}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (10)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -923,7 +923,7 @@ GameObject:
   - component: {fileID: 236217438}
   - component: {fileID: 236217437}
   - component: {fileID: 236217436}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (12)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -1142,7 +1142,7 @@ GameObject:
   - component: {fileID: 260094060}
   - component: {fileID: 260094059}
   - component: {fileID: 260094058}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (5)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -1435,7 +1435,7 @@ GameObject:
   - component: {fileID: 263624309}
   - component: {fileID: 263624308}
   - component: {fileID: 263624307}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PushingBlock (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1535,7 +1535,8 @@ GameObject:
   - component: {fileID: 266134592}
   - component: {fileID: 266134591}
   - component: {fileID: 266134590}
-  m_Layer: 0
+  - component: {fileID: 266134594}
+  m_Layer: 12
   m_Name: EndingBlock
   m_TagString: EndBlock
   m_Icon: {fileID: 0}
@@ -1658,6 +1659,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 266134587}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &266134594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266134587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0410e7a1c95951546bca15268ef82280, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &285300512
 GameObject:
   m_ObjectHideFlags: 0
@@ -1674,7 +1687,7 @@ GameObject:
   - component: {fileID: 285300514}
   m_Layer: 0
   m_Name: Trap Plane (1)
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1831,7 +1844,7 @@ GameObject:
   - component: {fileID: 303307747}
   - component: {fileID: 303307746}
   - component: {fileID: 303307745}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (21)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -1930,7 +1943,7 @@ GameObject:
   - component: {fileID: 308394774}
   - component: {fileID: 308394773}
   - component: {fileID: 308394772}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (23)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -2029,7 +2042,7 @@ GameObject:
   - component: {fileID: 341317759}
   - component: {fileID: 341317758}
   - component: {fileID: 341317757}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (2)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -2214,7 +2227,7 @@ GameObject:
   - component: {fileID: 399219249}
   - component: {fileID: 399219248}
   - component: {fileID: 399219247}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (20)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -2313,7 +2326,7 @@ GameObject:
   - component: {fileID: 407033526}
   - component: {fileID: 407033525}
   - component: {fileID: 407033524}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (18)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -2584,7 +2597,7 @@ GameObject:
   - component: {fileID: 508691358}
   - component: {fileID: 508691357}
   - component: {fileID: 508691356}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (4)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -2769,7 +2782,7 @@ GameObject:
   - component: {fileID: 571729912}
   - component: {fileID: 571729911}
   - component: {fileID: 571729910}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PushingBlock (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3390,7 +3403,7 @@ GameObject:
   - component: {fileID: 635916991}
   m_Layer: 0
   m_Name: Trap Plane (4)
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3655,7 +3668,7 @@ GameObject:
   - component: {fileID: 659631674}
   - component: {fileID: 659631673}
   - component: {fileID: 659631672}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (1)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -3754,7 +3767,7 @@ GameObject:
   - component: {fileID: 686467047}
   - component: {fileID: 686467046}
   - component: {fileID: 686467045}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (14)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -3853,7 +3866,7 @@ GameObject:
   - component: {fileID: 703214240}
   - component: {fileID: 703214239}
   - component: {fileID: 703214238}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (16)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -3952,7 +3965,7 @@ GameObject:
   - component: {fileID: 712220254}
   - component: {fileID: 712220253}
   - component: {fileID: 712220252}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PushingBlock (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4137,7 +4150,7 @@ GameObject:
   - component: {fileID: 780775467}
   - component: {fileID: 780775466}
   - component: {fileID: 780775465}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (15)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -4275,7 +4288,7 @@ GameObject:
   - component: {fileID: 792909386}
   - component: {fileID: 792909385}
   - component: {fileID: 792909384}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (13)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -4374,7 +4387,7 @@ GameObject:
   - component: {fileID: 852974527}
   - component: {fileID: 852974526}
   - component: {fileID: 852974525}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (9)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -4473,7 +4486,7 @@ GameObject:
   - component: {fileID: 857892990}
   - component: {fileID: 857892989}
   - component: {fileID: 857892988}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (7)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -4572,7 +4585,7 @@ GameObject:
   - component: {fileID: 881408876}
   - component: {fileID: 881408875}
   - component: {fileID: 881408874}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (24)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -4929,7 +4942,7 @@ GameObject:
   - component: {fileID: 955066544}
   - component: {fileID: 955066543}
   - component: {fileID: 955066542}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PushingBlock (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5028,7 +5041,7 @@ GameObject:
   - component: {fileID: 990035964}
   - component: {fileID: 990035963}
   - component: {fileID: 990035962}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (19)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -5331,7 +5344,7 @@ GameObject:
   - component: {fileID: 1073748602}
   - component: {fileID: 1073748601}
   - component: {fileID: 1073748600}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PushingBlock (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5753,7 +5766,7 @@ GameObject:
   - component: {fileID: 1188480580}
   m_Layer: 0
   m_Name: Trap Plane (7)
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5910,7 +5923,7 @@ GameObject:
   - component: {fileID: 1200306292}
   - component: {fileID: 1200306291}
   - component: {fileID: 1200306290}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (8)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -6121,7 +6134,7 @@ GameObject:
   - component: {fileID: 1281953306}
   m_Layer: 0
   m_Name: Trap Plane (3)
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6312,7 +6325,7 @@ GameObject:
   - component: {fileID: 1303482829}
   - component: {fileID: 1303482828}
   - component: {fileID: 1303482827}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PushingBlock (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6415,7 +6428,7 @@ GameObject:
   - component: {fileID: 1304034406}
   m_Layer: 0
   m_Name: Trap Plane (2)
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7398,7 +7411,7 @@ GameObject:
   - component: {fileID: 1508126689}
   - component: {fileID: 1508126688}
   - component: {fileID: 1508126687}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (3)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -7497,7 +7510,7 @@ GameObject:
   - component: {fileID: 1546820545}
   - component: {fileID: 1546820544}
   - component: {fileID: 1546820543}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (6)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -7682,7 +7695,7 @@ GameObject:
   - component: {fileID: 1595665998}
   - component: {fileID: 1595665997}
   - component: {fileID: 1595665996}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PushingBlock (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7781,7 +7794,7 @@ GameObject:
   - component: {fileID: 1610436945}
   - component: {fileID: 1610436944}
   - component: {fileID: 1610436943}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (26)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -8159,7 +8172,7 @@ GameObject:
   - component: {fileID: 1673840950}
   - component: {fileID: 1673840949}
   - component: {fileID: 1673840948}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (17)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -8428,7 +8441,7 @@ GameObject:
   - component: {fileID: 1779835926}
   - component: {fileID: 1779835925}
   - component: {fileID: 1779835924}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (25)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -8527,7 +8540,7 @@ GameObject:
   - component: {fileID: 1800307695}
   - component: {fileID: 1800307694}
   - component: {fileID: 1800307693}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (11)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -8712,7 +8725,7 @@ GameObject:
   - component: {fileID: 1837893348}
   - component: {fileID: 1837893347}
   - component: {fileID: 1837893346}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock (22)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -10721,7 +10734,7 @@ GameObject:
   - component: {fileID: 6726076386466696401}
   - component: {fileID: 8302523468441931803}
   - component: {fileID: 3971057035167638809}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -11257,7 +11270,7 @@ GameObject:
   - component: {fileID: 4158694781260601180}
   - component: {fileID: 1718414713901140886}
   - component: {fileID: 6052120319786303124}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -11276,7 +11289,7 @@ GameObject:
   - component: {fileID: 4158694781663298038}
   - component: {fileID: 1718414712424701244}
   - component: {fileID: 6052120321531177022}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -11295,7 +11308,7 @@ GameObject:
   - component: {fileID: 4158694781868964434}
   - component: {fileID: 1718414712615413400}
   - component: {fileID: 6052120321720832922}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -11817,7 +11830,7 @@ GameObject:
   - component: {fileID: 8671914797002253036}
   m_Layer: 0
   m_Name: Trap Plane
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12312,7 +12325,7 @@ GameObject:
   - component: {fileID: 5012080496826871929}
   - component: {fileID: 5957121485002321729}
   - component: {fileID: 8200284172864432625}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PushingBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}

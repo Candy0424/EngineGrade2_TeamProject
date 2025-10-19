@@ -133,8 +133,7 @@ namespace Work.PSB.Code.Test
         {
             if (_hasArrived) return false;
             if (_isMoving) return false;
-
-            if (CheckForArrival(direction)) return true;
+            
             if (CheckForStairs(direction)) return true;
 
             if (gridService.CanMoveTo(_gridObject.CurrentGridPosition, direction, out Vector3Int targetPos))
@@ -215,29 +214,6 @@ namespace Work.PSB.Code.Test
             {
                 Debug.LogWarning("텔레포트 후 강제 이동 실패. 다음 칸이 막혀있거나 경계 밖. 계단에 남아있을 수 있습니다.");
             }
-        }
-
-        private bool CheckForArrival(Vector3Int dir)
-        {
-            Vector3Int targetGridPos = _gridObject.CurrentGridPosition + dir;
-            Vector3 rayOrigin = new Vector3(targetGridPos.x, targetGridPos.y + 5f, targetGridPos.z);
-            Vector3 rayDirection = Vector3.down;
-
-            float maxDistance = 6f;
-
-            if (Physics.Raycast(rayOrigin, rayDirection, out RaycastHit hit, maxDistance, whatIsArrival))
-            {
-                if (hit.collider.GetComponent<ArrivalTrigger>() != null)
-                {
-                    Debug.Log("도착했습니다!");
-
-                    _hasArrived = true;
-                    StartCoroutine(MoveRoutine(targetGridPos));
-                    return true;
-                }
-            }
-
-            return false;
         }
 
         #endregion
