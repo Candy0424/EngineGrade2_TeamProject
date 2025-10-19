@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7786534697700644072
 RectTransform:
   m_ObjectHideFlags: 0
@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.9914284, b: 0.8443396, a: 1}
+  m_Color: {r: 1, g: 0.9914284, b: 0.8443396, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -384,7 +384,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: cf04a1d0d7539774e8b2420af02556b3, type: 2}
-  m_Color: {r: 0.14150941, g: 0.13683693, b: 0.13683693, a: 1}
+  m_Color: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -414,3 +414,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnCountText: {fileID: 3228020687698933875}
+  image: {fileID: 1260756539998183374}
