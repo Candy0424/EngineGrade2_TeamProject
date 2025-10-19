@@ -80,6 +80,7 @@ namespace Work.PSB.Code.Test
             if (isWall)
             {
                 Bus<TurnUseEvent>.Raise(new TurnUseEvent());
+                Debug.Log("Wall");
                 return;
             }
     

@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 4158694780884181745}
   - component: {fileID: 1718414713776356923}
   - component: {fileID: 6052120320735267641}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallBlock
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,7 +127,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 2.4, y: 2.5, z: 2}
+  m_LocalScale: {x: 5.5, y: 5.6, z: 2.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5690808193312679174}
@@ -139,7 +139,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6924104451624384015}
-  m_Mesh: {fileID: 5060444177187149915, guid: b7d099d8267bcfa4c967dbd4fddbe7c9, type: 3}
+  m_Mesh: {fileID: 7094966158483230508, guid: dcdd73ec049103c429c2d978ca3cc0f3, type: 3}
 --- !u!23 &7101167743387432023
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -163,7 +163,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b565bedd28ae6e94490c41270cbbfd38, type: 2}
+  - {fileID: -6478536213147159724, guid: 5b9bd66f174f29a418fd3b355e6d176c, type: 3}
+  - {fileID: 239378781582670930, guid: 5b9bd66f174f29a418fd3b355e6d176c, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

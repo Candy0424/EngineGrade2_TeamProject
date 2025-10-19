@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2535844125106186464}
   m_Layer: 0
   m_Name: Trap Plane
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -157,8 +157,10 @@ MonoBehaviour:
   moveDuration: 0.3
   easeType: 6
   startRaised: 1
-  spikeCommand: {fileID: 11400000, guid: 54a77ad2f123b2b4fbd04ecfc3005aa9, type: 2}
   bloodEffect: {fileID: 11400000, guid: f59841e02f9311a4b9a52d18a2f0f53e, type: 2}
+  OnPlayerHit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5190941709502022784
 GameObject:
   m_ObjectHideFlags: 0

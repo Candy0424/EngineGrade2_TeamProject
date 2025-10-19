@@ -63,7 +63,6 @@ namespace Work.PSB.Code.Test
             {
                 Bus<CommandEvent>.Raise(new CommandEvent(moveCommand));
             }
-
         }
 
         public void HandleInput(Vector2 input)
@@ -87,15 +86,20 @@ namespace Work.PSB.Code.Test
             if (!canMoveBlock) return false;
 
             Vector3Int targetPos = CurrentGridPosition + dir;
-            Collider[] hits = Physics.OverlapSphere((Vector3)targetPos, 0.45f);
+            
+            if (!_gridService.CanMoveTo(CurrentGridPosition, dir, out Vector3Int validatedPos))
+            {
+                return false;
+            }
 
+            Collider[] hits = Physics.OverlapSphere((Vector3)targetPos, 0.45f);
             foreach (Collider hit in hits)
             {
                 if (hit == null) continue;
                 if (hit.GetComponent<BlockPush>() != null) return false;
                 if (hit.CompareTag("Wall") || hit.CompareTag("Spike")) return false;
             }
-
+            
             CreateEffect();
             return true;
         }
