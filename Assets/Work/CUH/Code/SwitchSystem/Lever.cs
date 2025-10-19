@@ -67,10 +67,8 @@ namespace Work.CUH.Code.SwitchSystem
         
         private void HandlePlayerPosChange(PlayerPosChangeEvent evt)
         {
-            Debug.Log(Vector3.Distance(evt.transform.position + evt.direction, transform.position));
             if (Vector3.Distance(evt.transform.position + evt.direction, transform.position) <= 0.05f)
             {
-                Debug.Log($"동작역");
                 Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
             }
         }
@@ -78,13 +76,11 @@ namespace Work.CUH.Code.SwitchSystem
         [ContextMenu("Activate")]
         public void ToggleSwitch()
         {
-            Debug.Log("밍");
             IsActive = !IsActive;
         }
 
         public void UndoSwitch()
         {
-            Debug.Log("언두");
             IsActive = !IsActive;
         }
         
