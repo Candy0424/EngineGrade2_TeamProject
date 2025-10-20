@@ -835,7 +835,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &182736960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1024,11 +1024,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floorCam: {fileID: 1641700309}
   transitionCam: {fileID: 1462451359}
-  currentFloorObj: {fileID: 1302088641}
-  targetFloorObj: {fileID: 0}
-  playerObj: {fileID: 0}
+  floorObjs:
+  - {fileID: 1302088641}
+  playerObj: {fileID: 1147423848277493468}
   moveDuration: 1.5
-  moveCamLerpSpeed: 5
+  moveCamLerpSpeed: 13
+  camHeightForFloorView: 15
 --- !u!4 &192428895
 Transform:
   m_ObjectHideFlags: 0
@@ -3092,10 +3093,6 @@ PrefabInstance:
     - target: {fileID: 8582322917746505506, guid: 650315da62149c545bf8cb247f2d7999, type: 3}
       propertyPath: m_Name
       value: PushingBlock (8)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8582322917746505506, guid: 650315da62149c545bf8cb247f2d7999, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6505,7 +6502,7 @@ Transform:
   m_GameObject: {fileID: 1462451357}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 11, z: 0}
+  m_LocalPosition: {x: 0, y: 15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7274,7 +7271,7 @@ Transform:
   m_GameObject: {fileID: 1641700307}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 9, z: 0}
+  m_LocalPosition: {x: 0, y: 13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7585,7 +7582,7 @@ Transform:
   m_GameObject: {fileID: 1778318392}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 9, z: 0}
+  m_LocalPosition: {x: 0, y: 13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10705,6 +10702,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridServiceMono: {fileID: 85991417}
+  floorTransitionManager: {fileID: 0}
   moveTime: 0.15
   whatIsStair:
     serializedVersion: 2
