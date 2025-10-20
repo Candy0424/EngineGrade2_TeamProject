@@ -41,14 +41,13 @@ namespace Work.ISC.Code.UI
 
         private void UpdateText(int v)
         {
-            DOVirtual.Float(_currentGage, v, 0.2f, x => image.material.SetFloat(_gageHash, x)).SetEase(Ease.Linear);
+            DOVirtual.Float(_currentGage, v, 0.2f, x => image.material.SetFloat(_gageHash, x)).SetEase(Ease.Linear).OnComplete(() => _currentGage = v);
             Sequence seq = DOTween.Sequence();
             seq.Append(DOVirtual.Float(60f, 100f, 0.2f, x => turnCountText.fontSize = x));
             seq.Append(DOVirtual.Float(100f, 60f, 0.2f, x => turnCountText.fontSize = x));
             seq.Play();
             turnCountText.SetText(v.ToString());
             
-            _currentGage = v;
         }
     }
 }

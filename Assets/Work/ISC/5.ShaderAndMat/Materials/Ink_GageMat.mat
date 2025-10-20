@@ -78,7 +78,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_4c9fff0318fa45498b22685ecf373a98_Texture_1_Texture2D:
-        m_Texture: {fileID: 2800000, guid: f6c8602530ffcfa4da77762e75f94ae8, type: 3}
+        m_Texture: {fileID: 2800000, guid: 72e3c64674aaf384b963972544920766, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_6a380bcdb8f94650bc4cb5a5def69b01_Texture_1_Texture2D:
@@ -87,6 +87,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_6fbfede0cc374dac81b8cc10ed15c316_Texture_1_Texture2D:
         m_Texture: {fileID: 2800000, guid: 2b1f0c549c0d3bb44a7f7257abe173c0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_8dcaa35da0d940d1a97149e59b717002_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 58cfb4b3dbda1a544ad911e157ab4420, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_d317dd61c46b4f8fbf4a2ce051c76a4d_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 0137e794e04681a41a8ec30b10ee293a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -123,10 +131,11 @@ Material:
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
+    - _Float: 0.37
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Invalid: -0.14
+    - _Invalid: 0.02
     - _Metallic: 0
     - _MinusValue: 0.03
     - _OcclusionStrength: 1
@@ -134,6 +143,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _Smooth: 0.1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -151,7 +161,10 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     - _gage: 21
-    - _maxgage: 100
+    - _maxgage: 35
+    - _normalSpd: 0.2
+    - _vorInvalid: -1
+    - _vorSpd: 10
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _ClipRect: {r: 0, g: 0, b: 0, a: 0}
@@ -159,5 +172,6 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _MinusColor: {r: 0.4528302, g: 0.4528302, b: 0.4528302, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _vorColor: {r: 1, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
