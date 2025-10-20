@@ -1,5 +1,6 @@
 ﻿using Blade.Entities;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Work.PSB.Code.LibraryPlayers.States
 {
@@ -12,6 +13,10 @@ namespace Work.PSB.Code.LibraryPlayers.States
         public override void Update()
         {
             base.Update();
+            if (Keyboard.current.fKey.wasPressedThisFrame)
+            {
+                _player.ChangeState("INTERACT");
+            }
             Vector2 movementKey = _player.PlayerInput.MovementKey;
             
             _movement.SetMovementDirection(movementKey);

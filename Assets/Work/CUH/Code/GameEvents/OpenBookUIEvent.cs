@@ -10,5 +10,11 @@ namespace Work.CUH.Code.GameEvents
         {
             LoadSceneName = loadSceneName;
         }
+        
+    }
+    
+    public struct CloseBookUIEvent : IEvent
+    {
+        
     }
 }
