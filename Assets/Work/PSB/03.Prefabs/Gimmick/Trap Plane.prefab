@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 476364551572708042}
   - component: {fileID: 1296321292248148706}
   - component: {fileID: 4492444702675603884}
+  - component: {fileID: 2133150156638343269}
   m_Layer: 0
   m_Name: Trap Plane
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,7 +132,7 @@ MonoBehaviour:
   spikeObject: {fileID: 5637774200392902684}
   turnManager: {fileID: 0}
   startRaised: 1
-  isWork: 1
+  isWork: 0
   moveDistance: 3
   moveDuration: 0.3
   easeType: 6
@@ -163,6 +164,27 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!65 &2133150156638343269
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4636234131166404395}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.4758452, y: 0.39843562, z: 0.16952598}
+  m_Center: {x: -0.0073197717, y: -0.04309924, z: 0.27053905}
 --- !u!1 &5637774200392902684
 GameObject:
   m_ObjectHideFlags: 0
