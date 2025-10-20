@@ -1,8 +1,13 @@
 ﻿using Blade.Entities;
 using Blade.FSM;
+using Chuh007Lib.Dependencies;
+using Chuh007Lib.ObjectPool.Runtime;
 using System;
+using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using Work.CIW.Code;
+using Work.CIW.Code.ETC;
 using Work.CIW.Code.Grid;
 using Work.CIW.Code.Player;
 using Work.CUH.Chuh007Lib.EventBus;
@@ -34,6 +39,14 @@ namespace Work.PSB.Code.Test
         [SerializeField] TurnSystemAdapter turnAdapter;
         [SerializeField] TurnCountManager turnManager;
 
+        [Header("Ink Sink")]
+        [SerializeField] float sinkDuration = 1f;
+        [SerializeField] float sinkAmount = 0.5f;
+
+        [Header("Object Pooling")]
+        [Inject] PoolManagerMono _poolManager;
+        [SerializeField] PoolingItemSO inkPool;
+        
         bool _isDead = false;
 
         public void ChangeState(string stateName, bool forced = false) => _stateMachine.ChangeState(stateName, forced);
@@ -101,9 +114,9 @@ namespace Work.PSB.Code.Test
 
         private void Update()
         {
-            if (!turnAdapter.HasTurnRemaining)
+            if (!turnAdapter.HasTurnRemaining && !_isDead)
             {
-                _stateMachine.ChangeState("DEAD");
+                HandleTurnZero();
             }
 
             _stateMachine.UpdateStateMachine();
@@ -186,8 +199,42 @@ namespace Work.PSB.Code.Test
 
         private void HandleTurnZero()
         {
-            Debug.Log("쥬금");
+            if (_isDead) return;
+
             _isDead = true;
+            _stateMachine.ChangeState("DEAD");
+        }
+
+        public IEnumerator InkPooling()
+        {
+            InkPool ink = _poolManager.Pop<InkPool>(inkPool);
+            ink.transform.position = transform.position;
+
+            StartCoroutine(SinkRoutine());
+
+            yield return new WaitForSeconds(sinkDuration);
+
+            Debug.Log("잉크 풀링 완료");
+            _poolManager.Push(ink);
+        }
+
+        private IEnumerator SinkRoutine()
+        {
+            Vector3 startPos = transform.position;
+            Vector3 targetPos = startPos - new Vector3(0f, sinkAmount, 0f);
+
+            float elapsedTime = 0f;
+
+            while (elapsedTime < sinkDuration)
+            {
+                transform.position = Vector3.Lerp(startPos, targetPos, elapsedTime / sinkDuration);
+
+                yield return null; 
+
+                elapsedTime += Time.deltaTime;
+            }
+
+            transform.position = targetPos;
         }
 
         private Vector3Int GetDirection(Vector2 input)
