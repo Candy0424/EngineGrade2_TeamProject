@@ -45,7 +45,7 @@ namespace Work.CUH.Code.Command
         {
             if (_undoCommands.Count <= 0 || _currentTurnCount <= 0) return;
             if (!_undoCommands.Peek().CanExecute()) return;
-            if (leftUndoCount <= 0) return;
+            // if (leftUndoCount <= 0) return;
             bool undo = false;
             while (_undoCommands.Count > 0 && _undoCommands.Peek().Tick == _currentTurnCount)
             {
