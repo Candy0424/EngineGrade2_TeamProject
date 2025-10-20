@@ -15,6 +15,7 @@ namespace Work.CUH.Code.UI
         private void Awake()
         {
             if(transition == null) transition = GetComponent<TransitionAnimator>();
+            if (stageUI == null) Debug.LogError("Stage Ui is null!");
             Bus<OpenBookUIEvent>.OnEvent += HandleOpenBook;
         }
 
@@ -26,14 +27,20 @@ namespace Work.CUH.Code.UI
         private void HandleOpenBook(OpenBookUIEvent evt)
         {
             _loadSceneName = evt.LoadSceneName;
-            stageUI.SetActive(true);
+            if(stageUI) stageUI.SetActive(true);
         }
         
-        [ContextMenu("Test")]
+        [ContextMenu("TestLoad")]
         public void LoadGameScene() // 플레이어가 스테이지 진입 누르면 호출
         {
             transition.gameObject.SetActive(true);
             transition.sceneNameToLoad = _loadSceneName;
+        }
+        
+        [ContextMenu("TestClose")]
+        public void CloseUI() // 플레이어가 나가기 누르면 호출
+        {
+            Bus<CloseBookUIEvent>.Raise(new CloseBookUIEvent());
         }
     }
 }

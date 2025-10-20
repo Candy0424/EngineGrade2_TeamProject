@@ -2,7 +2,9 @@
 using Blade.Entities;
 using Blade.FSM;
 using UnityEngine;
+using Work.CUH.Code.Entities;
 using Work.PSB.Code.LibraryPlayer;
+using Work.PSB.Code.LibraryPlayers.States;
 
 namespace Work.PSB.Code.LibraryPlayers
 {
@@ -12,22 +14,21 @@ namespace Work.PSB.Code.LibraryPlayers
         [SerializeField] private StateDataSO[] states;
         private EntityStateMachine _stateMachine;
         
+        
         protected override void Awake()
         {
             base.Awake();
             _stateMachine = new EntityStateMachine(this, states);
-
             PlayerInput.OnInteractionPressed += HandleInteractPressed;
         }
-
+        
         private void OnDestroy()
         {
             PlayerInput.OnInteractionPressed -= HandleInteractPressed;
         }
-
+        
         private void HandleInteractPressed()
         {
-            _stateMachine.ChangeState("INTERACT");
         }
 
         protected override void Start()
