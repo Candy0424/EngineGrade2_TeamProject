@@ -1024,11 +1024,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floorCam: {fileID: 1641700309}
   transitionCam: {fileID: 1462451359}
-  currentFloorObj: {fileID: 1302088641}
-  targetFloorObj: {fileID: 0}
+  floorObjs: []
   playerObj: {fileID: 0}
   moveDuration: 1.5
   moveCamLerpSpeed: 5
+  camHeightForFloorView: 10
 --- !u!4 &192428895
 Transform:
   m_ObjectHideFlags: 0
@@ -10705,6 +10705,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridServiceMono: {fileID: 85991417}
+  floorTransitionManager: {fileID: 0}
   moveTime: 0.15
   whatIsStair:
     serializedVersion: 2
