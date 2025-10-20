@@ -170,6 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridServiceMono: {fileID: 149962078}
+  floorTransitionManager: {fileID: 0}
   moveTime: 0.15
   whatIsStair:
     serializedVersion: 2
@@ -4542,6 +4543,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1302088642}
     m_Modifications:
+    - target: {fileID: 1695243433147643435, guid: 9f02eea515b85a842900aaf2ec26ad9a, type: 3}
+      propertyPath: OnArrival.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1619491984}
+    - target: {fileID: 1695243433147643435, guid: 9f02eea515b85a842900aaf2ec26ad9a, type: 3}
+      propertyPath: OnArrival.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LobbyScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 1695243433147643435, guid: 9f02eea515b85a842900aaf2ec26ad9a, type: 3}
+      propertyPath: OnArrival.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Work.CIW.Code.Grid.ArrivalTrigger, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 6314386809526726394, guid: 9f02eea515b85a842900aaf2ec26ad9a, type: 3}
       propertyPath: m_Name
       value: EndingBlock
@@ -4596,6 +4609,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6911631330749521815, guid: 9f02eea515b85a842900aaf2ec26ad9a, type: 3}
   m_PrefabInstance: {fileID: 1619491982}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1619491984 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1695243433147643435, guid: 9f02eea515b85a842900aaf2ec26ad9a, type: 3}
+  m_PrefabInstance: {fileID: 1619491982}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0410e7a1c95951546bca15268ef82280, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1641700307
 GameObject:
   m_ObjectHideFlags: 0

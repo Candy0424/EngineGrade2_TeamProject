@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using Work.PSB.Code.Test;
 
 namespace Work.CIW.Code.Grid
@@ -17,6 +19,18 @@ namespace Work.CIW.Code.Grid
                 OnArrival.Invoke();
                 Debug.Log("도착입니다!");
             }
+        }
+
+        public IEnumerator LobbySceneCoroutine()
+        {
+            yield return new WaitForSeconds(0.5f);
+            SceneManager.LoadScene("LibraryPlayerScene");
+            
+        }
+        
+        public void LobbyScene()
+        {
+            StartCoroutine(LobbySceneCoroutine());
         }
         
     }

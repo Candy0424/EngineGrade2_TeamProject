@@ -82,7 +82,6 @@ namespace Work.PSB.Code.Test
             if (CheckForStairs(dir)) return;
 
             Vector3Int curPos = _gridObject.CurrentGridPosition;
-            Debug.Log(curPos);
             if (gridService.CanMoveTo(curPos, dir, out _))
             {
                 StartMoveLogic(input);
@@ -198,9 +197,7 @@ namespace Work.PSB.Code.Test
                     {
                         floorTransitionManager.StartFloorTransition(floorDirection);
                     }
-
-                    Debug.Log(_gridObject.CurrentGridPosition);
-                    Debug.Log(teleportPos);
+                    
                     Bus<CommandEvent>.Raise(new CommandEvent(new StairCommand(
                         this, _gridObject.CurrentGridPosition, teleportPos, dir)));
                     
@@ -220,8 +217,6 @@ namespace Work.PSB.Code.Test
             Vector3 finalWorldPos = new Vector3(targetPos.x, targetWorldY, targetPos.z);
             transform.position = finalWorldPos;
 
-            Debug.Log($"텔포 시킴. 현재 위치는 {_gridObject.CurrentGridPosition}");
-
             Vector3Int effectiveDir = dir;
             if (dir.y < 0)
             {
@@ -236,12 +231,6 @@ namespace Work.PSB.Code.Test
                 float finalWorldY = finalMovePos.y;
                 Vector3 finalFinalWorldPos = new Vector3(finalMovePos.x, finalWorldY, finalMovePos.z);
                 transform.position = finalFinalWorldPos;
-
-                Debug.Log($"텔포 후 강제 이동. 최종 위치는 {_gridObject.CurrentGridPosition}");
-            }
-            else
-            {
-                Debug.LogWarning("텔레포트 후 강제 이동 실패. 다음 칸이 막혀있거나 경계 밖. 계단에 남아있을 수 있습니다.");
             }
         }
 
