@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Work.CIW.Code.Camera;
 using Work.CIW.Code.Grid;
 using Work.CIW.Code.Player;
 using Work.CUH.Chuh007Lib.EventBus;
@@ -15,6 +16,9 @@ namespace Work.PSB.Code.Test
         [SerializeField] private MonoBehaviour gridServiceMono;
         public IGridDataService gridService;
         private GridObjectBase _gridObject;
+
+        [Header("Camera Transition")]
+        [SerializeField] FloorTransitionManager floorTransitionManager;
 
         PSBTestPlayerCode _playerCode;
 
@@ -187,6 +191,14 @@ namespace Work.PSB.Code.Test
                 if (hits[0].TryGetComponent(out StairTrigger stair))
                 {
                     Vector3Int teleportPos = new Vector3Int(_gridObject.CurrentGridPosition.x, stair.GetTargetY(), _gridObject.CurrentGridPosition.z);
+
+                    int floorDirection = teleportPos.y > _gridObject.CurrentGridPosition.y ? 1 : -1;
+
+                    if (floorTransitionManager != null)
+                    {
+                        floorTransitionManager.StartFloorTransition(floorDirection);
+                    }
+
                     Debug.Log(_gridObject.CurrentGridPosition);
                     Debug.Log(teleportPos);
                     Bus<CommandEvent>.Raise(new CommandEvent(new StairCommand(
