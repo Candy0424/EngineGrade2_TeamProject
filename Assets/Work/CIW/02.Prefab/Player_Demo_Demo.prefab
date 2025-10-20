@@ -1108,10 +1108,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8917620711972104216}
-  - component: {fileID: 4126121759932314336}
-  - component: {fileID: 6734043225076924604}
   - component: {fileID: 5968895831227494122}
   - component: {fileID: 3824301876674659253}
+  - component: {fileID: 3610769620131681164}
+  - component: {fileID: 5975473340876697369}
   m_Layer: 0
   m_Name: Player_Demo_Demo
   m_TagString: Player
@@ -1135,46 +1135,6 @@ Transform:
   - {fileID: 1387998512364785853}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4126121759932314336
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4307421060228984100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f05c29f95c88de44ab76d73278aa0f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gridServiceMono: {fileID: 0}
-  moveTime: 0.15
-  whatIsStair:
-    serializedVersion: 2
-    m_Bits: 128
-  whatIsArrival:
-    serializedVersion: 2
-    m_Bits: 4096
---- !u!114 &6734043225076924604
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4307421060228984100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67825fbb9af7fe247900972cd6f4df13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <InputSO>k__BackingField: {fileID: 11400000, guid: 50aa76c636a6be64ba2ef49f7e560820, type: 2}
-  states:
-  - {fileID: 11400000, guid: a16c5a7ace528ff4d95de26392c004a2, type: 2}
-  - {fileID: 11400000, guid: 2b2d25a3d3d5f204d968200e675139aa, type: 2}
-  - {fileID: 11400000, guid: 03c09d8b5b9ef0649af246d523fc2919, type: 2}
-  - {fileID: 11400000, guid: a79ddf629d2a1a84ba08388cf4bc63b5, type: 2}
-  turnManager: {fileID: 0}
-  turnAdapter: {fileID: 0}
 --- !u!136 &5968895831227494122
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1216,6 +1176,46 @@ MonoBehaviour:
   OnDeadEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3610769620131681164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4307421060228984100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3d075b4d8454ffeb36d8b4f1723b2f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <InputSO>k__BackingField: {fileID: 11400000, guid: 50aa76c636a6be64ba2ef49f7e560820, type: 2}
+  states:
+  - {fileID: 11400000, guid: a16c5a7ace528ff4d95de26392c004a2, type: 2}
+  - {fileID: 11400000, guid: 2b2d25a3d3d5f204d968200e675139aa, type: 2}
+  - {fileID: 11400000, guid: 03c09d8b5b9ef0649af246d523fc2919, type: 2}
+  - {fileID: 11400000, guid: a79ddf629d2a1a84ba08388cf4bc63b5, type: 2}
+  turnAdapter: {fileID: 0}
+  turnManager: {fileID: 0}
+--- !u!114 &5975473340876697369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4307421060228984100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 287ef08cc54f4ba9963cac1373f9555e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridServiceMono: {fileID: 0}
+  moveTime: 0.15
+  whatIsStair:
+    serializedVersion: 2
+    m_Bits: 0
+  whatIsArrival:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &4517002982398633879
 GameObject:
   m_ObjectHideFlags: 0
