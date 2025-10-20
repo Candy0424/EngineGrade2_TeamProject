@@ -6,7 +6,7 @@ namespace Work.CUH.Code.Interaction
 {
     public class PlayerInteraction : MonoBehaviour, IEntityComponent
     {
-        [SerializeField] private float interactionRange = 1f;
+        [SerializeField] private float interactionRange = 2f;
         
         private Entity _entity;
         public void Initialize(Entity entity)
