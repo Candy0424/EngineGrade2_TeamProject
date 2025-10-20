@@ -1,17 +1,22 @@
 ﻿using Blade.Entities;
 using UnityEngine;
+using Work.CUH.Code.Interaction;
 
 namespace Work.PSB.Code.LibraryPlayers.States
 {
     public class PlayerInteractState : PlayerState
     {
+        private PlayerInteraction _playerInteraction;
+        
         public PlayerInteractState(Entity entity, int animationHash) : base(entity, animationHash)
         {
+            _playerInteraction = entity.GetCompo<PlayerInteraction>();
         }
 
         public override void Enter()
         {
             base.Enter();
+            _playerInteraction.CheckInteraction();
             Debug.Log("Entering PlayerInteractState");
         }
         
