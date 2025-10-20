@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using UnityEngine;
     using echo17.EndlessBook;
+    using Work.CIW.Code.Camera;
 
     /// <summary>
     /// Simple demo showing the easiest setup of the book
@@ -15,6 +16,9 @@
         public float stateAnimationTime = 1f;
         public EndlessBook.PageTurnTimeTypeEnum turnTimeType = EndlessBook.PageTurnTimeTypeEnum.TotalTurnTime;
         public float turnTime = 1f;
+
+        [Header("Scene Dependencies")]
+        [SerializeField] FloorTransitionManager floorManager;
 
         void Awake()
         {
@@ -119,6 +123,11 @@
         protected virtual void OnBookTurnToPageCompleted(EndlessBook.StateEnum fromState, EndlessBook.StateEnum toState, int currentPageNumber)
         {
             Debug.Log("OnBookTurnToPageCompleted: State set to " + toState + ". Current Page Number = " + currentPageNumber);
+
+            if (floorManager != null)
+            {
+                floorManager.HandleBookTurnCompleted();
+            }
         }
 
         protected virtual void OnPageTurnStart(Page page, int pageNumberFront, int pageNumberBack, int pageNumberFirstVisible, int pageNumberLastVisible, Page.TurnDirectionEnum turnDirection)

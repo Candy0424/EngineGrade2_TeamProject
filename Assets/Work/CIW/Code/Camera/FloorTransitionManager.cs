@@ -1,4 +1,5 @@
-﻿using System;
+﻿using echo17.EndlessBook.Demo01;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
@@ -21,6 +22,9 @@ namespace Work.CIW.Code.Camera
         [SerializeField] float moveDuration = 1.5f;
         [SerializeField] float moveCamLerpSpeed = 5f;
         [SerializeField] float camHeightForFloorView = 10f;
+
+        [SerializeField] Demo01 demo01;
+        bool _isBookTurnCompleted = false;
 
         const int ActivePriority = 11;
         const int DefaultPriority = 9;
@@ -63,6 +67,11 @@ namespace Work.CIW.Code.Camera
             floorCam.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
         }
 
+        public void HandleBookTurnCompleted()
+        {
+            _isBookTurnCompleted = true;
+        }
+
         private IEnumerator TransitionSequence(int nextFloorIdx)
         {
             GameObject curObj = floorObjs[_currentIdx];
@@ -74,9 +83,42 @@ namespace Work.CIW.Code.Camera
             floorCam.Priority = DefaultPriority;
             transitionCam.Priority = ActivePriority;
 
-            Debug.Log("Transition Camera 전환 완료");
+            Debug.Log("Transition Camera 전환 시작");
 
-            yield return new WaitForSeconds(moveDuration);
+            bool canSuc = false;
+            int direction = nextFloorIdx > _currentIdx ? 1 : -1;
+
+            if(demo01 != null)
+            {
+                try
+                {
+                    demo01.GetType().GetMethod("OnTurnButtonClicked").Invoke(demo01, new object[] { direction });
+
+                    canSuc = true;
+                    _isBookTurnCompleted = false;
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"OnTurnButtonClicked 호출 실패: {e.Message}. MoveDuration을 사용합니다.");
+                    canSuc = false;
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Book Controller가 연결되지 않아 moveDuration을 사용합니다.");
+            }
+
+            if (canSuc)
+            {
+                while (!_isBookTurnCompleted)
+                {
+                    yield return null;
+                }
+            }
+            else
+            {
+                yield return new WaitForSeconds(moveDuration);
+            }
 
             Debug.Log("책 넘김 완료");
 
