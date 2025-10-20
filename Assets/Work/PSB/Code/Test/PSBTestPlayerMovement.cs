@@ -16,6 +16,8 @@ namespace Work.PSB.Code.Test
         public IGridDataService gridService;
         private GridObjectBase _gridObject;
 
+        PSBTestPlayerCode _playerCode;
+
         private bool _isMoving = false;
         bool _hasArrived = false;
 
@@ -44,7 +46,8 @@ namespace Work.PSB.Code.Test
             }
             
             _gridObject = GetComponent<GridObjectBase>();
-            if (_gridObject == null)
+            _playerCode = GetComponent<PSBTestPlayerCode>();
+            if (_gridObject == null || _playerCode == null)
             {
                 enabled = false;
             }
@@ -95,6 +98,11 @@ namespace Work.PSB.Code.Test
 
         private IEnumerator MoveRoutine(Vector3Int targetPos)
         {
+            if (_playerCode != null)
+            {
+                _playerCode.ChangeState("MOVE");
+            }
+
             _isMoving = true;
             Vector3Int oldPos = _gridObject.CurrentGridPosition;
 
@@ -119,6 +127,11 @@ namespace Work.PSB.Code.Test
             gridService.UpdateObjectPosition(_gridObject, oldPos, targetPos);
 
             _isMoving = false;
+
+            if (_playerCode != null)
+            {
+                _playerCode.ChangeState("IDLE");
+            }
         }
 
         public void StartMoveLogic(Vector2 dir)
