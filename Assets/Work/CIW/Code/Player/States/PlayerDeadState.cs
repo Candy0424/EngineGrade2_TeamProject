@@ -25,7 +25,7 @@ namespace Work.CIW.Code.Player.States
 
             _fsmHost.enabled = false;
 
-            _player.ChangeState("DEAD");
+            //_player.ChangeState("DEAD");
 
             _player.StartCoroutine(DeathSequence());
         }
