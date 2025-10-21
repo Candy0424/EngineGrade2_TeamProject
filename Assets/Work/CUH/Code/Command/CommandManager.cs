@@ -3,6 +3,7 @@ using Chuh007Lib.Dependencies;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using Work.CIW.Code.Camera;
 using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.Commands;
 using Work.CUH.Code.GameEvents;
@@ -25,6 +26,8 @@ namespace Work.CUH.Code.Command
         private Queue<BaseCommand> _executionCommands;
         private Stack<BaseCommand> _undoCommands;
         private float _lastUndoTime;
+
+        [SerializeField] FloorTransitionManager _floorManager;
         
         private void Awake()
         {
@@ -96,7 +99,7 @@ namespace Work.CUH.Code.Command
 
         private void Update()
         {
-            if (Keyboard.current.zKey.isPressed && Time.time > undoCooldown + _lastUndoTime)
+            if (Keyboard.current.zKey.isPressed && Time.time > undoCooldown + _lastUndoTime) // 지금 넘어가는 중인지
             {
                 _lastUndoTime = Time.time;
                 Undo();

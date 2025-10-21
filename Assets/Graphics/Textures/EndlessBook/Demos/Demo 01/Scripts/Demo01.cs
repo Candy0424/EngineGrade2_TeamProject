@@ -11,7 +11,7 @@
     /// </summary>
     public class Demo01 : MonoBehaviour
     {
-        protected EndlessBook book;
+        [SerializeField] protected EndlessBook book;
 
         public float stateAnimationTime = 1f;
         public EndlessBook.PageTurnTimeTypeEnum turnTimeType = EndlessBook.PageTurnTimeTypeEnum.TotalTurnTime;
@@ -20,12 +20,6 @@
         [Header("Scene Dependencies")]
         [SerializeField] FloorTransitionManager floorManager;
 
-        void Awake()
-        {
-            // cache the book
-            book = GameObject.Find("Book").GetComponent<EndlessBook>();
-        }
-
         void Update()
         {
             bool changeState = false;
@@ -33,10 +27,10 @@
 
             // change the state of the book
             //if (Input.GetKeyDown(KeyCode.Z)) { changeState = true; newState = EndlessBook.StateEnum.ClosedFront; }
-            if (Input.GetKeyDown(KeyCode.X)) { changeState = true; newState = EndlessBook.StateEnum.OpenFront; }
-            //else if (Input.GetKeyDown(KeyCode.C)) { changeState = true; newState = EndlessBook.StateEnum.OpenMiddle; }
-            else if (Input.GetKeyDown(KeyCode.V)) { changeState = true; newState = EndlessBook.StateEnum.OpenBack; }
-            else if (Input.GetKeyDown(KeyCode.B)) { changeState = true; newState = EndlessBook.StateEnum.ClosedBack; }
+            //if (Input.GetKeyDown(KeyCode.X)) { changeState = true; newState = EndlessBook.StateEnum.OpenFront; }
+            //else if (Input.GetKeyDown(KeyCode.B)) { changeState = true; newState = EndlessBook.StateEnum.ClosedBack; }            //else if (Input.GetKeyDown(KeyCode.C)) { changeState = true; newState = EndlessBook.StateEnum.OpenMiddle; }
+            //else if (Input.GetKeyDown(KeyCode.V)) { changeState = true; newState = EndlessBook.StateEnum.OpenBack; }
+
 
             if (changeState)
             {
@@ -48,26 +42,26 @@
             bool turnToPage = false;
             int newPageNumber = 0;
 
-            if (Input.GetKeyDown(KeyCode.Alpha1)) { turnToPage = true; newPageNumber = 1; }
-            else if (Input.GetKeyDown(KeyCode.Alpha2)) { turnToPage = true; newPageNumber = 2; }
-            else if (Input.GetKeyDown(KeyCode.Alpha3)) { turnToPage = true; newPageNumber = 3; }
-            else if (Input.GetKeyDown(KeyCode.Alpha4)) { turnToPage = true; newPageNumber = 4; }
-            else if (Input.GetKeyDown(KeyCode.Alpha5)) { turnToPage = true; newPageNumber = 5; }
-            else if (Input.GetKeyDown(KeyCode.Alpha6)) { turnToPage = true; newPageNumber = 6; }
-            else if (Input.GetKeyDown(KeyCode.Alpha7)) { turnToPage = true; newPageNumber = 7; }
-            else if (Input.GetKeyDown(KeyCode.Alpha8)) { turnToPage = true; newPageNumber = 8; }
-            else if (Input.GetKeyDown(KeyCode.Alpha9)) { turnToPage = true; newPageNumber = 9; }
-            else if (Input.GetKeyDown(KeyCode.Alpha0)) { turnToPage = true; newPageNumber = 10; }
-            else if (Input.GetKeyDown(KeyCode.Keypad1)) { turnToPage = true; newPageNumber = 11; }
-            else if (Input.GetKeyDown(KeyCode.Keypad2)) { turnToPage = true; newPageNumber = 12; }
-            else if (Input.GetKeyDown(KeyCode.Keypad3)) { turnToPage = true; newPageNumber = 13; }
-            else if (Input.GetKeyDown(KeyCode.Keypad4)) { turnToPage = true; newPageNumber = 14; }
-            else if (Input.GetKeyDown(KeyCode.Keypad5)) { turnToPage = true; newPageNumber = 15; }
-            else if (Input.GetKeyDown(KeyCode.Keypad6)) { turnToPage = true; newPageNumber = 16; }
-            else if (Input.GetKeyDown(KeyCode.Keypad7)) { turnToPage = true; newPageNumber = 17; }
-            else if (Input.GetKeyDown(KeyCode.Keypad8)) { turnToPage = true; newPageNumber = 18; }
-            else if (Input.GetKeyDown(KeyCode.Keypad9)) { turnToPage = true; newPageNumber = 19; }
-            else if (Input.GetKeyDown(KeyCode.Keypad0)) { turnToPage = true; newPageNumber = 20; }
+            //if (Input.GetKeyDown(KeyCode.Alpha1)) { turnToPage = true; newPageNumber = 1; }
+            //else if (Input.GetKeyDown(KeyCode.Alpha2)) { turnToPage = true; newPageNumber = 2; }
+            //else if (Input.GetKeyDown(KeyCode.Alpha3)) { turnToPage = true; newPageNumber = 3; }
+            //else if (Input.GetKeyDown(KeyCode.Alpha4)) { turnToPage = true; newPageNumber = 4; }
+            //else if (Input.GetKeyDown(KeyCode.Alpha5)) { turnToPage = true; newPageNumber = 5; }
+            //else if (Input.GetKeyDown(KeyCode.Alpha6)) { turnToPage = true; newPageNumber = 6; }
+            //else if (Input.GetKeyDown(KeyCode.Alpha7)) { turnToPage = true; newPageNumber = 7; }
+            //else if (Input.GetKeyDown(KeyCode.Alpha8)) { turnToPage = true; newPageNumber = 8; }
+            //else if (Input.GetKeyDown(KeyCode.Alpha9)) { turnToPage = true; newPageNumber = 9; }
+            //else if (Input.GetKeyDown(KeyCode.Alpha0)) { turnToPage = true; newPageNumber = 10; }
+            //else if (Input.GetKeyDown(KeyCode.Keypad1)) { turnToPage = true; newPageNumber = 11; }
+            //else if (Input.GetKeyDown(KeyCode.Keypad2)) { turnToPage = true; newPageNumber = 12; }
+            //else if (Input.GetKeyDown(KeyCode.Keypad3)) { turnToPage = true; newPageNumber = 13; }
+            //else if (Input.GetKeyDown(KeyCode.Keypad4)) { turnToPage = true; newPageNumber = 14; }
+            //else if (Input.GetKeyDown(KeyCode.Keypad5)) { turnToPage = true; newPageNumber = 15; }
+            //else if (Input.GetKeyDown(KeyCode.Keypad6)) { turnToPage = true; newPageNumber = 16; }
+            //else if (Input.GetKeyDown(KeyCode.Keypad7)) { turnToPage = true; newPageNumber = 17; }
+            //else if (Input.GetKeyDown(KeyCode.Keypad8)) { turnToPage = true; newPageNumber = 18; }
+            //else if (Input.GetKeyDown(KeyCode.Keypad9)) { turnToPage = true; newPageNumber = 19; }
+            //else if (Input.GetKeyDown(KeyCode.Keypad0)) { turnToPage = true; newPageNumber = 20; }
 
             if (turnToPage)
             {

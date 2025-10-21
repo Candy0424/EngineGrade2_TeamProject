@@ -19,15 +19,15 @@ namespace Work.CIW.Code.Grid
             Debug.Log("TriggerEnter");
             if (other.gameObject.GetComponent<PSBTestPlayerCode>() != null)
             {
-                //OnArrival.Invoke();
-                LobbyScene();
+                OnArrival.Invoke();
+                //LobbyScene();
                 Debug.Log("도착입니다!");
             }
         }
 
         public IEnumerator LobbySceneCoroutine()
         {
-            floorManager.SetBookState(4);
+            //floorManager.SetBookState(4);
 
             yield return new WaitForSeconds(0.5f);
             SceneManager.LoadScene("BookScene");
