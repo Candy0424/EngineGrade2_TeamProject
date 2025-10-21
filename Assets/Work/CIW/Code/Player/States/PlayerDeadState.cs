@@ -1,6 +1,7 @@
 ﻿using Blade.Entities;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Work.PSB.Code.Test;
 
 namespace Work.CIW.Code.Player.States
@@ -38,7 +39,6 @@ namespace Work.CIW.Code.Player.States
         public override void Exit()
         {
             base.Exit();
-            
         }
 
         private IEnumerator DeathSequence()
@@ -46,6 +46,7 @@ namespace Work.CIW.Code.Player.States
             yield return _player.InkPooling();
 
             Debug.Log("진짜로 죽음처리 끝남");
+            SceneManager.LoadScene("BookScene");
         }
     }
 }

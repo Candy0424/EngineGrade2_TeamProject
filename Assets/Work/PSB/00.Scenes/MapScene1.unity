@@ -10704,7 +10704,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridServiceMono: {fileID: 85991417}
-  floorTransitionManager: {fileID: 0}
+  floorTransitionManager: {fileID: 192428894}
   moveTime: 0.15
   whatIsStair:
     serializedVersion: 2
@@ -10712,6 +10712,7 @@ MonoBehaviour:
   whatIsArrival:
     serializedVersion: 2
     m_Bits: 4096
+  moveEffect: {fileID: 11400000, guid: 1e5671ffb16f18d4bb64115a598c8b8b, type: 2}
 --- !u!114 &5450244954345718157
 MonoBehaviour:
   m_ObjectHideFlags: 0

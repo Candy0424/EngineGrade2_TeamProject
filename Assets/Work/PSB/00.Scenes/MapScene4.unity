@@ -664,7 +664,7 @@ Transform:
   m_GameObject: {fileID: 58627561}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 13, z: 0}
+  m_LocalPosition: {x: 0, y: 26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -936,6 +936,34 @@ PrefabInstance:
     - target: {fileID: 973456104544763259, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
       propertyPath: maxTurnCount
       value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 973456104544763259, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: OnTurnZeroEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 973456104544763259, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: OnTurnZeroEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 973456104544763259, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: OnTurnZeroEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 930813824}
+    - target: {fileID: 973456104544763259, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: OnTurnZeroEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 973456104544763259, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: OnTurnZeroEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LobbyScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 973456104544763259, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: OnTurnZeroEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Work.CIW.Code.Grid.ArrivalTrigger, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 973456104544763259, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: OnTurnZeroEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1989855006085659703, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
       propertyPath: m_Name
@@ -10603,12 +10631,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1c7f362c8a53e64ca35f402b4748445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnDeadEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1765571239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10630,6 +10652,7 @@ MonoBehaviour:
   whatIsArrival:
     serializedVersion: 2
     m_Bits: 4096
+  moveEffect: {fileID: 11400000, guid: 1e5671ffb16f18d4bb64115a598c8b8b, type: 2}
 --- !u!114 &1765571240
 MonoBehaviour:
   m_ObjectHideFlags: 0
