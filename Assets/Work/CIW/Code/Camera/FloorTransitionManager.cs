@@ -1,13 +1,16 @@
-﻿using echo17.EndlessBook.Demo01;
+﻿using Chuh007Lib.Dependencies;
+using echo17.EndlessBook.Demo01;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
+using Work.CUH.Code.Command;
+using Work.CUH.Code.Commands;
 
 namespace Work.CIW.Code.Camera
 {
-    public class FloorTransitionManager : MonoBehaviour
+    public class FloorTransitionManager : MonoBehaviour, ICommandable
     {
         [Header("Cinemachine Cameras")]
         [SerializeField] CinemachineCamera floorCam;
@@ -24,6 +27,8 @@ namespace Work.CIW.Code.Camera
 
         [SerializeField] Demo01 demo01;
         bool _isBookTurnCompleted = false;
+
+        [Inject] CommandManager _cmdManager;
 
         const int ActivePriority = 11;
         const int DefaultPriority = 9;
@@ -50,12 +55,84 @@ namespace Work.CIW.Code.Camera
 
             if (nextIdx >= 0 && nextIdx < floorObjs.Count)
             {
-                StartCoroutine(TransitionSequence(nextIdx));
+                BookTurnCommand command = new BookTurnCommand(
+                    this,
+                    demo01,
+                    nextIdx,
+                    dir,
+                    _currentIdx
+                );
+                command.Execute();
+
             }
             else
             {
                 Debug.LogWarning("더 이상 이동할 층이 없습니다.");
             }
+        }
+
+        public IEnumerator UndoTransitionSequence(int prevFloorIdx, int undoDir)
+        {
+            GameObject curObj = floorObjs[_currentIdx]; // 현재(잘못된) 층
+            GameObject targetObj = floorObjs[prevFloorIdx]; // 되돌아갈 층 (Undo 목표)
+
+            playerObj.SetActive(false);
+            curObj.SetActive(false);
+
+            // 2. Transition Cam 활성화 (책 넘김 애니메이션을 보여주기 위함)
+            floorCam.Priority = DefaultPriority;
+            transitionCam.Priority = ActivePriority;
+
+            Debug.Log("Undo Transition Camera 전환 시작");
+
+            // 3. 책 되돌리기 애니메이션 시작
+            bool canSuc = false;
+            if (demo01 != null)
+            {
+                try
+                {
+                    // Reflection 대신 직접 호출 가능 (Demo01에 public OnTurnButtonClicked가 있으므로)
+                    demo01.GetType().GetMethod("OnTurnButtonClicked").Invoke(demo01, new object[] { undoDir });
+
+                    canSuc = true;
+                    _isBookTurnCompleted = false; // 완료 플래그 초기화
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"OnTurnButtonClicked (Undo) 호출 실패: {e.Message}. MoveDuration을 사용합니다.");
+                    canSuc = false;
+                }
+            }
+
+            // 4. 책 넘김 완료 대기
+            if (canSuc)
+            {
+                while (!_isBookTurnCompleted)
+                {
+                    yield return null; // Demo01.OnBookTurnToPageCompleted 콜백을 기다림
+                }
+            }
+            else
+            {
+                // Fallback: 책 컨트롤러가 없으면 임시로 moveDuration 대기
+                yield return new WaitForSeconds(moveDuration);
+            }
+
+            Debug.Log("책 되돌리기 완료");
+
+            _currentIdx = prevFloorIdx;
+
+            SetFloorCameraTarget(targetObj.transform);
+            targetObj.SetActive(true);
+
+            transitionCam.Priority = DefaultPriority;
+            floorCam.Priority = ActivePriority;
+
+            playerObj.SetActive(true);
+
+            yield return new WaitForSeconds(0.5f);
+
+            Debug.Log("Undo 카메라 전환 완료");
         }
 
         private void SetFloorCameraTarget(Transform targetTrm)
@@ -71,7 +148,27 @@ namespace Work.CIW.Code.Camera
             _isBookTurnCompleted = true;
         }
 
-        private IEnumerator TransitionSequence(int nextFloorIdx)
+        public void SetBookState(int stateIdx)
+        {
+            if (demo01 != null)
+            {
+                try
+                {
+                    demo01.OnStateButtonClicked(stateIdx);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"OnStateButtonClicked 호출 실패: {e.Message}");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Demo01 컨트롤러가 연결되지 않아 책 상태를 변경할 수 없습니다.");
+            }
+        }
+
+
+        public IEnumerator TransitionSequence(int nextFloorIdx)
         {
             GameObject curObj = floorObjs[_currentIdx];
             GameObject targetObj = floorObjs[nextFloorIdx];
@@ -135,34 +232,6 @@ namespace Work.CIW.Code.Camera
             yield return new WaitForSeconds(0.5f);
 
             Debug.Log("카메라 전환 완료");
-
-            //Vector3 targetPos = targetObj.transform.position;
-
-            //float elapsedTime = 0f;
-            //while (elapsedTime < moveDuration)
-            //{
-            //    floorCam.transform.position = Vector3.Lerp(floorCam.transform.position, targetPos, Time.deltaTime * moveCamLerpSpeed);
-
-            //    yield return null;
-            //    elapsedTime += Time.deltaTime;
-            //}
-
-            //floorCam.transform.position = targetPos;
-            //Debug.Log("책 넘김 및 FloorCam 위치 업데이트 완료");
-
-            //curObj.SetActive(false);
-            //targetObj.SetActive(true);
-
-            //transitionCam.Priority = DefaultPriority;
-            //floorCam.Priority = ActivePriority;
-
-            //playerObj.SetActive(true);
-
-            //_currentIdx = nextFloorIdx;
-
-            //yield return new WaitForSeconds(0.5f);
-
-            //Debug.Log("카메라 전환 완료");
         }
     }
 }

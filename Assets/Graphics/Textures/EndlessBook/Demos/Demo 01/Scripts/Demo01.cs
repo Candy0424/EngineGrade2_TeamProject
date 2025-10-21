@@ -32,9 +32,9 @@
             EndlessBook.StateEnum newState = EndlessBook.StateEnum.ClosedFront;
 
             // change the state of the book
-            if (Input.GetKeyDown(KeyCode.Z)) { changeState = true; newState = EndlessBook.StateEnum.ClosedFront; }
-            else if (Input.GetKeyDown(KeyCode.X)) { changeState = true; newState = EndlessBook.StateEnum.OpenFront; }
-            else if (Input.GetKeyDown(KeyCode.C)) { changeState = true; newState = EndlessBook.StateEnum.OpenMiddle; }
+            //if (Input.GetKeyDown(KeyCode.Z)) { changeState = true; newState = EndlessBook.StateEnum.ClosedFront; }
+            if (Input.GetKeyDown(KeyCode.X)) { changeState = true; newState = EndlessBook.StateEnum.OpenFront; }
+            //else if (Input.GetKeyDown(KeyCode.C)) { changeState = true; newState = EndlessBook.StateEnum.OpenMiddle; }
             else if (Input.GetKeyDown(KeyCode.V)) { changeState = true; newState = EndlessBook.StateEnum.OpenBack; }
             else if (Input.GetKeyDown(KeyCode.B)) { changeState = true; newState = EndlessBook.StateEnum.ClosedBack; }
 

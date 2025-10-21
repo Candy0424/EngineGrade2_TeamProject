@@ -3,12 +3,15 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using Work.CIW.Code.Camera;
 using Work.PSB.Code.Test;
 
 namespace Work.CIW.Code.Grid
 {
     public class ArrivalTrigger : MonoBehaviour
     {
+        [SerializeField] FloorTransitionManager floorManager;
+
         public UnityEvent OnArrival;
         
         private void OnTriggerEnter(Collider other)
@@ -23,6 +26,8 @@ namespace Work.CIW.Code.Grid
 
         public IEnumerator LobbySceneCoroutine()
         {
+            floorManager.SetBookState(4);
+
             yield return new WaitForSeconds(0.5f);
             SceneManager.LoadScene("BookScene");
             
