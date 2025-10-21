@@ -11,7 +11,7 @@
     /// </summary>
     public class Demo01 : MonoBehaviour
     {
-        protected EndlessBook book;
+        [SerializeField] protected EndlessBook book;
 
         public float stateAnimationTime = 1f;
         public EndlessBook.PageTurnTimeTypeEnum turnTimeType = EndlessBook.PageTurnTimeTypeEnum.TotalTurnTime;
@@ -19,12 +19,6 @@
 
         [Header("Scene Dependencies")]
         [SerializeField] FloorTransitionManager floorManager;
-
-        void Awake()
-        {
-            // cache the book
-            book = GameObject.Find("Book").GetComponent<EndlessBook>();
-        }
 
         void Update()
         {

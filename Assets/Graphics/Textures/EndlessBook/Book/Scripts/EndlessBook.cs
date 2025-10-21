@@ -249,8 +249,7 @@
         /// </summary>
         [SerializeField]
         protected Animator bookController = null;
-
-
+        [SerializeField]
         protected SkinnedMeshRenderer skinnedMeshRenderer = null;
 
         /// <summary>
