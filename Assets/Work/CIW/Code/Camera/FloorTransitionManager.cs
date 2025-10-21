@@ -132,12 +132,6 @@ namespace Work.CIW.Code.Camera
 
             yield return new WaitForSeconds(0.5f);
 
-            if (_cmdManager != null)
-            {
-                // 비동기 작업이 끝났음을 통보
-                _cmdManager.NotifyAsyncCommandCompleted();
-            }
-
             Debug.Log("Undo 카메라 전환 완료");
         }
 
@@ -236,11 +230,6 @@ namespace Work.CIW.Code.Camera
             _currentIdx = nextFloorIdx;
 
             yield return new WaitForSeconds(0.5f);
-
-            if (_cmdManager != null)
-            {
-                _cmdManager.NotifyAsyncCommandCompleted();
-            }
 
             Debug.Log("카메라 전환 완료");
         }
