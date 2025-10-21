@@ -27,7 +27,7 @@ namespace Work.CIW.Code.Grid
 
         public IEnumerator LobbySceneCoroutine()
         {
-            floorManager.SetBookState(4);
+            //floorManager.SetBookState(4);
 
             yield return new WaitForSeconds(0.5f);
             SceneManager.LoadScene("BookScene");
