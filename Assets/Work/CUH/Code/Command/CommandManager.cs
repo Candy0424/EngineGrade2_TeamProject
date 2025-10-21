@@ -32,12 +32,19 @@ namespace Work.CUH.Code.Command
             _undoCommands = new Stack<BaseCommand>();
             Bus<CommandEvent>.OnEvent += HandleCommand;
             Bus<TurnUseEvent>.OnEvent += TurnUse;
+            Bus<UndoEvent>.OnEvent += HandleUndo;
         }
         
         private void OnDestroy()
         {
             Bus<CommandEvent>.OnEvent -= HandleCommand;
             Bus<TurnUseEvent>.OnEvent -= TurnUse;
+            Bus<UndoEvent>.OnEvent -= HandleUndo;
+        }
+        
+        private void HandleUndo(UndoEvent evt)
+        {
+            Undo();
         }
         
         [ContextMenu("Undo")]
