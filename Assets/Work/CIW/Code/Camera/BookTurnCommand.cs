@@ -29,14 +29,14 @@ namespace Work.CIW.Code.Camera
 
         public override void Execute()
         {
-            _manager.StartCoroutine(_manager.TransitionSequence(_nextFloorIdx));
+            //_manager.StartCoroutine(_manager.TransitionSequence(_nextFloorIdx));
         }
 
         public override void Undo()
         {
-            int undoDir = -_direction;
+            //int undoDir = -_direction;
 
-            _manager.StartCoroutine(_manager.UndoTransitionSequence(_prevFloorIdx, undoDir));
+            //_manager.StartCoroutine(_manager.UndoTransitionSequence(_prevFloorIdx, undoDir));
         }
     }
 }

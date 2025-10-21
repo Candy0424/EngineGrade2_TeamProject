@@ -5,6 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
+using Work.CIW.Code.Camera.Events;
+using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.Command;
 using Work.CUH.Code.Commands;
 
@@ -28,10 +30,20 @@ namespace Work.CIW.Code.Camera
         [SerializeField] Demo01 demo01;
         bool _isBookTurnCompleted = false;
 
-        [Inject] CommandManager _cmdManager;
+        //[Inject] CommandManager _cmdManager;
 
         const int ActivePriority = 11;
         const int DefaultPriority = 9;
+
+        private void Awake()
+        {
+            Bus<FloorEvent>.OnEvent += HandleFloorChange;
+        }
+
+        private void OnDestroy()
+        {
+            Bus<FloorEvent>.OnEvent -= HandleFloorChange;
+        }
 
         private void Start()
         {
@@ -49,27 +61,39 @@ namespace Work.CIW.Code.Camera
             SetFloorCameraTarget(floorObjs[_currentIdx].transform);
         }
 
-        public void StartFloorTransition(int dir)
+        // 층 이동
+        private void HandleFloorChange(FloorEvent evt)
         {
-            int nextIdx = _currentIdx + dir;
+            Debug.Log("층 바꾸기 이벤트 받음");
 
-            if (nextIdx >= 0 && nextIdx < floorObjs.Count)
-            {
-                BookTurnCommand command = new BookTurnCommand(
-                    this,
-                    demo01,
-                    nextIdx,
-                    dir,
-                    _currentIdx
-                );
-                command.Execute();
+            //int nextIdx = evt.TargetIdx;
+            int dir = evt.Direction;
 
-            }
-            else
-            {
-                Debug.LogWarning("더 이상 이동할 층이 없습니다.");
-            }
+            Debug.Log("Transition Sequence 코루틴 시작");
+            StartCoroutine(TransitionSequence(dir));
         }
+
+        //public void StartFloorTransition(int dir)
+        //{
+        //    int nextIdx = _currentIdx + dir;
+
+        //    if (nextIdx >= 0 && nextIdx < floorObjs.Count)
+        //    {
+        //        BookTurnCommand command = new BookTurnCommand(
+        //            this,
+        //            demo01,
+        //            nextIdx,
+        //            dir,
+        //            _currentIdx
+        //        );
+        //        command.Execute();
+
+        //    }
+        //    else
+        //    {
+        //        Debug.LogWarning("더 이상 이동할 층이 없습니다.");
+        //    }
+        //}
 
         public IEnumerator UndoTransitionSequence(int prevFloorIdx, int undoDir)
         {
@@ -154,6 +178,12 @@ namespace Work.CIW.Code.Camera
             {
                 try
                 {
+                    foreach (GameObject floors in floorObjs)
+                    {
+                        floors.SetActive(false);
+                    }
+                    playerObj.SetActive(false);
+
                     demo01.OnStateButtonClicked(stateIdx);
                 }
                 catch (Exception e)
@@ -168,10 +198,12 @@ namespace Work.CIW.Code.Camera
         }
 
 
-        public IEnumerator TransitionSequence(int nextFloorIdx)
+        public IEnumerator TransitionSequence(int direction)
         {
+            Debug.Log("Sequence로 들어옴");
+
             GameObject curObj = floorObjs[_currentIdx];
-            GameObject targetObj = floorObjs[nextFloorIdx];
+            GameObject targetObj = floorObjs[_currentIdx + direction];
 
             playerObj.SetActive(false);
             curObj.SetActive(false);
@@ -182,7 +214,7 @@ namespace Work.CIW.Code.Camera
             Debug.Log("Transition Camera 전환 시작");
 
             bool canSuc = false;
-            int direction = nextFloorIdx > _currentIdx ? 1 : -1;
+            //int direction = nextFloorIdx > _currentIdx ? 1 : -1;
 
             if(demo01 != null)
             {
@@ -227,7 +259,7 @@ namespace Work.CIW.Code.Camera
 
             playerObj.SetActive(true);
 
-            _currentIdx = nextFloorIdx;
+            _currentIdx = _currentIdx + direction;
 
             yield return new WaitForSeconds(0.5f);
 
