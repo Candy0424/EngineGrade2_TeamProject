@@ -20,7 +20,6 @@ namespace Work.CIW.Code.Camera
 
         [Header("Transition settings")]
         [SerializeField] float moveDuration = 1.5f;
-        [SerializeField] float moveCamLerpSpeed = 5f;
         [SerializeField] float camHeightForFloorView = 10f;
 
         [SerializeField] Demo01 demo01;

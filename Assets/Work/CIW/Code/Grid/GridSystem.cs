@@ -24,7 +24,6 @@ namespace Work.CIW.Code.Grid
 
         [Header("Movement Check Data")]
         [SerializeField] LayerMask whatIsWalkable;
-        [SerializeField] float raycastDistance = 1.0f; // �̵��ϴ� �Ÿ��� ��ġ�ؾ���
 
         [Header("Dependencies")]
         [SerializeField] MonoBehaviour turnServiceMono;

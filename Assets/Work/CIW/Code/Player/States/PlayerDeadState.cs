@@ -20,8 +20,6 @@ namespace Work.CIW.Code.Player.States
         {
             base.Enter();
 
-            Debug.Log("까악까악 플레이어 사망 플레이어 사망");
-
             _player.StopAllCoroutines();
 
             _fsmHost.enabled = false;
