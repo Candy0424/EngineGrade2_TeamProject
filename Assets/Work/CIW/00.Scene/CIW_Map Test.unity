@@ -1178,7 +1178,6 @@ MonoBehaviour:
   - {fileID: 1592389036}
   playerObj: {fileID: 1147423848277493468}
   moveDuration: 1.5
-  moveCamLerpSpeed: 5
   camHeightForFloorView: 10
   demo01: {fileID: 61040458}
 --- !u!4 &192428895
@@ -12586,6 +12585,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7160846758986189290, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: _floorManager
+      value: 
+      objectReference: {fileID: 192428894}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13558,6 +13561,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1592389037}
     m_Modifications:
+    - target: {fileID: 1695243433147643435, guid: 9f02eea515b85a842900aaf2ec26ad9a, type: 3}
+      propertyPath: floorManager
+      value: 
+      objectReference: {fileID: 192428894}
     - target: {fileID: 1695243433147643435, guid: 9f02eea515b85a842900aaf2ec26ad9a, type: 3}
       propertyPath: OnArrival.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
