@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using Chuh007Lib.Dependencies;
+using Chuh007Lib.ObjectPool.Runtime;
+using System.Collections;
 using UnityEngine;
 using Work.CIW.Code.Camera;
 using Work.CIW.Code.Grid;
@@ -7,6 +9,7 @@ using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.Commands;
 using Work.CUH.Code.GameEvents;
 using Work.CUH.Code.Test;
+using Work.ISC.Code.Effects;
 
 namespace Work.PSB.Code.Test
 {
@@ -31,6 +34,11 @@ namespace Work.PSB.Code.Test
         [Header("Stair Collision Setting")]
         [SerializeField] private LayerMask whatIsStair;
         [SerializeField] private LayerMask whatIsArrival;
+
+        [Header("Object Pooling")]
+        [SerializeField] PoolingItemSO moveEffect;
+
+        [Inject] PoolManagerMono _poolManager;
 
         public bool isMoving
         {
@@ -82,7 +90,6 @@ namespace Work.PSB.Code.Test
             if (CheckForStairs(dir)) return;
 
             Vector3Int curPos = _gridObject.CurrentGridPosition;
-            Debug.Log(curPos);
             if (gridService.CanMoveTo(curPos, dir, out _))
             {
                 StartMoveLogic(input);
@@ -108,6 +115,7 @@ namespace Work.PSB.Code.Test
             }
 
             _isMoving = true;
+            CreateEffect();
             Vector3Int oldPos = _gridObject.CurrentGridPosition;
 
             float startWorldY = oldPos.y;
@@ -172,6 +180,14 @@ namespace Work.PSB.Code.Test
             return false;
         }
 
+        public async void CreateEffect()
+        {
+            PoolingEffect effect = _poolManager.Pop<PoolingEffect>(moveEffect);
+            effect.PlayVFX(transform.position + new Vector3(0f, 0.1f, 0f));
+            await Awaitable.WaitForSecondsAsync(2f);
+            _poolManager.Push(effect);
+        }
+
         #endregion
 
         #region Check Stairs
@@ -198,9 +214,7 @@ namespace Work.PSB.Code.Test
                     {
                         floorTransitionManager.StartFloorTransition(floorDirection);
                     }
-
-                    Debug.Log(_gridObject.CurrentGridPosition);
-                    Debug.Log(teleportPos);
+                    
                     Bus<CommandEvent>.Raise(new CommandEvent(new StairCommand(
                         this, _gridObject.CurrentGridPosition, teleportPos, dir)));
                     
@@ -220,8 +234,6 @@ namespace Work.PSB.Code.Test
             Vector3 finalWorldPos = new Vector3(targetPos.x, targetWorldY, targetPos.z);
             transform.position = finalWorldPos;
 
-            Debug.Log($"텔포 시킴. 현재 위치는 {_gridObject.CurrentGridPosition}");
-
             Vector3Int effectiveDir = dir;
             if (dir.y < 0)
             {
@@ -236,12 +248,6 @@ namespace Work.PSB.Code.Test
                 float finalWorldY = finalMovePos.y;
                 Vector3 finalFinalWorldPos = new Vector3(finalMovePos.x, finalWorldY, finalMovePos.z);
                 transform.position = finalFinalWorldPos;
-
-                Debug.Log($"텔포 후 강제 이동. 최종 위치는 {_gridObject.CurrentGridPosition}");
-            }
-            else
-            {
-                Debug.LogWarning("텔레포트 후 강제 이동 실패. 다음 칸이 막혀있거나 경계 밖. 계단에 남아있을 수 있습니다.");
             }
         }
 
