@@ -2,9 +2,11 @@
 using DG.Tweening;
 using TransitionsPlus;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.GameEvents;
+using Work.ISC.Code.SO;
 
 namespace Work.CUH.Code.Interaction.Book
 {
@@ -14,6 +16,8 @@ namespace Work.CUH.Code.Interaction.Book
         private static readonly int Open = Animator.StringToHash("Open");
         [SerializeField] private string loadSceneName;
         private Animator _animator;
+        
+        [SerializeField] private StageInfoSO stageInfo;
 
         private void Awake()
         {
@@ -32,7 +36,7 @@ namespace Work.CUH.Code.Interaction.Book
 
         private void OpenBook()
         {
-            Bus<OpenBookUIEvent>.Raise(new OpenBookUIEvent(loadSceneName));
+            Bus<OpenBookUIEvent>.Raise(new OpenBookUIEvent(loadSceneName, stageInfo));
             Bus<CloseBookUIEvent>.OnEvent += HandleCloseBook;
         }
         
