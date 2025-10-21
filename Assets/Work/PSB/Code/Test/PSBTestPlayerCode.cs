@@ -161,6 +161,7 @@ namespace Work.PSB.Code.Test
 
             if (isWall)
             {
+                Bus<CommandEvent>.Raise(new CommandEvent(new NothingCommand(_movementCompo)));
                 Bus<TurnUseEvent>.Raise(new TurnUseEvent());
                 Debug.Log("Wall");
                 return;
@@ -182,6 +183,7 @@ namespace Work.PSB.Code.Test
             {
                 if (!_movementCompo.gridService.CanMoveTo(curGridPos, dir, out _))
                 {
+                    Bus<CommandEvent>.Raise(new CommandEvent(new NothingCommand(_movementCompo)));
                     Bus<TurnUseEvent>.Raise(new TurnUseEvent());
                     return;
                 }
