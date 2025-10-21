@@ -24,7 +24,7 @@ namespace Work.CIW.Code.Grid
         public IEnumerator LobbySceneCoroutine()
         {
             yield return new WaitForSeconds(0.5f);
-            SceneManager.LoadScene("LibraryPlayerScene");
+            SceneManager.LoadScene("BookScene");
             
         }
         
