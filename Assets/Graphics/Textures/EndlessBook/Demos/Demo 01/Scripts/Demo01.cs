@@ -11,7 +11,7 @@
     /// </summary>
     public class Demo01 : MonoBehaviour
     {
-        protected EndlessBook book;
+        [SerializeField] protected EndlessBook book;
 
         public float stateAnimationTime = 1f;
         public EndlessBook.PageTurnTimeTypeEnum turnTimeType = EndlessBook.PageTurnTimeTypeEnum.TotalTurnTime;
@@ -20,21 +20,15 @@
         [Header("Scene Dependencies")]
         [SerializeField] FloorTransitionManager floorManager;
 
-        void Awake()
-        {
-            // cache the book
-            book = GameObject.Find("Book").GetComponent<EndlessBook>();
-        }
-
         void Update()
         {
             bool changeState = false;
             EndlessBook.StateEnum newState = EndlessBook.StateEnum.ClosedFront;
 
             // change the state of the book
-            if (Input.GetKeyDown(KeyCode.Z)) { changeState = true; newState = EndlessBook.StateEnum.ClosedFront; }
-            else if (Input.GetKeyDown(KeyCode.X)) { changeState = true; newState = EndlessBook.StateEnum.OpenFront; }
-            else if (Input.GetKeyDown(KeyCode.C)) { changeState = true; newState = EndlessBook.StateEnum.OpenMiddle; }
+            //if (Input.GetKeyDown(KeyCode.Z)) { changeState = true; newState = EndlessBook.StateEnum.ClosedFront; }
+            if (Input.GetKeyDown(KeyCode.X)) { changeState = true; newState = EndlessBook.StateEnum.OpenFront; }
+            //else if (Input.GetKeyDown(KeyCode.C)) { changeState = true; newState = EndlessBook.StateEnum.OpenMiddle; }
             else if (Input.GetKeyDown(KeyCode.V)) { changeState = true; newState = EndlessBook.StateEnum.OpenBack; }
             else if (Input.GetKeyDown(KeyCode.B)) { changeState = true; newState = EndlessBook.StateEnum.ClosedBack; }
 

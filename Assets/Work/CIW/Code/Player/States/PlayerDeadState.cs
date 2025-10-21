@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Work.CIW.Code.Camera;
 using Work.PSB.Code.Test;
 
 namespace Work.CIW.Code.Player.States
@@ -19,8 +20,6 @@ namespace Work.CIW.Code.Player.States
         public override void Enter()
         {
             base.Enter();
-
-            Debug.Log("까악까악 플레이어 사망 플레이어 사망");
 
             _player.StopAllCoroutines();
 
@@ -45,7 +44,9 @@ namespace Work.CIW.Code.Player.States
         {
             yield return _player.InkPooling();
 
+            // 끝났을 때, 책 덮고 로비로 나가야한다.
             Debug.Log("진짜로 죽음처리 끝남");
+            yield return new WaitForSeconds(0.5f);
             SceneManager.LoadScene("BookScene");
         }
     }

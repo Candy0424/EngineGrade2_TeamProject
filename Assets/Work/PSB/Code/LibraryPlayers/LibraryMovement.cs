@@ -1,9 +1,11 @@
 ﻿using Blade.Entities;
+using Chuh007Lib.Dependencies;
 using UnityEngine;
 
 namespace Work.PSB.Code.LibraryPlayers
 {
-    public class LibraryMovement : MonoBehaviour, IEntityComponent, IAfterInitialize
+    [Provide]
+    public class LibraryMovement : MonoBehaviour, IEntityComponent, IAfterInitialize, IDependencyProvider
     {
         [SerializeField] private Transform cameraPivot;
 
@@ -28,6 +30,11 @@ namespace Work.PSB.Code.LibraryPlayers
 
         public bool IsGround => controller.isGrounded;
         public bool CanManualMovement { get; set; } = true;
+        public float MouseSensitivity 
+        { 
+            get => mouseSensitivity; 
+            set => mouseSensitivity = value; 
+        }
 
         private Vector3 _velocity;
         private Vector3 _currentMoveVelocity;
@@ -88,9 +95,9 @@ namespace Work.PSB.Code.LibraryPlayers
                 rotationSmoothTime
             );
 
-            _entity.transform.Rotate(Vector3.up, _currentMouseDeltaX * mouseSensitivity * Time.deltaTime);
+            _entity.transform.Rotate(Vector3.up, _currentMouseDeltaX * MouseSensitivity * Time.deltaTime);
 
-            _cameraPitch -= mouseDelta.y * mouseSensitivity * Time.deltaTime;
+            _cameraPitch -= mouseDelta.y * MouseSensitivity * Time.deltaTime;
             _cameraPitch = Mathf.Clamp(_cameraPitch, -60f, 35f);
 
             if (cameraPivot != null)
