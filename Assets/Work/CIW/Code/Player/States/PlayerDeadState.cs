@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Work.CIW.Code.Camera;
 using Work.PSB.Code.Test;
 
 namespace Work.CIW.Code.Player.States
@@ -46,6 +47,7 @@ namespace Work.CIW.Code.Player.States
             yield return _player.InkPooling();
 
             Debug.Log("진짜로 죽음처리 끝남");
+            yield return new WaitForSeconds(0.5f);
             SceneManager.LoadScene("BookScene");
         }
     }

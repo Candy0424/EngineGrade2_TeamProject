@@ -214,8 +214,8 @@ namespace Work.PSB.Code.Test
                     {
                         floorTransitionManager.StartFloorTransition(floorDirection);
                     }
-                    
-                    Bus<CommandEvent>.Raise(new CommandEvent(new StairCommand(
+
+                    Bus<CommandEvent>.Raise(new CommandEvent(new CUH.Code.Commands.StairCommand(
                         this, _gridObject.CurrentGridPosition, teleportPos, dir)));
                     
                     return true;

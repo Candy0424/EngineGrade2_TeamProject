@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Chuh007Lib.Dependencies;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using Work.CIW.Code.Camera;
 using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.Commands;
 using Work.CUH.Code.GameEvents;
@@ -25,6 +28,9 @@ namespace Work.CUH.Code.Command
         private Queue<BaseCommand> _executionCommands;
         private Stack<BaseCommand> _undoCommands;
         private float _lastUndoTime;
+
+        bool _isAsyncCommandRunning = false;
+        public Action OnAsyncCommandCompleted;
         
         private void Awake()
         {
@@ -32,12 +38,21 @@ namespace Work.CUH.Code.Command
             _undoCommands = new Stack<BaseCommand>();
             Bus<CommandEvent>.OnEvent += HandleCommand;
             Bus<TurnUseEvent>.OnEvent += TurnUse;
+
+            OnAsyncCommandCompleted += () => _isAsyncCommandRunning = false;
         }
         
         private void OnDestroy()
         {
             Bus<CommandEvent>.OnEvent -= HandleCommand;
             Bus<TurnUseEvent>.OnEvent -= TurnUse;
+
+            OnAsyncCommandCompleted?.Invoke();
+        }
+
+        public void NotifyAsyncCommandCompleted()
+        {
+            OnAsyncCommandCompleted?.Invoke();
         }
         
         [ContextMenu("Undo")]
@@ -45,13 +60,47 @@ namespace Work.CUH.Code.Command
         {
             if (_undoCommands.Count <= 0 || _currentTurnCount <= 0) return;
             if (!_undoCommands.Peek().CanExecute()) return;
+
+            if (_isAsyncCommandRunning) return;
             // if (leftUndoCount <= 0) return;
+
+            StartCoroutine(ProcessUndo());
+
+            //bool undo = false;
+            //while (_undoCommands.Count > 0 && _undoCommands.Peek().Tick == _currentTurnCount)
+            //{
+            //    undo = true;
+            //    _undoCommands.Pop().Undo();
+            //}
+            //if (undo)
+            //{
+            //    leftUndoCount--;
+            //    _currentTurnCount--;
+            //    Bus<TurnGetEvent>.Raise(new TurnGetEvent());
+            //}
+        }
+
+        private IEnumerator ProcessUndo()
+        {
             bool undo = false;
+
             while (_undoCommands.Count > 0 && _undoCommands.Peek().Tick == _currentTurnCount)
             {
+                BaseCommand cmd = _undoCommands.Pop();
+                cmd.Undo();
                 undo = true;
-                _undoCommands.Pop().Undo();
+
+                if (cmd is BookTurnCommand)
+                {
+                    _isAsyncCommandRunning = true;
+
+                    while (_isAsyncCommandRunning)
+                    {
+                        yield return null;
+                    }
+                }
             }
+
             if (undo)
             {
                 leftUndoCount--;
@@ -65,20 +114,49 @@ namespace Work.CUH.Code.Command
         // 실행하면서 생기는 커맨드들도 여따가 넣는다.
         public void TurnUse(TurnUseEvent evt)
         {
+            if (_isAsyncCommandRunning) return;
+            StartCoroutine(ProcessTurnUse());
+
+            //_currentTurnCount++;
+            //while (_executionCommands.Count > 0)
+            //{
+            //    BaseCommand command = _executionCommands.Dequeue();
+            //    if (command.CanExecute())
+            //    {
+            //        command.Tick = _currentTurnCount;
+            //        command.Execute();
+            //        _undoCommands.Push(command);
+            //    }
+            //}
+        }
+
+        private IEnumerator ProcessTurnUse()
+        {
             _currentTurnCount++;
+
             while (_executionCommands.Count > 0)
             {
                 BaseCommand command = _executionCommands.Dequeue();
+
                 if (command.CanExecute())
                 {
                     command.Tick = _currentTurnCount;
                     command.Execute();
+
+                    if (command is BookTurnCommand)
+                    {
+                        _isAsyncCommandRunning = true;
+
+                        while (_isAsyncCommandRunning)
+                        {
+                            yield return null;
+                        }
+                    }
+
                     _undoCommands.Push(command);
                 }
             }
         }
-
-
         
         // 커멘드를 넣는 작업
         // 플레이어의 행동 커멘드는 TurnUse보다 먼저 들어와야 한다.
