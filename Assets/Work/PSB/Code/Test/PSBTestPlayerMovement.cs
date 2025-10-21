@@ -228,11 +228,8 @@ namespace Work.PSB.Code.Test
 
         public void TeleportToFloor(Vector3Int targetPos, Vector3Int dir)
         {
-            Debug.Log("Teleprot To Floor 진입");
-
             Vector3Int oldPos = _gridObject.CurrentGridPosition;
 
-            Debug.Log("층 이동 이벤트 발사");
             // nextFloorIndex인데 targetPos.y값을 보내주니 당연히 에러가 나지
             Bus<FloorEvent>.Raise(new FloorEvent(targetPos.y > oldPos.y ? 1 : -1));
 
@@ -249,7 +246,6 @@ namespace Work.PSB.Code.Test
                 effectiveDir.z *= -1;
             }
 
-            Debug.Log("Can Move To 검사");
             if (gridService.CanMoveTo(targetPos, effectiveDir, out Vector3Int finalMovePos))
             {
                 gridService.UpdateObjectPosition(_gridObject, targetPos, finalMovePos);
