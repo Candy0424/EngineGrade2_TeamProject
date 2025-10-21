@@ -3,6 +3,7 @@ using Chuh007Lib.ObjectPool.Runtime;
 using System.Collections;
 using UnityEngine;
 using Work.CIW.Code.Camera;
+using Work.CIW.Code.Camera.Events;
 using Work.CIW.Code.Grid;
 using Work.CIW.Code.Player;
 using Work.CUH.Chuh007Lib.EventBus;
@@ -210,10 +211,10 @@ namespace Work.PSB.Code.Test
 
                     int floorDirection = teleportPos.y > _gridObject.CurrentGridPosition.y ? 1 : -1;
 
-                    if (floorTransitionManager != null)
-                    {
-                        floorTransitionManager.StartFloorTransition(floorDirection);
-                    }
+                    //if (floorTransitionManager != null)
+                    //{
+                    //    floorTransitionManager.StartFloorTransition(floorDirection);
+                    //}
 
                     Bus<CommandEvent>.Raise(new CommandEvent(new CUH.Code.Commands.StairCommand(
                         this, _gridObject.CurrentGridPosition, teleportPos, dir)));
@@ -227,7 +228,14 @@ namespace Work.PSB.Code.Test
 
         public void TeleportToFloor(Vector3Int targetPos, Vector3Int dir)
         {
+            Debug.Log("Teleprot To Floor 진입");
+
             Vector3Int oldPos = _gridObject.CurrentGridPosition;
+
+            Debug.Log("층 이동 이벤트 발사");
+            // nextFloorIndex인데 targetPos.y값을 보내주니 당연히 에러가 나지
+            Bus<FloorEvent>.Raise(new FloorEvent(targetPos.y > oldPos.y ? 1 : -1));
+
             gridService.UpdateObjectPosition(_gridObject, oldPos, targetPos);
 
             float targetWorldY = targetPos.y;
@@ -241,6 +249,7 @@ namespace Work.PSB.Code.Test
                 effectiveDir.z *= -1;
             }
 
+            Debug.Log("Can Move To 검사");
             if (gridService.CanMoveTo(targetPos, effectiveDir, out Vector3Int finalMovePos))
             {
                 gridService.UpdateObjectPosition(_gridObject, targetPos, finalMovePos);
