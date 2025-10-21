@@ -19,8 +19,8 @@ namespace Work.CIW.Code.Grid
             Debug.Log("TriggerEnter");
             if (other.gameObject.GetComponent<PSBTestPlayerCode>() != null)
             {
-                //OnArrival.Invoke();
-                LobbyScene();
+                OnArrival.Invoke();
+                //LobbyScene();
                 Debug.Log("도착입니다!");
             }
         }
