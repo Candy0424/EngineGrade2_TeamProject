@@ -59,11 +59,11 @@
 
 	//Enable Local Antialiasing
 	//%%MK_LOCAL_ANTIALIASING
-	//!!
+	/*!!
 	#ifndef MK_LOCAL_ANTIALIASING
 		#define MK_LOCAL_ANTIALIASING
 	#endif
-	//$$
+	$$*/
 
 	//Force Linear Light Attenuation on URP - experimental
 	//%%MK_LINEAR_lIGHT_DISTANCE_ATTENUATION
