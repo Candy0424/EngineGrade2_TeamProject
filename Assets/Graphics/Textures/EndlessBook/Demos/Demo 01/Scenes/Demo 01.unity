@@ -6918,9 +6918,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09a698bf855370d48a51ea842d8bfc73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  book: {fileID: 0}
   stateAnimationTime: 0.7
   turnTimeType: 1
   turnTime: 0.5
+  floorManager: {fileID: 0}
 --- !u!4 &1788019611
 Transform:
   m_ObjectHideFlags: 0
@@ -8009,6 +8011,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bookController: {fileID: 51113367}
+  skinnedMeshRenderer: {fileID: 0}
   currentState: 2
   standinsTransform: {fileID: 469109691}
   pagesTransform: {fileID: 1327878676}
