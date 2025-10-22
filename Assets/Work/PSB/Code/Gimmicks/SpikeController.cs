@@ -28,7 +28,6 @@ namespace Work.PSB.Code.Test
         [SerializeField] private Ease easeType = Ease.OutQuad;
         
         [Header("Command / Effect")]
-        [SerializeField] private SpikeCommand spikeCommand;
         [SerializeField] private PoolingItemSO bloodEffect;
 
         [Header("Event")] 
@@ -37,7 +36,6 @@ namespace Work.PSB.Code.Test
         [Inject] private PoolManagerMono _poolManager;
 
         private bool _isRaised;
-        private bool _isFirst = true;
         private Vector3 _startPos;
         private Vector3 _raisedPos;
         private Tween _currentTween;
@@ -64,6 +62,8 @@ namespace Work.PSB.Code.Test
             
             if (_collider != null)
                 _collider.enabled = _isRaised;
+            SpikeCommand command = new SpikeCommand(this);
+            Bus<CommandEvent>.Raise(new CommandEvent(command));
         }
 
         private void OnEnable()
@@ -89,11 +89,6 @@ namespace Work.PSB.Code.Test
             SpikeCommand command = new SpikeCommand(this);
             Bus<CommandEvent>.Raise(new CommandEvent(command));
 
-            if (_isFirst)
-            {
-                command.Execute();    
-            }
-            _isFirst = false;
         }
         
         public void ToggleSpikeCommanded()
