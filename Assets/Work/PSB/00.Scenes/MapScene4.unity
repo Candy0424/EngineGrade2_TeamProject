@@ -5216,7 +5216,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 922527939}
     m_Modifications:
     - target: {fileID: 1695243433147643435, guid: 9f02eea515b85a842900aaf2ec26ad9a, type: 3}
       propertyPath: floorManager
@@ -5280,7 +5280,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6911631330749521815, guid: 9f02eea515b85a842900aaf2ec26ad9a, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6911631330749521815, guid: 9f02eea515b85a842900aaf2ec26ad9a, type: 3}
       propertyPath: m_LocalRotation.x
@@ -5288,7 +5288,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6911631330749521815, guid: 9f02eea515b85a842900aaf2ec26ad9a, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6911631330749521815, guid: 9f02eea515b85a842900aaf2ec26ad9a, type: 3}
       propertyPath: m_LocalRotation.z
@@ -5385,6 +5385,11 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!4 &738225367 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6911631330749521815, guid: 9f02eea515b85a842900aaf2ec26ad9a, type: 3}
+  m_PrefabInstance: {fileID: 738225359}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &745226079
 GameObject:
   m_ObjectHideFlags: 0
@@ -6768,6 +6773,7 @@ Transform:
   - {fileID: 2130582824}
   - {fileID: 745226082}
   - {fileID: 2043882683}
+  - {fileID: 738225367}
   m_Father: {fileID: 928849803}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &923571873
@@ -15123,4 +15129,3 @@ SceneRoots:
   - {fileID: 624464269}
   - {fileID: 2108129128}
   - {fileID: 1501082184}
-  - {fileID: 738225359}
