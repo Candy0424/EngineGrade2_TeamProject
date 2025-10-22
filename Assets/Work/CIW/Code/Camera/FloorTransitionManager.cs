@@ -22,7 +22,14 @@ namespace Work.CIW.Code.Camera
         [SerializeField] List<GameObject> floorObjs;
         [SerializeField] GameObject playerObj;
         [SerializeField] private GameObject bookObj;
-        public bool IsBookTurned => _isBookTurned;
+        public bool IsBookTurned
+        {
+            get => _isBookTurned;
+            set => _isBookTurned = value;
+        }
+
+        bool _isBookTurned = false;
+        bool _turnCompleted = false;
         int _currentIdx = 0;
 
         [Header("Transition settings")]
@@ -30,7 +37,6 @@ namespace Work.CIW.Code.Camera
         [SerializeField] float camHeightForFloorView = 10f;
 
         [SerializeField] Demo01 demo01;
-        bool _isBookTurned = false;
 
         const int ActivePriority = 11;
         const int DefaultPriority = 9;
@@ -66,11 +72,30 @@ namespace Work.CIW.Code.Camera
         {
             Debug.Log("층 바꾸기 이벤트 받음");
 
-            //int nextIdx = evt.TargetIdx;
+            if (IsBookTurned) return;
+
+            IsBookTurned = true;
+
             int dir = evt.Direction;
 
-            Debug.Log("Transition Sequence 코루틴 시작");
-            StartCoroutine(TransitionSequence(dir));
+            int nextIdx = _currentIdx + dir;
+            if (nextIdx < 0 || nextIdx >= floorObjs.Count)
+            {
+                if (nextIdx < 0)
+                {
+                    Debug.LogWarning($"Undo로 인한 유효하지 않은 층 인덱스({nextIdx}) 요청을 무시합니다. (Undo는 이미 실행됨)");
+                }
+                else
+                {
+                    Debug.LogError($"다음 층 인덱스({nextIdx})가 유효 범위를 벗어났습니다 (0 ~ {floorObjs.Count - 1}). 층 이동을 취소합니다.");
+                }
+
+                IsBookTurned = false;
+                return;
+            }
+
+            Debug.Log("잘 살아남았구나! 실행해도 좋다!");
+            StartCoroutine(TransitionSequence(dir)); // undo 여기서 에러
         }
 
         private void SetFloorCameraTarget(Transform targetTrm)
@@ -109,7 +134,10 @@ namespace Work.CIW.Code.Camera
 
         public IEnumerator TransitionSequence(int direction)
         {
-            Debug.Log("Sequence로 들어옴");
+            Debug.Log($"Sequence로 들어옴 : {IsBookTurned}");
+
+            _turnCompleted = false;
+            yield return null;
 
             GameObject curObj = floorObjs[_currentIdx];
             GameObject targetObj = floorObjs[_currentIdx + direction];
@@ -120,10 +148,9 @@ namespace Work.CIW.Code.Camera
             floorCam.Priority = DefaultPriority;
             transitionCam.Priority = ActivePriority;
 
-            Debug.Log("Transition Camera 전환 시작");
+            Debug.Log($"Transition Camera 전환 시작 : {IsBookTurned}");
 
             bool canSuc = false;
-            //int direction = nextFloorIdx > _currentIdx ? 1 : -1;
 
             if(demo01 != null)
             {
@@ -132,22 +159,23 @@ namespace Work.CIW.Code.Camera
                     demo01.GetType().GetMethod("OnTurnButtonClicked").Invoke(demo01, new object[] { direction });
 
                     canSuc = true;
-                    _isBookTurned = false;
                 }
                 catch (Exception e)
                 {
                     Debug.LogError($"OnTurnButtonClicked 호출 실패: {e.Message}. MoveDuration을 사용합니다.");
                     canSuc = false;
+                    IsBookTurned = true;
                 }
             }
             else
             {
                 Debug.LogWarning("Book Controller가 연결되지 않아 moveDuration을 사용합니다.");
+                canSuc = false;
             }
 
             if (canSuc)
             {
-                while (!_isBookTurned)
+                while (!_turnCompleted)
                 {
                     yield return null;
                 }
@@ -157,7 +185,7 @@ namespace Work.CIW.Code.Camera
                 yield return new WaitForSeconds(moveDuration);
             }
 
-            Debug.Log("책 넘김 완료");
+            Debug.Log($"책 넘김 완료 : {IsBookTurned}");
 
             float offsetY = direction > 0 ? 15f : -15f;
             bookObj.transform.position += new Vector3(0f, offsetY, 0f);
@@ -165,6 +193,8 @@ namespace Work.CIW.Code.Camera
             SetFloorCameraTarget(targetObj.transform);
 
             targetObj.SetActive(true);
+
+            IsBookTurned = false;
 
             transitionCam.Priority = DefaultPriority;
             floorCam.Priority = ActivePriority;
@@ -175,12 +205,12 @@ namespace Work.CIW.Code.Camera
 
             yield return new WaitForSeconds(0.5f);
 
-            Debug.Log("카메라 전환 완료");
+            Debug.Log($"카메라 전환 완료 : {IsBookTurned}");
         }
 
         public void HandleBookTurnCompleted()
         {
-            _isBookTurned = true;
+            _turnCompleted = true;
         }
     }
 }
