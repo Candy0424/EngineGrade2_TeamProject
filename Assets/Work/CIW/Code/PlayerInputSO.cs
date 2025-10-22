@@ -10,6 +10,7 @@ namespace Work.CIW.Code
         public Vector3 MoveInput { get; private set; }
 
         public event Action<Vector2> OnMovement;
+        public event Action OnInteract;
 
         Controls _controls;
 
@@ -38,6 +39,12 @@ namespace Work.CIW.Code
             }
             if (context.canceled)
                 MoveInput = Vector2.zero;
+        }
+
+        public void OnInteraction(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+                OnInteract?.Invoke();
         }
     }
 }

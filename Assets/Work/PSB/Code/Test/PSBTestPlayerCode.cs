@@ -13,6 +13,7 @@ using Work.CIW.Code.Player;
 using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.Commands;
 using Work.CUH.Code.GameEvents;
+using Work.CUH.Code.SwitchSystem;
 using Work.CUH.Code.Test;
 using Work.ISC.Code.Managers;
 using Work.PSB.Code.Commands;
@@ -46,9 +47,12 @@ namespace Work.PSB.Code.Test
         [Header("Object Pooling")]
         [Inject] PoolManagerMono _poolManager;
         [SerializeField] PoolingItemSO inkPool;
+
+        [Header("Interact")] [SerializeField] private float interactRange = 0.5f;
         
         bool _isDead = false;
-
+        private Collider[] _results = new Collider[10];
+        
         public void ChangeState(string stateName, bool forced = false) => _stateMachine.ChangeState(stateName, forced);
 
         private void Awake()
@@ -95,13 +99,19 @@ namespace Work.PSB.Code.Test
         private void OnEnable()
         {
             if (InputSO != null)
+            {
                 InputSO.OnMovement += HandleMove;
+                InputSO.OnInteract += HandleInteract;
+            }
         }
-
+        
         private void OnDisable()
         {
             if (InputSO != null)
+            {
                 InputSO.OnMovement -= HandleMove;
+                InputSO.OnInteract -= HandleInteract;
+            }
         }
 
         private void OnDestroy()
@@ -122,6 +132,21 @@ namespace Work.PSB.Code.Test
             _stateMachine.UpdateStateMachine();
         }
 
+        private void HandleInteract()
+        {
+            if(_movementCompo.isMoving) return;
+            var size = Physics.OverlapSphereNonAlloc(transform.position, interactRange, _results);
+            for (int i = 0; i < size; i++)
+            {
+                if (_results[i].TryGetComponent(out Lever lever))
+                {
+                    Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(lever)));
+                    Bus<TurnUseEvent>.Raise(new TurnUseEvent());
+                    break;
+                }
+            }
+        }
+        
         private void HandleMove(Vector2 input)
         {
             if (_isDead) return;
