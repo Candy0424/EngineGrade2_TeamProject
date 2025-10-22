@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 using UnityEngine;
 
 namespace Work.PSB.Code.Test
@@ -97,3 +98,4 @@ namespace Work.PSB.Code.Test
         
     }
 }
+#endif

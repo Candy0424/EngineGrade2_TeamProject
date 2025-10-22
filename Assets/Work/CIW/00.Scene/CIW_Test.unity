@@ -148,9 +148,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09a698bf855370d48a51ea842d8bfc73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  book: {fileID: 0}
   stateAnimationTime: 0.7
   turnTimeType: 1
   turnTime: 0.5
+  floorManager: {fileID: 0}
 --- !u!4 &430236
 Transform:
   m_ObjectHideFlags: 0
@@ -3022,7 +3024,6 @@ MonoBehaviour:
   whatIsWalkable:
     serializedVersion: 2
     m_Bits: 64
-  raycastDistance: 1
   turnServiceMono: {fileID: 159611367}
 --- !u!4 &848903495
 Transform:
@@ -4214,6 +4215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bookController: {fileID: 1296448874}
+  skinnedMeshRenderer: {fileID: 0}
   currentState: 2
   standinsTransform: {fileID: 1278319286}
   pagesTransform: {fileID: 1175526743}
@@ -4580,6 +4582,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   undoCooldown: 0.2
   leftUndoCount: 0
+  _floorManager: {fileID: 0}
 --- !u!4 &1261419662
 Transform:
   m_ObjectHideFlags: 0
@@ -5562,8 +5565,8 @@ MonoBehaviour:
   - {fileID: 1639101462}
   playerObj: {fileID: 8024549313690319210}
   moveDuration: 1.5
-  moveCamLerpSpeed: 5
   camHeightForFloorView: 10
+  demo01: {fileID: 0}
 --- !u!4 &1578742927
 Transform:
   m_ObjectHideFlags: 0
@@ -9502,6 +9505,7 @@ MonoBehaviour:
   whatIsArrival:
     serializedVersion: 2
     m_Bits: 4096
+  moveEffect: {fileID: 0}
 --- !u!114 &8024549313690319212
 MonoBehaviour:
   m_ObjectHideFlags: 0
