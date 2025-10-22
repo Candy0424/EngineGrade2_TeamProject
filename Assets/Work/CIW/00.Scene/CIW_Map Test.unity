@@ -935,7 +935,7 @@ MonoBehaviour:
   stateAnimationTime: 0.7
   turnTimeType: 1
   turnTime: 0.5
-  floorManager: {fileID: 192428894}
+  floorManager: {fileID: 529946274}
 --- !u!4 &61040459
 Transform:
   m_ObjectHideFlags: 0
@@ -976,7 +976,7 @@ MonoBehaviour:
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
+            m_IntArgument: 4
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
@@ -1664,59 +1664,6 @@ Transform:
   - {fileID: 914479702}
   - {fileID: 645727745}
   - {fileID: 968744190}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &192428893
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 192428895}
-  - component: {fileID: 192428894}
-  m_Layer: 0
-  m_Name: FloorManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &192428894
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 192428893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 896d15c3171a5fd44b18cf19df449d74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  floorCam: {fileID: 1641700309}
-  transitionCam: {fileID: 1462451359}
-  floorObjs:
-  - {fileID: 1302088641}
-  - {fileID: 1592389036}
-  playerObj: {fileID: 1147423848277493468}
-  moveDuration: 1.5
-  camHeightForFloorView: 10
-  demo01: {fileID: 61040458}
---- !u!4 &192428895
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 192428893}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &199741654
@@ -3551,6 +3498,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 870970975}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &529946274 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2287410066883682459, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+  m_PrefabInstance: {fileID: 2455669674274716136}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 896d15c3171a5fd44b18cf19df449d74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &531367496
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5729,6 +5687,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1093263581}
     m_Modifications:
+    - target: {fileID: 380972889489949924, guid: 2864075b7432f864bbaa69e5e6809296, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -4.463135
+      objectReference: {fileID: 0}
     - target: {fileID: 1652841877073286673, guid: 2864075b7432f864bbaa69e5e6809296, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -18802,6 +18764,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: System
       objectReference: {fileID: 0}
+    - target: {fileID: 2287410066883682459, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: demo01
+      value: 
+      objectReference: {fileID: 61040458}
+    - target: {fileID: 2287410066883682459, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: bookObj
+      value: 
+      objectReference: {fileID: 1610026847}
+    - target: {fileID: 2287410066883682459, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: floorCam
+      value: 
+      objectReference: {fileID: 1641700309}
+    - target: {fileID: 2287410066883682459, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: playerObj
+      value: 
+      objectReference: {fileID: 1147423848277493468}
+    - target: {fileID: 2287410066883682459, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: _isBookTurned
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2287410066883682459, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: transitionCam
+      value: 
+      objectReference: {fileID: 1462451359}
+    - target: {fileID: 2287410066883682459, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: 'floorObjs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1302088641}
+    - target: {fileID: 2287410066883682459, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: 'floorObjs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1592389036}
+    - target: {fileID: 2905366371190823978, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: gridSize.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2905366371190823978, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: gridSize.z
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 2905366371190823978, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
       propertyPath: gridParent.Array.size
       value: 2
@@ -18857,7 +18859,7 @@ PrefabInstance:
     - target: {fileID: 7160846758986189290, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
       propertyPath: _floorManager
       value: 
-      objectReference: {fileID: 192428894}
+      objectReference: {fileID: 529946274}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -19666,7 +19668,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridServiceMono: {fileID: 85991417}
-  floorTransitionManager: {fileID: 192428894}
+  floorTransitionManager: {fileID: 529946274}
   moveTime: 0.15
   whatIsStair:
     serializedVersion: 2
@@ -19833,7 +19835,7 @@ PrefabInstance:
     - target: {fileID: 1695243433147643435, guid: 9f02eea515b85a842900aaf2ec26ad9a, type: 3}
       propertyPath: floorManager
       value: 
-      objectReference: {fileID: 192428894}
+      objectReference: {fileID: 0}
     - target: {fileID: 1695243433147643435, guid: 9f02eea515b85a842900aaf2ec26ad9a, type: 3}
       propertyPath: OnArrival.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -20480,5 +20482,4 @@ SceneRoots:
   - {fileID: 182736961}
   - {fileID: 61040459}
   - {fileID: 785450508}
-  - {fileID: 192428895}
   - {fileID: 1610026849}

@@ -32,6 +32,7 @@ namespace Work.CUH.Code.Commands
         public override void Undo()
         {
             var movement = Commandable as PSBTestPlayerMovement;
+            Debug.Log($"언도에서 보내줄 DIr : {Dir}");
             movement.TeleportToFloor(BeforePos, Dir);
         }
     }
