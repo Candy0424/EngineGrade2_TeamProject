@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.IO;
 using Chuh007Lib.ObjectPool.Runtime;
 using UnityEditor;
@@ -58,3 +59,4 @@ namespace Chuh007Lib.ObjectPool.Editor
         }
     }
 }
+#endif

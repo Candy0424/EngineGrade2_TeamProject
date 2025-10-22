@@ -6867,6 +6867,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1093263581}
     m_Modifications:
+    - target: {fileID: 380972889489949924, guid: 2864075b7432f864bbaa69e5e6809296, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -4.463135
+      objectReference: {fileID: 0}
     - target: {fileID: 3993407792119883127, guid: 2864075b7432f864bbaa69e5e6809296, type: 3}
       propertyPath: m_Name
       value: GamePanel
@@ -7714,7 +7718,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1601332064}
     m_Modifications:
     - target: {fileID: 1695243433147643435, guid: 9f02eea515b85a842900aaf2ec26ad9a, type: 3}
       propertyPath: floorManager
@@ -7770,7 +7774,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6911631330749521815, guid: 9f02eea515b85a842900aaf2ec26ad9a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.6
+      value: 0.5999985
       objectReference: {fileID: 0}
     - target: {fileID: 6911631330749521815, guid: 9f02eea515b85a842900aaf2ec26ad9a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7883,6 +7887,11 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!4 &1072786609 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6911631330749521815, guid: 9f02eea515b85a842900aaf2ec26ad9a, type: 3}
+  m_PrefabInstance: {fileID: 1072786601}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1081464938
 GameObject:
   m_ObjectHideFlags: 0
@@ -12636,6 +12645,7 @@ Transform:
   - {fileID: 1443987499}
   - {fileID: 311196145}
   - {fileID: 1730924488}
+  - {fileID: 1072786609}
   m_Father: {fileID: 1302088642}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1605747707
@@ -18911,4 +18921,3 @@ SceneRoots:
   - {fileID: 64718076}
   - {fileID: 1530067173}
   - {fileID: 864856919}
-  - {fileID: 1072786601}
