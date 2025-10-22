@@ -310,7 +310,6 @@ MonoBehaviour:
   whatIsWalkable:
     serializedVersion: 2
     m_Bits: 64
-  raycastDistance: 1
   turnServiceMono: {fileID: 886064899}
 --- !u!4 &85991418
 Transform:
@@ -1392,6 +1391,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   undoCooldown: 0.2
   leftUndoCount: 0
+  _floorManager: {fileID: 0}
 --- !u!4 &746091141
 Transform:
   m_ObjectHideFlags: 0
@@ -3042,11 +3042,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5236593430827471641, guid: 2864075b7432f864bbaa69e5e6809296, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5236593430827471641, guid: 2864075b7432f864bbaa69e5e6809296, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 17.300049
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5236593430827471641, guid: 2864075b7432f864bbaa69e5e6809296, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
