@@ -682,6 +682,7 @@ MonoBehaviour:
   floorObjs:
   - {fileID: 1302088641}
   playerObj: {fileID: 1147423848277493468}
+  bookObj: {fileID: 0}
   moveDuration: 1.5
   camHeightForFloorView: 15
   demo01: {fileID: 142404737}
@@ -4765,7 +4766,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 1
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -9336,6 +9337,18 @@ PrefabInstance:
     - target: {fileID: 1989855006085659703, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
       propertyPath: m_Name
       value: System
+      objectReference: {fileID: 0}
+    - target: {fileID: 2905366371190823978, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: gridSize.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2905366371190823978, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: gridSize.z
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2905366371190823978, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: gridParent.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2905366371190823978, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
       propertyPath: 'gridParent.Array.data[0]'
