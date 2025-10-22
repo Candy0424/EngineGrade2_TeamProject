@@ -418,7 +418,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &34122501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2630,6 +2630,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Trap Plane (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4695686295397949153, guid: d08ea26875c20b94a9bd54e4257b0ec7, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f10c3beda0f29c46a716276d2773655, type: 2}
     - target: {fileID: 8706778550115166095, guid: d08ea26875c20b94a9bd54e4257b0ec7, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.2999998
@@ -7792,7 +7796,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 1
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -9112,7 +9116,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: f25515bd58762f644afcc3d0e629cccb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

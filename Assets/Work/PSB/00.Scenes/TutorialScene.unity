@@ -562,7 +562,6 @@ MonoBehaviour:
   whatIsWalkable:
     serializedVersion: 2
     m_Bits: 64
-  raycastDistance: 1
   turnServiceMono: {fileID: 886064899}
 --- !u!4 &85991418
 Transform:
@@ -3061,6 +3060,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   undoCooldown: 0.2
   leftUndoCount: 1557
+  _floorManager: {fileID: 0}
 --- !u!4 &746091141
 Transform:
   m_ObjectHideFlags: 0
@@ -4835,6 +4835,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridServiceMono: {fileID: 85991417}
+  floorTransitionManager: {fileID: 0}
   moveTime: 0.15
   whatIsStair:
     serializedVersion: 2
@@ -4842,6 +4843,7 @@ MonoBehaviour:
   whatIsArrival:
     serializedVersion: 2
     m_Bits: 4096
+  moveEffect: {fileID: 0}
 --- !u!114 &1163503398
 MonoBehaviour:
   m_ObjectHideFlags: 0

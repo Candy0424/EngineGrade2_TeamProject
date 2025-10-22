@@ -2603,6 +2603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09a698bf855370d48a51ea842d8bfc73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  book: {fileID: 0}
   stateAnimationTime: 0.7
   turnTimeType: 1
   turnTime: 0.5
@@ -11474,6 +11475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bookController: {fileID: 227344193}
+  skinnedMeshRenderer: {fileID: 0}
   currentState: 2
   standinsTransform: {fileID: 138263882}
   pagesTransform: {fileID: 1110504263}
