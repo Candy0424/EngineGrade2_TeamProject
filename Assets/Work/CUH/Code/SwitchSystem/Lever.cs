@@ -1,17 +1,17 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Work.CIW.Code.Grid;
-using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.Commands;
-using Work.CUH.Code.GameEvents;
 
 namespace Work.CUH.Code.SwitchSystem
 {
-    public class Lever : GridObjectBase, ICommandable, ISwitch
+    public class Lever : MonoBehaviour, ISwitch, ICommandable
     {
-        [SerializeField] private GameObject onVisual;
-        [SerializeField] private GameObject offVisual;
+        private static readonly int Open = Animator.StringToHash("Open");
+        [SerializeField] private Renderer[] renderers;
+        [SerializeField] private Material onMaterial;
+        [SerializeField] private Material offMaterial;
+        [SerializeField] private Animator animator;
+        
         [Header("Target")]
         [SerializeField] private GameObject operateObject;
         
@@ -38,42 +38,33 @@ namespace Work.CUH.Code.SwitchSystem
                 _isActive = value;
                 if (_isActive)
                 {
-                    onVisual.SetActive(true);
-                    offVisual.SetActive(false);
+                    foreach (var render in renderers)
+                    {
+                        render.material = onMaterial;
+                    }
+                    animator.SetBool(Open, true);
                     activatable.Activate();
                 }
                 else
                 {
-                    onVisual.SetActive(false);
-                    offVisual.SetActive(true);
+                    foreach (var render in renderers)
+                    {
+                        render.material = offMaterial;
+                    }
+                    animator.SetBool(Open, false);
                     activatable.Deactivate();
                 }
             }
         }
-        
-        public IActivatable activatable { get; private set; }
-        
 
         private void Awake()
         {
+            animator = GetComponentInChildren<Animator>();
             activatable = operateObject.GetComponent<IActivatable>();
-            Bus<PlayerPosChangeEvent>.OnEvent += HandlePlayerPosChange;
         }
 
-        private void OnDestroy()
-        {
-            Bus<PlayerPosChangeEvent>.OnEvent -= HandlePlayerPosChange;
-        }
+        public IActivatable activatable { get; private set; }
         
-        private void HandlePlayerPosChange(PlayerPosChangeEvent evt)
-        {
-            if (Vector3.Distance(evt.transform.position + evt.direction, transform.position) <= 0.05f)
-            {
-                Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
-            }
-        }
-        
-        [ContextMenu("Activate")]
         public void ToggleSwitch()
         {
             IsActive = !IsActive;
@@ -83,34 +74,5 @@ namespace Work.CUH.Code.SwitchSystem
         {
             IsActive = !IsActive;
         }
-        
-        #region Grid
-        
-        public override Vector3Int CurrentGridPosition { get; set; }
-        public override void OnCellDeoccupied()
-        {
-        }
-
-        public override void OnCellOccupied(Vector3Int newPos)
-        {
-        }
-        
-        #endregion
-
-#if UNITY_EDITOR
-        private void OnValidate()
-        {
-            if(operateObject == null) return;
-            if (operateObject.TryGetComponent(out IActivatable activate))
-            {
-                activeObject = operateObject;
-            }
-            else
-            {
-                operateObject = null;
-                Debug.LogError("This Object is not ActivateObject");
-            }
-        }
-#endif
     }
 }
