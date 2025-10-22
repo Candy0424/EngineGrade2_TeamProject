@@ -828,54 +828,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 973456104544763259, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
-      propertyPath: maxTurnCount
-      value: 75
-      objectReference: {fileID: 0}
-    - target: {fileID: 973456104544763259, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
-      propertyPath: OnTurnZeroEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 973456104544763259, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
-      propertyPath: OnTurnZeroEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 973456104544763259, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
-      propertyPath: OnTurnZeroEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 973456104544763259, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
-      propertyPath: OnTurnZeroEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 973456104544763259, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
-      propertyPath: OnTurnZeroEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LobbyScene
-      objectReference: {fileID: 0}
-    - target: {fileID: 973456104544763259, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
-      propertyPath: OnTurnZeroEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Work.CIW.Code.Grid.ArrivalTrigger, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 973456104544763259, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
-      propertyPath: OnTurnZeroEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 1989855006085659703, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
       propertyPath: m_Name
       value: System
       objectReference: {fileID: 0}
-    - target: {fileID: 2905366371190823978, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
-      propertyPath: gridSize.x
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 2905366371190823978, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
-      propertyPath: gridSize.z
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 2905366371190823978, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
-      propertyPath: gridParent.Array.size
-      value: 2
-      objectReference: {fileID: 0}
+    - target: {fileID: 2287410066883682459, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: demo01
+      value: 
+      objectReference: {fileID: 624464268}
+    - target: {fileID: 2287410066883682459, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: floorCam
+      value: 
+      objectReference: {fileID: 1352113538}
+    - target: {fileID: 2287410066883682459, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: playerObj
+      value: 
+      objectReference: {fileID: 1765571237}
+    - target: {fileID: 2287410066883682459, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: transitionCam
+      value: 
+      objectReference: {fileID: 1039553487}
+    - target: {fileID: 2287410066883682459, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: 'floorObjs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 922527938}
+    - target: {fileID: 2287410066883682459, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+      propertyPath: 'floorObjs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 923571873}
     - target: {fileID: 2905366371190823978, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
       propertyPath: 'gridParent.Array.data[0]'
       value: 
@@ -7289,59 +7269,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5690808193312679174, guid: df7b73dc7879f474baf5b734ab59a40e, type: 3}
   m_PrefabInstance: {fileID: 1032161996}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1035261318
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1035261320}
-  - component: {fileID: 1035261319}
-  m_Layer: 0
-  m_Name: FloorManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1035261319
+--- !u!114 &1035261319 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 2287410066883682459, guid: e10cfd24a1cabde459bc0b53eec8741b, type: 3}
+  m_PrefabInstance: {fileID: 119989485}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1035261318}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 896d15c3171a5fd44b18cf19df449d74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorCam: {fileID: 1352113538}
-  transitionCam: {fileID: 1039553487}
-  floorObjs:
-  - {fileID: 922527938}
-  - {fileID: 923571873}
-  playerObj: {fileID: 1765571237}
-  moveDuration: 1.5
-  camHeightForFloorView: 11
-  demo01: {fileID: 624464268}
---- !u!4 &1035261320
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1035261318}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1039553486
 GameObject:
   m_ObjectHideFlags: 0
@@ -15206,8 +15144,7 @@ SceneRoots:
   - {fileID: 1435666848}
   - {fileID: 333281804}
   - {fileID: 728571023}
-  - {fileID: 1035261320}
   - {fileID: 850010087}
-  - {fileID: 1501082184}
-  - {fileID: 2108129128}
   - {fileID: 624464269}
+  - {fileID: 2108129128}
+  - {fileID: 1501082184}

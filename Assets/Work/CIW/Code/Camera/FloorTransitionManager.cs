@@ -21,6 +21,7 @@ namespace Work.CIW.Code.Camera
         [Header("Floor Objects")]
         [SerializeField] List<GameObject> floorObjs;
         [SerializeField] GameObject playerObj;
+        [SerializeField] private GameObject bookObj;
         public bool IsBookTurned => _isBookTurned;
         int _currentIdx = 0;
 
@@ -157,6 +158,9 @@ namespace Work.CIW.Code.Camera
             }
 
             Debug.Log("책 넘김 완료");
+
+            float offsetY = direction > 0 ? 15f : -15f;
+            bookObj.transform.position += new Vector3(0f, offsetY, 0f);
 
             SetFloorCameraTarget(targetObj.transform);
 
