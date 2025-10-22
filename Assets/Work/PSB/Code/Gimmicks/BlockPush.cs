@@ -89,6 +89,8 @@ namespace Work.PSB.Code.Test
             
             if (!_gridService.CanMoveTo(CurrentGridPosition, dir, out Vector3Int validatedPos))
             {
+                Bus<CommandEvent>.Raise(new CommandEvent(new NothingCommand(this)));
+                Bus<TurnUseEvent>.Raise(new TurnUseEvent());
                 return false;
             }
 
@@ -96,8 +98,18 @@ namespace Work.PSB.Code.Test
             foreach (Collider hit in hits)
             {
                 if (hit == null) continue;
-                if (hit.GetComponent<BlockPush>() != null) return false;
-                if (hit.CompareTag("Wall") || hit.CompareTag("Spike")) return false;
+                if (hit.GetComponent<BlockPush>() != null)
+                {
+                    Bus<CommandEvent>.Raise(new CommandEvent(new NothingCommand(this)));
+                    Bus<TurnUseEvent>.Raise(new TurnUseEvent());
+                    return false;
+                }
+                if (hit.CompareTag("Wall") || hit.CompareTag("Spike"))
+                {
+                    Bus<CommandEvent>.Raise(new CommandEvent(new NothingCommand(this)));
+                    Bus<TurnUseEvent>.Raise(new TurnUseEvent());
+                    return false;
+                }
             }
             
             CreateEffect();
