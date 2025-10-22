@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 6, y: 0.01, z: -6}
-  m_LocalScale: {x: 1.3, y: 1.2999998, z: 1}
+  m_LocalScale: {x: 1.3, y: 1.2999996, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2744443235911553034}
@@ -131,8 +131,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spikeObject: {fileID: 5637774200392902684}
   turnManager: {fileID: 0}
-  startRaised: 1
-  isWork: 0
+  startRaised: 0
+  isWork: 1
   moveDistance: 3
   moveDuration: 0.3
   easeType: 6
@@ -214,7 +214,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.17}
-  m_LocalScale: {x: 1, y: 1, z: 4}
+  m_LocalScale: {x: 1, y: 1, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8706778550115166095}
@@ -250,7 +250,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3956615484646405076, guid: 274d59296d4656e459ff80f3ba0514ff, type: 3}
+  - {fileID: 2100000, guid: 5f10c3beda0f29c46a716276d2773655, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

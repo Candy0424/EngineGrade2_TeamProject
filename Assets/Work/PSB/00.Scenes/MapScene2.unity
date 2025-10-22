@@ -2912,10 +2912,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 785424723}
     m_Modifications:
     - target: {fileID: 4492444702675603884, guid: d08ea26875c20b94a9bd54e4257b0ec7, type: 3}
-      propertyPath: startRaised
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4492444702675603884, guid: d08ea26875c20b94a9bd54e4257b0ec7, type: 3}
       propertyPath: turnManager
       value: 
       objectReference: {fileID: 1501708783}
@@ -2930,14 +2926,6 @@ PrefabInstance:
     - target: {fileID: 4636234131166404395, guid: d08ea26875c20b94a9bd54e4257b0ec7, type: 3}
       propertyPath: m_Name
       value: Trap Plane (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4695686295397949153, guid: d08ea26875c20b94a9bd54e4257b0ec7, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 5f10c3beda0f29c46a716276d2773655, type: 2}
-    - target: {fileID: 8706778550115166095, guid: d08ea26875c20b94a9bd54e4257b0ec7, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.2999998
       objectReference: {fileID: 0}
     - target: {fileID: 8706778550115166095, guid: d08ea26875c20b94a9bd54e4257b0ec7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6626,6 +6614,7 @@ MonoBehaviour:
   floorObjs:
   - {fileID: 1302088641}
   playerObj: {fileID: 7986807}
+  bookObj: {fileID: 0}
   moveDuration: 1.5
   camHeightForFloorView: 15
   demo01: {fileID: 530115340}
