@@ -145,7 +145,8 @@ namespace Work.PSB.Code.Test
         public async void CreateEffect()
         {
             PoolingEffect effect = _poolManager.Pop<PoolingEffect>(pushEffect);
-            effect.PlayVFX(transform.position);
+            Vector3 pos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+            effect.PlayVFX(pos);
             await Awaitable.WaitForSecondsAsync(2f);
             _poolManager.Push(effect);
         }
