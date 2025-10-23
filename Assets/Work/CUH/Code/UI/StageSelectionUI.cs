@@ -3,6 +3,7 @@ using TransitionsPlus;
 using UnityEngine;
 using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.GameEvents;
+using Work.PSB.Code.Managers;
 
 namespace Work.CUH.Code.UI
 {
@@ -28,19 +29,27 @@ namespace Work.CUH.Code.UI
         {
             _loadSceneName = evt.LoadSceneName;
             if(stageUI) stageUI.SetActive(true);
+            
+            Bus<CursorToggleEvent>.Raise(new CursorToggleEvent(true, null));
         }
         
         [ContextMenu("TestLoad")]
-        public void LoadGameScene() // 플레이어가 스테이지 진입 누르면 호출
+        public void LoadGameScene()
         {
+            Bus<CursorToggleEvent>.Raise(new CursorToggleEvent(false));
+            
             transition.gameObject.SetActive(true);
             transition.sceneNameToLoad = _loadSceneName;
         }
         
         [ContextMenu("TestClose")]
-        public void CloseUI() // 플레이어가 나가기 누르면 호출
+        public void CloseUI()
         {
+            Bus<CursorToggleEvent>.Raise(new CursorToggleEvent(false));
+            
+            if(stageUI) stageUI.SetActive(false);
             Bus<CloseBookUIEvent>.Raise(new CloseBookUIEvent());
         }
+        
     }
 }

@@ -55,7 +55,7 @@ namespace Work.PSB.Code.Test
             Bus<PlayerPosChangeEvent>.OnEvent += HandlePlayerPosChange;
         }
 
-        private void Start()
+        public void StartEvent()
         {
             _isRaised = startRaised;
             spikeObject.transform.localPosition = _isRaised ? _startPos : _raisedPos;
@@ -71,6 +71,9 @@ namespace Work.PSB.Code.Test
             if (spikeObject == null) return;
             if (turnManager != null && isWork)
                 turnManager.OnUseTurn += OnTurnUse;
+            
+            SpikeCommand command = new SpikeCommand(this);
+            Bus<CommandEvent>.Raise(new CommandEvent(command));
         }
 
         private void OnDisable()

@@ -51,7 +51,7 @@ namespace Work.CIW.Code.Camera
             Bus<FloorEvent>.OnEvent -= HandleFloorChange;
         }
 
-        private void Start()
+        public void StartEvent()
         {
             floorCam.Priority = ActivePriority;
             transitionCam.Priority = DefaultPriority;
@@ -103,6 +103,7 @@ namespace Work.CIW.Code.Camera
             Vector3 newCamPos = new Vector3(targetTrm.position.x, targetTrm.position.y + camHeightForFloorView, targetTrm.position.z);
 
             floorCam.transform.position = newCamPos;
+            transitionCam.transform.position = newCamPos;
             floorCam.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
         }
 

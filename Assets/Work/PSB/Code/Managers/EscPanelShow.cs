@@ -1,6 +1,8 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Work.CUH.Chuh007Lib.EventBus;
+using Work.PSB.Code.Managers; // CursorManager를 사용하기 위해 추가
 
 namespace Work.PSB.Code.Managers
 {
@@ -9,8 +11,9 @@ namespace Work.PSB.Code.Managers
         [SerializeField] private GameObject escPanel;
         [SerializeField] private Texture2D texture;
 
-        private bool isOpen = false;
+        private bool isOpen = false; // ESC 패널 상태
         private Texture2D cachedCursor;
+        private bool isCursorForcedOpen = false; // 외부 UI(예: StageSelectionUI)가 커서를 강제 오픈했는지 여부
 
         private void Start()
         {
@@ -22,44 +25,74 @@ namespace Work.PSB.Code.Managers
             int newHeight = Mathf.RoundToInt(texture.height * scaleFactor);
 
             cachedCursor = ResizeTexture(texture, newWidth, newHeight);
-            LockCursor();
+
+            SetCursorLockedState(true);
+            
+            Bus<CursorToggleEvent>.OnEvent += HandleCursorToggleRequest;
         }
 
         private void OnDestroy()
         {
             if (cachedCursor != null)
                 Destroy(cachedCursor);
+            
+            Bus<CursorToggleEvent>.OnEvent -= HandleCursorToggleRequest;
         }
 
         private void Update()
         {
-            if (Keyboard.current.escapeKey.wasPressedThisFrame)
+            if (Keyboard.current.escapeKey.wasPressedThisFrame && !isCursorForcedOpen)
+            {
                 isOpen = !isOpen;
+            }
 
             if (isOpen)
             {
                 Time.timeScale = 0;
                 escPanel.SetActive(true);
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+                SetCursorLockedState(false);
             }
-            else
+            else if (!isCursorForcedOpen)
             {
                 Time.timeScale = 1;
                 escPanel.SetActive(false);
-                Cursor.visible = true;
-                Invoke(nameof(LockCursor), 0.05f);
+                SetCursorLockedState(true);
             }
         }
 
-        private void LockCursor()
+        private void HandleCursorToggleRequest(CursorToggleEvent evt)
         {
-            Cursor.SetCursor(cachedCursor, Vector2.zero, CursorMode.ForceSoftware);
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = true;
+            isCursorForcedOpen = evt.ShouldShow;
+
+            if (evt.ShouldShow)
+            {
+                Time.timeScale = 0;
+                SetCursorLockedState(false, evt.CursorTexture);
+            }
+            else if (!isOpen)
+            {
+                Time.timeScale = 1;
+                SetCursorLockedState(true);
+            }
         }
 
+        private void SetCursorLockedState(bool locked, Texture2D textureOverride = null)
+        {
+            if (locked)
+            {
+                Cursor.SetCursor(cachedCursor, Vector2.zero, CursorMode.ForceSoftware);
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = true;
+            }
+            else
+            {
+                Texture2D cursorToUse = textureOverride != null ? textureOverride : null;
+                Cursor.SetCursor(cursorToUse, Vector2.zero, CursorMode.Auto);
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+        }
+        
         private Texture2D ResizeTexture(Texture2D source, int width, int height)
         {
             RenderTexture rt = RenderTexture.GetTemporary(width, height);
