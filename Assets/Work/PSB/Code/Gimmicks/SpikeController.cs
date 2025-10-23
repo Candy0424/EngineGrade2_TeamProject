@@ -71,6 +71,9 @@ namespace Work.PSB.Code.Test
             if (spikeObject == null) return;
             if (turnManager != null && isWork)
                 turnManager.OnUseTurn += OnTurnUse;
+            
+            SpikeCommand command = new SpikeCommand(this);
+            Bus<CommandEvent>.Raise(new CommandEvent(command));
         }
 
         private void OnDisable()
