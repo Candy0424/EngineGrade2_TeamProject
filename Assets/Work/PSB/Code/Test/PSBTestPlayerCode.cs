@@ -52,6 +52,7 @@ namespace Work.PSB.Code.Test
         [Header("Interact")] [SerializeField] private float interactRange = 0.5f;
         
         public bool IsDead = false;
+        public bool IsInputLocked = false;
         private Collider[] _results = new Collider[10];
         
         public void ChangeState(string stateName, bool forced = false) => _stateMachine.ChangeState(stateName, forced);
@@ -149,8 +150,8 @@ namespace Work.PSB.Code.Test
         
         private void HandleMove(Vector2 input)
         {
+            if (IsInputLocked) return;
             if (IsDead) return;
-
             if (input == Vector2.zero) return;
 
             Vector3Int dir = GetDirection(input);
@@ -243,6 +244,8 @@ namespace Work.PSB.Code.Test
 
             IsDead = true;
 
+            IsInputLocked = true;
+
             _stateMachine.ChangeState("IDLE");
 
             Debug.Log("게임 클리어");
@@ -292,6 +295,11 @@ namespace Work.PSB.Code.Test
             }
 
             return Vector3Int.zero;
+        }
+
+        public void SetInputLockState(bool isLocked)
+        {
+            IsInputLocked = isLocked;
         }
 
         public override void OnCellDeoccupied()
