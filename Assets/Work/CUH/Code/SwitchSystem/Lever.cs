@@ -11,9 +11,12 @@ namespace Work.CUH.Code.SwitchSystem
         [SerializeField] private Material onMaterial;
         [SerializeField] private Material offMaterial;
         [SerializeField] private Animator animator;
+        [field: SerializeField] public ColorLinkObject linkObject { get; private set; }
         
         [Header("Target")]
         [SerializeField] private GameObject operateObject;
+        
+        public IActivatable activatable { get; private set; }
         
         public GameObject activeObject
         {
@@ -56,15 +59,19 @@ namespace Work.CUH.Code.SwitchSystem
                 }
             }
         }
-
+        
         private void Awake()
         {
             animator = GetComponentInChildren<Animator>();
             activatable = operateObject.GetComponent<IActivatable>();
         }
 
-        public IActivatable activatable { get; private set; }
-        
+        private void Start()
+        {
+            Debug.Assert(linkObject != null, $"linker can not be null");
+            linkObject.SetLinkColor(activatable.linker.GetLinkColor());
+        }
+
         public void ToggleSwitch()
         {
             IsActive = !IsActive;

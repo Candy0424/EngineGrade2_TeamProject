@@ -11,12 +11,17 @@ namespace Work.CUH.Code.SwitchSystem
     {
         [SerializeField] private GameObject onVisual;
         [SerializeField] private GameObject offVisual;
+        [SerializeField, ColorUsage(true, true)] private Color linkColor;
         
         private Collider _collider;
-
+        
+        [field: SerializeField] public ColorLinkObject linker { get; private set; }
+        
         private void Awake()
         {
             _collider = GetComponent<Collider>();
+            Debug.Assert(linker != null, $"linker can not be null");
+            linker.SetLinkColor(linkColor);
         }
 
         private void Start()
@@ -25,6 +30,7 @@ namespace Work.CUH.Code.SwitchSystem
             transform.position = CurrentGridPosition;
             GridSystem.Instance.SetObjectInitialPosition(this, CurrentGridPosition);
         }
+
 
         public void Activate()
         {

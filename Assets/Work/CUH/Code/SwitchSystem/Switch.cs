@@ -12,8 +12,12 @@ namespace Work.CUH.Code.SwitchSystem
     {
         [SerializeField] private GameObject onVisual;
         [SerializeField] private GameObject offVisual;
+        [field: SerializeField] public ColorLinkObject linkObject { get; private set; }
+        
         [Header("Target")]
         [SerializeField] private GameObject operateObject;
+        
+        public IActivatable activatable { get; private set; }
         
         public GameObject activeObject
         {
@@ -51,13 +55,16 @@ namespace Work.CUH.Code.SwitchSystem
             }
         }
         
-        public IActivatable activatable { get; private set; }
-        
-
         private void Awake()
         {
             activatable = operateObject.GetComponent<IActivatable>();
             Bus<PlayerPosChangeEvent>.OnEvent += HandlePlayerPosChange;
+        }
+
+        private void Start()
+        {
+            Debug.Assert(linkObject != null, $"linker can not be null");
+            linkObject.SetLinkColor(activatable.linker.GetLinkColor());
         }
 
         private void OnDestroy()
@@ -67,6 +74,7 @@ namespace Work.CUH.Code.SwitchSystem
         
         private void HandlePlayerPosChange(PlayerPosChangeEvent evt)
         {
+            Debug.Log(evt.transform.position + evt.direction);
             if (Vector3.Distance(evt.transform.position + evt.direction, transform.position) <= 0.05f)
             {
                 Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
