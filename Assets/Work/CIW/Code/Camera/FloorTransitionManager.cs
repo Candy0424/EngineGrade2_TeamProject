@@ -51,7 +51,7 @@ namespace Work.CIW.Code.Camera
             Bus<FloorEvent>.OnEvent -= HandleFloorChange;
         }
 
-        private void Start()
+        public void StartEvent()
         {
             floorCam.Priority = ActivePriority;
             transitionCam.Priority = DefaultPriority;

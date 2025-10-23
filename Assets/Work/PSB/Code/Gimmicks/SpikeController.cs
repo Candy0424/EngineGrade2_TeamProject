@@ -55,7 +55,7 @@ namespace Work.PSB.Code.Test
             Bus<PlayerPosChangeEvent>.OnEvent += HandlePlayerPosChange;
         }
 
-        private void Start()
+        public void StartEvent()
         {
             _isRaised = startRaised;
             spikeObject.transform.localPosition = _isRaised ? _startPos : _raisedPos;
