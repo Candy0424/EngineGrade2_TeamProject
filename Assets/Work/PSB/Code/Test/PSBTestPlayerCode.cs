@@ -10,6 +10,7 @@ using Work.CIW.Code;
 using Work.CIW.Code.ETC;
 using Work.CIW.Code.Grid;
 using Work.CIW.Code.Player;
+using Work.CIW.Code.Player.Event;
 using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.Commands;
 using Work.CUH.Code.GameEvents;
@@ -37,7 +38,7 @@ namespace Work.PSB.Code.Test
         public EntityAnimator Animator { get; private set; }
 
         [Header("Turn system")]
-        [SerializeField] TurnSystemAdapter turnAdapter;
+        [field : SerializeField] public TurnSystemAdapter turnAdapter;
         [SerializeField] TurnCountManager turnManager;
 
         [Header("Ink Sink")]
@@ -50,7 +51,7 @@ namespace Work.PSB.Code.Test
 
         [Header("Interact")] [SerializeField] private float interactRange = 0.5f;
         
-        bool _isDead = false;
+        public bool IsDead = false;
         private Collider[] _results = new Collider[10];
         
         public void ChangeState(string stateName, bool forced = false) => _stateMachine.ChangeState(stateName, forced);
@@ -93,6 +94,8 @@ namespace Work.PSB.Code.Test
                 Debug.LogError("TurnCountManager 연결 안됨");
             }
 
+            Bus<GameClearEvent>.OnEvent += HandleGameClear;
+
             _stateMachine.ChangeState("IDLE");
         }
 
@@ -116,19 +119,16 @@ namespace Work.PSB.Code.Test
 
         private void OnDestroy()
         {
-            if (!_isDead && turnAdapter != null && !turnAdapter.HasTurnRemaining)
+            if (turnManager != null)
             {
-                HandleTurnZero();
+                turnManager.OnTurnZeroEvent -= HandleTurnZero;
             }
+
+            Bus<GameClearEvent>.OnEvent -= HandleGameClear;
         }
 
         private void Update()
         {
-            if (!turnAdapter.HasTurnRemaining && !_isDead)
-            {
-                HandleTurnZero();
-            }
-
             _stateMachine.UpdateStateMachine();
         }
 
@@ -149,7 +149,7 @@ namespace Work.PSB.Code.Test
         
         private void HandleMove(Vector2 input)
         {
-            if (_isDead) return;
+            if (IsDead) return;
 
             if (input == Vector2.zero) return;
 
@@ -224,12 +224,28 @@ namespace Work.PSB.Code.Test
 
         }
 
-        private void HandleTurnZero()
+        public void HandleTurnZero()
         {
-            if (_isDead) return;
+            if (IsDead) return;
+            if (_movementCompo.isMoving)
+            {
+                Debug.Log("아직 이동중이라서 죽음 처리 보류");
+                return;
+            }
 
-            _isDead = true;
+            IsDead = true;
             _stateMachine.ChangeState("DEAD");
+        }
+
+        private void HandleGameClear(GameClearEvent evt)
+        {
+            if (IsDead) return;
+
+            IsDead = true;
+
+            _stateMachine.ChangeState("IDLE");
+
+            Debug.Log("게임 클리어");
         }
 
         public IEnumerator InkPooling()

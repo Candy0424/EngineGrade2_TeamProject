@@ -144,6 +144,14 @@ namespace Work.PSB.Code.Test
             if (_playerCode != null)
             {
                 _playerCode.ChangeState("IDLE");
+
+                if (!_playerCode.IsDead)
+                {
+                    if (_playerCode.turnAdapter != null && !_playerCode.turnAdapter.HasTurnRemaining)
+                    {
+                        _playerCode.HandleTurnZero();
+                    }
+                }
             }
         }
 
