@@ -21,9 +21,16 @@ namespace Work.CIW.Code.Player.States
         {
             base.Enter();
 
+            Debug.Log("Dead 들어옴");
+
             _player.StopAllCoroutines();
 
-            _player.InkPooling();
+            _player.IsInputLocked = true;
+            Debug.Log($"바꿔줌. IsInputLocked : {_player.IsInputLocked}");
+
+            //_player.InkPooling();
+            _player.StartCoroutine(_player.InkPooling());
+            
             _fsmHost.OnDeadEvent?.Invoke();
             _fsmHost.enabled = false;
         }

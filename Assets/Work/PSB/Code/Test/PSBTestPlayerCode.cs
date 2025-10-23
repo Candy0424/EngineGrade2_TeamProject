@@ -11,6 +11,7 @@ using Work.CIW.Code.ETC;
 using Work.CIW.Code.Grid;
 using Work.CIW.Code.Player;
 using Work.CIW.Code.Player.Event;
+using Work.CIW.Code.Transition.Events;
 using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.Commands;
 using Work.CUH.Code.GameEvents;
@@ -236,6 +237,7 @@ namespace Work.PSB.Code.Test
 
             IsDead = true;
             _stateMachine.ChangeState("DEAD");
+            Bus<TransitionEvent>.Raise(new TransitionEvent(CIW.Code.Transition.TransitionType.Fail));
         }
 
         private void HandleGameClear(GameClearEvent evt)
@@ -243,7 +245,6 @@ namespace Work.PSB.Code.Test
             if (IsDead) return;
 
             IsDead = true;
-
             IsInputLocked = true;
 
             _stateMachine.ChangeState("IDLE");
