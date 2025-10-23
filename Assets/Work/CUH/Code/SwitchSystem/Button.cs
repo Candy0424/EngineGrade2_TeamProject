@@ -23,8 +23,12 @@ namespace Work.CUH.Code.SwitchSystem
         #endregion
 
         [SerializeField] private GameObject visual;
+        [field: SerializeField] public ColorLinkObject linkObject { get; private set; }
+
         [Header("Target")]
         [SerializeField] private GameObject operateObject;
+        
+        public IActivatable activatable { get; private set; }
         
         public GameObject activeObject
         {
@@ -59,7 +63,6 @@ namespace Work.CUH.Code.SwitchSystem
                 }
             }
         }
-        public IActivatable activatable { get; private set; }
         
         private void Awake()
         {
@@ -72,6 +75,8 @@ namespace Work.CUH.Code.SwitchSystem
         {
             CurrentGridPosition = Vector3Int.RoundToInt(transform.position);
             transform.position = CurrentGridPosition;
+            Debug.Assert(linkObject != null, $"linker can not be null");
+            linkObject.SetLinkColor(activatable.linker.GetLinkColor());
         }
 
         private void OnDestroy()
