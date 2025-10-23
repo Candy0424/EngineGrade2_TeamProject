@@ -23,31 +23,11 @@ namespace Work.CIW.Code.Player.States
 
             _player.StopAllCoroutines();
 
+            _player.InkPooling();
+            _fsmHost.OnDeadEvent?.Invoke();
             _fsmHost.enabled = false;
-
-            //_player.ChangeState("DEAD");
-
-            _player.StartCoroutine(DeathSequence());
         }
 
-        public override void Update()
-        {
-            
-        }
-
-        public override void Exit()
-        {
-            base.Exit();
-        }
-
-        private IEnumerator DeathSequence()
-        {
-            yield return _player.InkPooling();
-
-            // 끝났을 때, 책 덮고 로비로 나가야한다.
-            Debug.Log("진짜로 죽음처리 끝남");
-            yield return new WaitForSeconds(0.5f);
-            SceneManager.LoadScene("BookScene");
-        }
+        
     }
 }

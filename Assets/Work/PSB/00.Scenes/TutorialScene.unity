@@ -7425,7 +7425,7 @@ MonoBehaviour:
   whatIsArrival:
     serializedVersion: 2
     m_Bits: 4096
-  moveEffect: {fileID: 11400000, guid: 1e5671ffb16f18d4bb64115a598c8b8b, type: 2}
+  moveEffect: {fileID: 11400000, guid: b3ee68593a47d1a4789c22ed38f59abe, type: 2}
 --- !u!114 &1163503398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7450,6 +7450,7 @@ MonoBehaviour:
   sinkAmount: 0.5
   inkPool: {fileID: 11400000, guid: 0f657f04ae68bcb4db17ce378a524382, type: 2}
   interactRange: 0.5
+  IsDead: 0
 --- !u!136 &1163503399
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -9688,7 +9689,7 @@ Transform:
   m_GameObject: {fileID: 1414267668}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 75, z: -1}
+  m_LocalPosition: {x: 0, y: 75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11706,7 +11707,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1565752363}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 75, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -12892,7 +12893,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1778318392}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071067}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
