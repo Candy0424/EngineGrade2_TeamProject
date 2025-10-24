@@ -6,6 +6,7 @@ namespace Work.CUH.Code.Interaction
 {
     public class PlayerInteraction : MonoBehaviour, IEntityComponent
     {
+        [SerializeField] private LayerMask whatisTarget;
         [SerializeField] private float interactionRange = 2f;
         
         private Entity _entity;
@@ -16,7 +17,7 @@ namespace Work.CUH.Code.Interaction
 
         public void CheckInteraction()
         {
-            Physics.Raycast(transform.position, transform.forward * interactionRange, out RaycastHit hit);
+            Physics.Raycast(transform.position, transform.forward * interactionRange, out RaycastHit hit, whatisTarget);
 
             if (hit.collider && hit.collider.TryGetComponent(out IInteraction interaction))
             {
