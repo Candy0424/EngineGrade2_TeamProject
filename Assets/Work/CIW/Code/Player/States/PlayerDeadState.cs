@@ -30,11 +30,16 @@ namespace Work.CIW.Code.Player.States
 
             //_player.InkPooling();
             _player.StartCoroutine(_player.InkPooling());
-            
-            _fsmHost.OnDeadEvent?.Invoke();
-            _fsmHost.enabled = false;
+            _player.StartCoroutine(WaitTime());
         }
 
+        public IEnumerator WaitTime()
+        {
+            yield return new WaitForSeconds(2f);
+            _fsmHost.OnDeadEvent?.Invoke();
+            Debug.Log("DeadEvent호출");
+            _fsmHost.enabled = false;
+        }
         
     }
 }

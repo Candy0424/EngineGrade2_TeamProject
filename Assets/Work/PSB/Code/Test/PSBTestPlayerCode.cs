@@ -190,7 +190,10 @@ namespace Work.PSB.Code.Test
             {
                 Bus<CommandEvent>.Raise(new CommandEvent(new NothingCommand(_movementCompo)));
                 Bus<TurnUseEvent>.Raise(new TurnUseEvent());
-                Debug.Log("Wall");
+                if (turnManager != null && turnManager.CurrentTurnCount == 0)
+                {
+                    HandleTurnZero();
+                }
                 return;
             }
     
@@ -212,6 +215,10 @@ namespace Work.PSB.Code.Test
                 {
                     Bus<CommandEvent>.Raise(new CommandEvent(new NothingCommand(_movementCompo)));
                     Bus<TurnUseEvent>.Raise(new TurnUseEvent());
+                    if (turnManager != null && turnManager.CurrentTurnCount == 0)
+                    {
+                        HandleTurnZero();
+                    }
                     return;
                 }
             }
@@ -229,6 +236,7 @@ namespace Work.PSB.Code.Test
         public void HandleTurnZero()
         {
             if (IsDead) return;
+
             if (_movementCompo.isMoving)
             {
                 Debug.Log("아직 이동중이라서 죽음 처리 보류");

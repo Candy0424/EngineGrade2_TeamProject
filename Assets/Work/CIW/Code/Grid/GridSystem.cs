@@ -62,8 +62,6 @@ namespace Work.CIW.Code.Grid
                 return;
             }
 
-            Debug.Log($"Calculated Cell Size : {_cellSize}");
-
             gridStartWorldPosition = Vector3.zero;
             //gridStartWorldPosition = new Vector3(_cellSize / 2f, 0f, _cellSize / 2f);
         }
@@ -112,8 +110,7 @@ namespace Work.CIW.Code.Grid
                     }
                 }
             }
-
-            Debug.Log($"Grid Initialized: {_gridMap.Count} cells created across {gridParent.Count} floor(s).");
+            
         }
 
         #region I Grid Data Service ����
