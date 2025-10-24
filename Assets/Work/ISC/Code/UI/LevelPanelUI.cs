@@ -54,18 +54,38 @@ namespace Work.ISC.Code.UI
             InfoUpdate();
         }
 
-        public void EnableAnimation()
+        private void EnableAnimation()
         {
+            Debug.Log(Time.timeScale);
             Sequence seq = DOTween.Sequence()
-                .Append(transform.DOScale(1.2f, 1f).SetEase(Ease.InSine))
-                .Append(transform.DOScale(0.9f, 1f).SetEase(Ease.OutSine))
-                .Append(transform.DOScale(1.1f, 1f).SetEase(Ease.OutSine));
+                .SetUpdate(UpdateType.Normal, true)
+                .Append(transform.DOScale(1.2f, 0.2f).SetEase(Ease.InSine))
+                .Append(transform.DOScale(0.9f, 0.2f).SetEase(Ease.OutSine))
+                .Append(transform.DOScale(1f, 0.2f).SetEase(Ease.InSine))
+                .SetAutoKill(false)
+                .Pause();
             seq.Play();
         }
         
         private void OnEnable()
         {
             EnableAnimation();
+        }
+
+        private void OnDisable()
+        {
+            DisableAnimation();
+        }
+
+        private void DisableAnimation()
+        {
+            Sequence seq = DOTween.Sequence()
+                .SetUpdate(UpdateType.Normal, true)
+                .Append(transform.DOScale(0.2f, 0.2f).SetEase(Ease.OutSine))
+                .SetAutoKill(false)
+                .Pause();
+            
+            seq.Play();
         }
 
         private void InfoUpdate()
