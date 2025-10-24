@@ -47,8 +47,8 @@ namespace Work.CUH.Code.UI
         {
             Bus<CursorToggleEvent>.Raise(new CursorToggleEvent(false));
             
-            if(stageUI) stageUI.SetActive(false);
             Bus<CloseBookUIEvent>.Raise(new CloseBookUIEvent());
+            //if(stageUI) stageUI.SetActive(false);
         }
         
     }

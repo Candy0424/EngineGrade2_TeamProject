@@ -39,6 +39,7 @@ namespace Work.ISC.Code.UI
             _stars = new List<GameObject>();
 
             Bus<OpenBookUIEvent>.OnEvent += HandleOpenUI;
+            Bus<CloseBookUIEvent>.OnEvent += HandleCloseUI;
             
             gameObject.SetActive(false);
         }
@@ -46,6 +47,12 @@ namespace Work.ISC.Code.UI
         private void OnDestroy()
         {
             Bus<OpenBookUIEvent>.OnEvent -= HandleOpenUI;
+            Bus<CloseBookUIEvent>.OnEvent -= HandleCloseUI;
+        }
+
+        private void HandleCloseUI(CloseBookUIEvent evt)
+        {
+            DisableAnimation();
         }
 
         private void HandleOpenUI(OpenBookUIEvent evt)
@@ -71,20 +78,16 @@ namespace Work.ISC.Code.UI
         {
             EnableAnimation();
         }
-
-        private void OnDisable()
-        {
-            DisableAnimation();
-        }
-
+        
         private void DisableAnimation()
         {
             Sequence seq = DOTween.Sequence()
                 .SetUpdate(UpdateType.Normal, true)
-                .Append(transform.DOScale(0.2f, 0.2f).SetEase(Ease.OutSine))
+                .Append(transform.DOScale(0.1f, 0.2f).SetEase(Ease.OutSine))
                 .SetAutoKill(false)
                 .Pause();
             
+            seq.OnComplete(() => gameObject.SetActive(false));
             seq.Play();
         }
 
