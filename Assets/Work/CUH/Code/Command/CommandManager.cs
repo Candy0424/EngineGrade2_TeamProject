@@ -7,6 +7,7 @@ using Work.CIW.Code.Camera;
 using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.Commands;
 using Work.CUH.Code.GameEvents;
+using Work.PSB.Code.Test;
 
 namespace Work.CUH.Code.Command
 {
@@ -28,6 +29,7 @@ namespace Work.CUH.Code.Command
         private float _lastUndoTime;
 
         [SerializeField] FloorTransitionManager _floorManager;
+        [SerializeField] PSBTestPlayerCode _playerCode;
         
         private void Awake()
         {
@@ -104,10 +106,10 @@ namespace Work.CUH.Code.Command
 
         private void Update()
         {
-            if (Keyboard.current.zKey.isPressed && Time.time > undoCooldown + _lastUndoTime && !_floorManager.IsBookTurned) // 지금 넘어가는 중인지
+            if (Keyboard.current.zKey.isPressed && Time.time > undoCooldown + _lastUndoTime && !_floorManager.IsBookTurned && !_playerCode.IsInputLocked) // 지금 넘어가는 중인지
             {
                 _lastUndoTime = Time.time;
-                Debug.Log($"Z키 눌렀으니 Undo 실행함 : {_floorManager.IsBookTurned}");
+                Debug.Log($"Z키 눌렀으니 Undo 실행함 : {_playerCode.IsInputLocked}");
                 Undo();
             }
 

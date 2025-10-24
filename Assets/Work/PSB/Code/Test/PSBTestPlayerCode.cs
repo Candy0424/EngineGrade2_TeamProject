@@ -11,6 +11,7 @@ using Work.CIW.Code.ETC;
 using Work.CIW.Code.Grid;
 using Work.CIW.Code.Player;
 using Work.CIW.Code.Player.Event;
+using Work.CIW.Code.Transition.Events;
 using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.Commands;
 using Work.CUH.Code.GameEvents;
@@ -189,7 +190,10 @@ namespace Work.PSB.Code.Test
             {
                 Bus<CommandEvent>.Raise(new CommandEvent(new NothingCommand(_movementCompo)));
                 Bus<TurnUseEvent>.Raise(new TurnUseEvent());
-                Debug.Log("Wall");
+                if (turnManager != null && turnManager.CurrentTurnCount == 0)
+                {
+                    HandleTurnZero();
+                }
                 return;
             }
     
@@ -211,6 +215,10 @@ namespace Work.PSB.Code.Test
                 {
                     Bus<CommandEvent>.Raise(new CommandEvent(new NothingCommand(_movementCompo)));
                     Bus<TurnUseEvent>.Raise(new TurnUseEvent());
+                    if (turnManager != null && turnManager.CurrentTurnCount == 0)
+                    {
+                        HandleTurnZero();
+                    }
                     return;
                 }
             }
@@ -228,6 +236,7 @@ namespace Work.PSB.Code.Test
         public void HandleTurnZero()
         {
             if (IsDead) return;
+
             if (_movementCompo.isMoving)
             {
                 Debug.Log("아직 이동중이라서 죽음 처리 보류");
@@ -236,6 +245,7 @@ namespace Work.PSB.Code.Test
 
             IsDead = true;
             _stateMachine.ChangeState("DEAD");
+            Bus<TransitionEvent>.Raise(new TransitionEvent(CIW.Code.Transition.TransitionType.Fail));
         }
 
         private void HandleGameClear(GameClearEvent evt)
@@ -243,7 +253,6 @@ namespace Work.PSB.Code.Test
             if (IsDead) return;
 
             IsDead = true;
-
             IsInputLocked = true;
 
             _stateMachine.ChangeState("IDLE");

@@ -1,5 +1,4 @@
-﻿using Chuh007Lib.Dependencies;
-using echo17.EndlessBook.Demo01;
+﻿using echo17.EndlessBook.Demo01;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +6,6 @@ using Unity.Cinemachine;
 using UnityEngine;
 using Work.CIW.Code.Camera.Events;
 using Work.CUH.Chuh007Lib.EventBus;
-using Work.CUH.Code.Command;
 using Work.CUH.Code.Commands;
 
 namespace Work.CIW.Code.Camera
@@ -35,6 +33,7 @@ namespace Work.CIW.Code.Camera
         [Header("Transition settings")]
         [SerializeField] float moveDuration = 1.5f;
         [SerializeField] float camHeightForFloorView = 10f;
+        [SerializeField] float camZForFloorView = 0f;
 
         [SerializeField] Demo01 demo01;
 
@@ -61,8 +60,6 @@ namespace Work.CIW.Code.Camera
                 floorObjs[i].SetActive(i == _currentIdx);
             }
             playerObj.SetActive(true);
-
-            floorCam.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
 
             SetFloorCameraTarget(floorObjs[_currentIdx].transform);
         }
@@ -100,11 +97,12 @@ namespace Work.CIW.Code.Camera
 
         private void SetFloorCameraTarget(Transform targetTrm)
         {
-            Vector3 newCamPos = new Vector3(targetTrm.position.x, targetTrm.position.y + camHeightForFloorView, targetTrm.position.z);
+            Vector3 newCamPos = new Vector3(targetTrm.position.x, 
+                targetTrm.position.y + camHeightForFloorView, targetTrm.position.z + camZForFloorView);
 
             floorCam.transform.position = newCamPos;
             transitionCam.transform.position = newCamPos;
-            floorCam.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+            //floorCam.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
         }
 
         public void SetBookState(int stateIdx)

@@ -21,13 +21,25 @@ namespace Work.CIW.Code.Player.States
         {
             base.Enter();
 
+            Debug.Log("Dead 들어옴");
+
             _player.StopAllCoroutines();
 
-            _player.InkPooling();
-            _fsmHost.OnDeadEvent?.Invoke();
-            _fsmHost.enabled = false;
+            _player.IsInputLocked = true;
+            Debug.Log($"바꿔줌. IsInputLocked : {_player.IsInputLocked}");
+
+            //_player.InkPooling();
+            _player.StartCoroutine(_player.InkPooling());
+            _player.StartCoroutine(WaitTime());
         }
 
+        public IEnumerator WaitTime()
+        {
+            yield return new WaitForSeconds(2f);
+            _fsmHost.OnDeadEvent?.Invoke();
+            Debug.Log("DeadEvent호출");
+            _fsmHost.enabled = false;
+        }
         
     }
 }
