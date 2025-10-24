@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -49,17 +50,22 @@ namespace Work.ISC.Code.UI
 
         private void HandleOpenUI(OpenBookUIEvent evt)
         {
-            Debug.Log("오프ㅡㅡㄴ");
             _stageInfo = evt.StageInfo;
             InfoUpdate();
         }
 
-        public void Enable()
+        public void EnableAnimation()
         {
+            Sequence seq = DOTween.Sequence()
+                .Append(transform.DOScale(1.2f, 1f).SetEase(Ease.InSine))
+                .Append(transform.DOScale(0.9f, 1f).SetEase(Ease.OutSine))
+                .Append(transform.DOScale(1.1f, 1f).SetEase(Ease.OutSine));
+            seq.Play();
         }
         
         private void OnEnable()
         {
+            EnableAnimation();
         }
 
         private void InfoUpdate()
