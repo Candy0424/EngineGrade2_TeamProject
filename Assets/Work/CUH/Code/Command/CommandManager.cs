@@ -115,7 +115,7 @@ namespace Work.CUH.Code.Command
 
             if (Keyboard.current.rKey.wasPressedThisFrame)
             {
-                Bus<ResetUIOpenEvent>.Raise(new ResetUIOpenEvent());
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
     }
