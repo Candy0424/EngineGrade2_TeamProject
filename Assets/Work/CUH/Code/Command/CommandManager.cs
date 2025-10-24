@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Chuh007Lib.Dependencies;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Work.CIW.Code.Camera;
@@ -23,6 +24,7 @@ namespace Work.CUH.Code.Command
 
         [Header("Settings")]
         [SerializeField] private int leftUndoCount;
+        public UnityEvent ResetEvent;
         
         private Queue<BaseCommand> _executionCommands;
         private Stack<BaseCommand> _undoCommands;
@@ -115,7 +117,7 @@ namespace Work.CUH.Code.Command
 
             if (Keyboard.current.rKey.wasPressedThisFrame)
             {
-                Bus<ResetUIOpenEvent>.Raise(new ResetUIOpenEvent());
+                ResetEvent?.Invoke();
             }
         }
     }

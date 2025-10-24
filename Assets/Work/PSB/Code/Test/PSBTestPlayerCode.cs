@@ -206,7 +206,10 @@ namespace Work.PSB.Code.Test
                     blockToPush.TryMoveByCommand(dir);
                     Bus<TurnUseEvent>.Raise(new TurnUseEvent());
                 }
-
+                if (turnManager != null && turnManager.CurrentTurnCount == 0)
+                {
+                    HandleTurnZero();
+                }
                 return;
             }
             if (_movementCompo.gridService != null)

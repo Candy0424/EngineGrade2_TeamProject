@@ -5,17 +5,17 @@ namespace Work.CUH.Code.SwitchSystem
 {
     public class ColorLinkObject : MonoBehaviour
     {
+        private static readonly int BaseColor = Shader.PropertyToID("_BaseColor");
+        
         private Material _renderMaterial;
 
         private void Awake()
         {
             _renderMaterial = GetComponent<Renderer>().material;
-            _renderMaterial = new Material(_renderMaterial);
-            GetComponent<Renderer>().material = _renderMaterial;
         }
 
         public void SetLinkColor(Color color)
-            => _renderMaterial.color = color;
+            => _renderMaterial.SetColor(BaseColor, color);
 
         public Color GetLinkColor() => _renderMaterial.color;
     }
