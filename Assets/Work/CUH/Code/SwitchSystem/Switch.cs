@@ -74,7 +74,6 @@ namespace Work.CUH.Code.SwitchSystem
         
         private void HandlePlayerPosChange(PlayerPosChangeEvent evt)
         {
-            Debug.Log(evt.transform.position + evt.direction);
             if (Vector3.Distance(evt.transform.position + evt.direction, transform.position) <= 0.05f)
             {
                 Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));

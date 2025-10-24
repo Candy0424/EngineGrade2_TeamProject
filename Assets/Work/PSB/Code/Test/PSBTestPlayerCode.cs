@@ -188,8 +188,9 @@ namespace Work.PSB.Code.Test
 
             if (isWall)
             {
-                Bus<CommandEvent>.Raise(new CommandEvent(new NothingCommand(_movementCompo)));
                 Bus<TurnUseEvent>.Raise(new TurnUseEvent());
+                Bus<PlayerPosChangeEvent>.Raise(
+                    new PlayerPosChangeEvent(_movementCompo.transform, new Vector3(0, 0, 0)));
                 if (turnManager != null && turnManager.CurrentTurnCount == 0)
                 {
                     HandleTurnZero();
@@ -205,6 +206,8 @@ namespace Work.PSB.Code.Test
 
                     blockToPush.TryMoveByCommand(dir);
                     Bus<TurnUseEvent>.Raise(new TurnUseEvent());
+                    Bus<PlayerPosChangeEvent>.Raise(
+                        new PlayerPosChangeEvent(_movementCompo.transform, new Vector3(0, 0, 0)));
                 }
                 if (turnManager != null && turnManager.CurrentTurnCount == 0)
                 {
@@ -216,8 +219,9 @@ namespace Work.PSB.Code.Test
             {
                 if (!_movementCompo.gridService.CanMoveTo(curGridPos, dir, out _))
                 {
-                    Bus<CommandEvent>.Raise(new CommandEvent(new NothingCommand(_movementCompo)));
                     Bus<TurnUseEvent>.Raise(new TurnUseEvent());
+                    Bus<PlayerPosChangeEvent>.Raise(
+                        new PlayerPosChangeEvent(_movementCompo.transform, new Vector3(0, 0, 0)));
                     if (turnManager != null && turnManager.CurrentTurnCount == 0)
                     {
                         HandleTurnZero();
