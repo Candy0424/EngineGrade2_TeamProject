@@ -16,6 +16,7 @@ namespace Work.PSB.Code.LibraryPlayers.States
             if (Keyboard.current.fKey.wasPressedThisFrame)
             {
                 _player.ChangeState("INTERACT");
+                return;
             }
             Vector2 movementKey = _player.PlayerInput.MovementKey;
             
