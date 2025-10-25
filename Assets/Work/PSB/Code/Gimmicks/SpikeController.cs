@@ -68,7 +68,7 @@ namespace Work.PSB.Code.Test
 
         private void Start()
         {
-            StartEvent();
+            //StartEvent();
         }
 
         private void OnEnable()
