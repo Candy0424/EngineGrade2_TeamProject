@@ -68,8 +68,7 @@ namespace Work.PSB.Code.Test
 
         private void Start()
         {
-            // SpikeCommand command = new SpikeCommand(this);
-            // Bus<CommandEvent>.Raise(new CommandEvent(command));
+            StartEvent();
         }
 
         private void OnEnable()
