@@ -16,7 +16,7 @@ namespace Work.CUH.Code.Command
     /// 모든 커멘드가 실행되는 메니저입니다.
     /// 처리는 이곳의 큐에서 실행되게 됩니다.
     /// </summary>
-    [Provide]
+    [Provide, DefaultExecutionOrder(-5)]
     public class CommandManager : MonoBehaviour
     {
         [SerializeField] private float undoCooldown = 0.2f;
@@ -36,6 +36,7 @@ namespace Work.CUH.Code.Command
         private void Awake()
         {
             _executionCommands = new Queue<BaseCommand>();
+            _executionCommands.Clear();
             _undoCommands = new Stack<BaseCommand>();
             Bus<CommandEvent>.OnEvent += HandleCommand;
             Bus<TurnUseEvent>.OnEvent += TurnUse;

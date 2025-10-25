@@ -66,32 +66,34 @@ namespace Work.PSB.Code.Test
             Bus<CommandEvent>.Raise(new CommandEvent(command));
         }
 
+        private void Start()
+        {
+            // SpikeCommand command = new SpikeCommand(this);
+            // Bus<CommandEvent>.Raise(new CommandEvent(command));
+        }
+
         private void OnEnable()
         {
             if (spikeObject == null) return;
             if (turnManager != null && isWork)
-                turnManager.OnUseTurn += OnTurnUse;
-            
-            SpikeCommand command = new SpikeCommand(this);
-            Bus<CommandEvent>.Raise(new CommandEvent(command));
+                Bus<TurnUseEvent>.OnEvent += OnTurnUse;
         }
-
+        
         private void OnDisable()
         {
             if (turnManager != null && isWork)
-                turnManager.OnUseTurn -= OnTurnUse;
-        }
+                Bus<TurnUseEvent>.OnEvent -= OnTurnUse;
         
+        }
         private void OnDestroy()
         {
             Bus<PlayerPosChangeEvent>.OnEvent -= HandlePlayerPosChange;
         }
         
-        private void OnTurnUse()
+        private void OnTurnUse(TurnUseEvent evt)
         {
             SpikeCommand command = new SpikeCommand(this);
             Bus<CommandEvent>.Raise(new CommandEvent(command));
-
         }
         
         public void ToggleSpikeCommanded()
