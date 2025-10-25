@@ -1,4 +1,4 @@
-using Blade.Entities;
+﻿using Blade.Entities;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
