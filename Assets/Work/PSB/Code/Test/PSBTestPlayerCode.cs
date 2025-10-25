@@ -237,7 +237,6 @@ namespace Work.PSB.Code.Test
                 Bus<CommandEvent>.Raise(new CommandEvent(moveCommand));
                 Bus<TurnUseEvent>.Raise(new TurnUseEvent());
             }
-
         }
 
         public void HandleTurnZero()
