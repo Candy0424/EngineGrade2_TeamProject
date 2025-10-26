@@ -10,6 +10,8 @@ namespace Work.CUH.Code.Interaction
         [SerializeField] private float interactionRange = 2f;
         
         private Entity _entity;
+        private RaycastHit[] _results = new RaycastHit[5];
+        
         public void Initialize(Entity entity)
         {
             _entity = entity;
@@ -17,11 +19,13 @@ namespace Work.CUH.Code.Interaction
 
         public void CheckInteraction()
         {
-            Physics.Raycast(transform.position, transform.forward * interactionRange, out RaycastHit hit, whatisTarget);
-
-            if (hit.collider && hit.collider.TryGetComponent(out IInteraction interaction))
+            var size = Physics.RaycastNonAlloc(transform.position, transform.forward * interactionRange, _results, 10f, whatisTarget);
+            for (var i = 0; i < size; i++)
             {
-                interaction.Interact();
+                if (_results[i].collider && _results[i].collider.TryGetComponent(out IInteraction interaction))
+                {
+                    interaction.Interact();
+                }
             }
         }
 
