@@ -21,7 +21,10 @@ namespace Work.ISC.Code.UI
         [SerializeField] private Image image;
         [SerializeField] private TextMeshProUGUI title;
         [SerializeField] private TextMeshProUGUI sub;
-
+        [SerializeField] private TextMeshProUGUI first;
+        [SerializeField] private TextMeshProUGUI second;
+        [SerializeField] private TextMeshProUGUI third;
+        
         [Header("Level Settings")]
         [SerializeField] private int maxLevel;
         
@@ -115,6 +118,9 @@ namespace Work.ISC.Code.UI
             image.sprite = _stageInfo.stageImg;
             title.SetText(_stageInfo.stageName);
             sub.SetText(_stageInfo.description);
+            first.SetText(_stageInfo.firstStd);
+            second.SetText(_stageInfo.secondStd);
+            third.SetText(_stageInfo.thirdStd);
         }
     }
 }

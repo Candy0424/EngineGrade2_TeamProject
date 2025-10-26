@@ -11,5 +11,10 @@ namespace Work.ISC.Code.SO
         
         [TextArea]
         public string description;
+
+        [Header("별 기준 적는 곳")]
+        [TextArea] public string firstStd;
+        [TextArea] public string secondStd;
+        [TextArea] public string thirdStd;
     }
 }
