@@ -20,6 +20,9 @@ namespace Work.CIW.Code.Camera
         [SerializeField] List<GameObject> floorObjs;
         [SerializeField] GameObject playerObj;
         [SerializeField] private GameObject bookObj;
+        
+        [SerializeField] private GameObject endingObj;
+        
         public bool IsBookTurned
         {
             get => _isBookTurned;
@@ -143,6 +146,9 @@ namespace Work.CIW.Code.Camera
 
             playerObj.SetActive(false);
             curObj.SetActive(false);
+            
+            if (endingObj != null)
+                endingObj.SetActive(false);
 
             floorCam.Priority = DefaultPriority;
             transitionCam.Priority = ActivePriority;
@@ -199,6 +205,9 @@ namespace Work.CIW.Code.Camera
             floorCam.Priority = ActivePriority;
 
             playerObj.SetActive(true);
+            
+            if (endingObj != null)
+                endingObj.SetActive(true);
 
             _currentIdx = _currentIdx + direction;
 
