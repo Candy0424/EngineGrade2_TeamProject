@@ -5,6 +5,7 @@ using Work.CIW.Code.Grid;
 using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.Commands;
 using Work.CUH.Code.GameEvents;
+using Work.PSB.Code.Test;
 
 namespace Work.CUH.Code.SwitchSystem
 {
@@ -87,20 +88,24 @@ namespace Work.CUH.Code.SwitchSystem
         
         private void HandlePlayerPosChange(PlayerPosChangeEvent evt)
         {
-            if (_upObject != null) return;
+            if (_upObject) return;
             if (Vector3.Distance(evt.transform.position + evt.direction, transform.position) <= 0.05f)
             {
                 Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
             }
             else if (IsActive)
             {
-                Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
+                var cell = GridSystem.Instance.GetCell(CurrentGridPosition);
+                if (cell.Occupant is PSBTestPlayerCode)
+                    Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
             }
         }
         
         private void HandleTargetPosChange(TargetPosChangeEvent evt)
         {
-            if (_upObject != null && evt.transform.gameObject != _upObject) return;
+            var cell = GridSystem.Instance.GetCell(CurrentGridPosition);
+            if (!cell.Occupant) _upObject = null;
+            if (_upObject && evt.transform.gameObject != _upObject) return;
             if (Vector3.Distance(evt.transform.position + evt.direction, transform.position) <= 0.05f)
             {
                 Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
@@ -108,6 +113,7 @@ namespace Work.CUH.Code.SwitchSystem
             }
             else if (IsActive)
             {
+                if (cell.Occupant is PSBTestPlayerCode) return;
                 Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
                 _upObject = null;
             }
