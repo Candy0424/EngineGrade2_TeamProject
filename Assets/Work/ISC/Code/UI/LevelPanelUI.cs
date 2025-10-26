@@ -21,7 +21,10 @@ namespace Work.ISC.Code.UI
         [SerializeField] private Image image;
         [SerializeField] private TextMeshProUGUI title;
         [SerializeField] private TextMeshProUGUI sub;
-
+        [SerializeField] private TextMeshProUGUI first;
+        [SerializeField] private TextMeshProUGUI second;
+        [SerializeField] private TextMeshProUGUI third;
+        
         [Header("Level Settings")]
         [SerializeField] private int maxLevel;
         
@@ -39,6 +42,7 @@ namespace Work.ISC.Code.UI
             _stars = new List<GameObject>();
 
             Bus<OpenBookUIEvent>.OnEvent += HandleOpenUI;
+            Bus<CloseBookUIEvent>.OnEvent += HandleCloseUI;
             
             gameObject.SetActive(false);
         }
@@ -46,6 +50,12 @@ namespace Work.ISC.Code.UI
         private void OnDestroy()
         {
             Bus<OpenBookUIEvent>.OnEvent -= HandleOpenUI;
+            Bus<CloseBookUIEvent>.OnEvent -= HandleCloseUI;
+        }
+
+        private void HandleCloseUI(CloseBookUIEvent evt)
+        {
+            DisableAnimation();
         }
 
         private void HandleOpenUI(OpenBookUIEvent evt)
@@ -71,20 +81,16 @@ namespace Work.ISC.Code.UI
         {
             EnableAnimation();
         }
-
-        private void OnDisable()
-        {
-            DisableAnimation();
-        }
-
+        
         private void DisableAnimation()
         {
             Sequence seq = DOTween.Sequence()
                 .SetUpdate(UpdateType.Normal, true)
-                .Append(transform.DOScale(0.2f, 0.2f).SetEase(Ease.OutSine))
+                .Append(transform.DOScale(0.1f, 0.2f).SetEase(Ease.OutSine))
                 .SetAutoKill(false)
                 .Pause();
             
+            seq.OnComplete(() => gameObject.SetActive(false));
             seq.Play();
         }
 
@@ -112,6 +118,9 @@ namespace Work.ISC.Code.UI
             image.sprite = _stageInfo.stageImg;
             title.SetText(_stageInfo.stageName);
             sub.SetText(_stageInfo.description);
+            first.SetText(_stageInfo.firstStd);
+            second.SetText(_stageInfo.secondStd);
+            third.SetText(_stageInfo.thirdStd);
         }
     }
 }
