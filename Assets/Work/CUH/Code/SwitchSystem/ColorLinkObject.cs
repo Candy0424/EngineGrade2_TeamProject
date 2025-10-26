@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Work.CUH.Code.SwitchSystem
 {
+    [DefaultExecutionOrder(-1)]
     public class ColorLinkObject : MonoBehaviour
     {
         private static readonly int BaseColor = Shader.PropertyToID("_BaseColor");
