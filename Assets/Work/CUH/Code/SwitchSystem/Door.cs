@@ -20,13 +20,12 @@ namespace Work.CUH.Code.SwitchSystem
         private void Awake()
         {
             _collider = GetComponent<Collider>();
-
+            Debug.Assert(linker != null, $"linker can not be null");
+            linker.SetLinkColor(linkColor);
         }
 
         private void Start()
         {
-            Debug.Assert(linker != null, $"linker can not be null");
-            linker.SetLinkColor(linkColor);
             CurrentGridPosition = Vector3Int.RoundToInt(transform.position);
             transform.position = CurrentGridPosition;
             GridSystem.Instance.SetObjectInitialPosition(this, CurrentGridPosition);
