@@ -88,14 +88,15 @@ namespace Work.CUH.Code.SwitchSystem
         
         private void HandlePlayerPosChange(PlayerPosChangeEvent evt)
         {
-            if (_upObject) return;
+            var cell = GridSystem.Instance.GetCell(CurrentGridPosition);
+            if (_upObject && cell.Occupant) return;
             if (Vector3.Distance(evt.transform.position + evt.direction, transform.position) <= 0.05f)
             {
                 Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
             }
             else if (IsActive)
             {
-                var cell = GridSystem.Instance.GetCell(CurrentGridPosition);
+                
                 if (cell.Occupant is PSBTestPlayerCode)
                     Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
             }
