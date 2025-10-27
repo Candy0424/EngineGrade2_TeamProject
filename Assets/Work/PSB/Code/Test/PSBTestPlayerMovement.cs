@@ -213,8 +213,6 @@ namespace Work.PSB.Code.Test
 
             if (hits.Length > 0)
             {
-                Debug.Log("Stair 감지");
-
                 if (hits[0].TryGetComponent(out StairTrigger stair))
                 {
                     Vector3Int teleportPos = new Vector3Int(_gridObject.CurrentGridPosition.x, stair.GetTargetY(), _gridObject.CurrentGridPosition.z);

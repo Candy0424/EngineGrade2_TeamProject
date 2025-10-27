@@ -72,7 +72,7 @@ namespace Work.PSB.Code.Test
             _fsmHost = GetComponent<PlayerFSMHost>();
             if (_fsmHost == null)
             {
-                Debug.LogError("PlayerFSMHost Player에 없음. 나 작동 안해");
+                Debug.LogError("PlayerFSMHost가 Player에 없습니다.");
                 enabled = false;
                 return;
             }
@@ -84,7 +84,7 @@ namespace Work.PSB.Code.Test
             Animator = GetComponentInChildren<EntityAnimator>();
             if (Animator == null)
             {
-                Debug.LogWarning("EntityAnimator 못 찾겠다 꾀꼬리");
+                Debug.LogWarning("EntityAnimator 안 넣은듯?");
             }
 
             if (turnManager != null)
@@ -264,8 +264,6 @@ namespace Work.PSB.Code.Test
             IsInputLocked = true;
 
             _stateMachine.ChangeState("IDLE");
-
-            Debug.Log("게임 클리어");
         }
 
         public IEnumerator InkPooling()
@@ -277,7 +275,6 @@ namespace Work.PSB.Code.Test
 
             yield return new WaitForSeconds(sinkDuration);
 
-            Debug.Log("잉크 풀링 완료");
             _poolManager.Push(ink);
         }
 

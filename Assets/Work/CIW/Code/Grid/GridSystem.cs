@@ -63,7 +63,6 @@ namespace Work.CIW.Code.Grid
             }
 
             gridStartWorldPosition = Vector3.zero;
-            //gridStartWorldPosition = new Vector3(_cellSize / 2f, 0f, _cellSize / 2f);
         }
 
         // �� �ʱ�ȭ -> �� gridCell���� 3���� ������ ��ġ
@@ -119,24 +118,12 @@ namespace Work.CIW.Code.Grid
         {
             targetPos = curPos + dir;
 
-            //Debug.Log($"[GRID CHECK] Requesting check from {curPos} in direction {dir}.");
-
-            if (_turnService != null && !_turnService.HasTurnRemaining)
-            {
-                Debug.LogWarning("[GRID CHECK] FAILED (0): No turns remaining. Movement blocked.");
-                return false;
-            }
-
             if (!_gridMap.TryGetValue(targetPos, out GridCell targetCell))
             {
-                Debug.LogWarning($"[GRID CHECK] FAILED (1): Target position {targetPos} is outside map boundaries.");
                 return false;
             }
-
-            // Grid Cell�� ���� �� �ְ�, ���� �װ��� ��ġ�ϰ� ���� �ʴ°�?
             if (!targetCell.IsWalkable)
             {
-                Debug.LogWarning($"[GRID CHECK] FAILED (2): Cell at {targetPos} is not marked as walkable.");
                 return false;
             }
             if (targetCell.IsOccupant)
@@ -150,8 +137,7 @@ namespace Work.CIW.Code.Grid
                         return false;
                     }
                 }
-                
-                Debug.LogWarning($"[GRID CHECK] FAILED (3): Cell at {targetPos} is already occupied.");
+
                 return false;
             }
 
@@ -169,26 +155,13 @@ namespace Work.CIW.Code.Grid
                 {
                     return true;
                 }
-                else
-                {
-                    Debug.LogWarning($"[GRID CHECK] FAILED (4a): Raycast hit an object at Y={hit.point.y}, but expected Y={targetPos.y}.");
-                    return false;
-                }
             }
 
-            Debug.LogWarning($"[GRID CHECK] FAILED (4): Raycast failed to hit 'whatIsWalkable' ground at {targetPos}. Check LayerMask!");
             return false;
         }
 
         public void UpdateObjectPosition(GridObjectBase movingObj, Vector3Int oldPos, Vector3Int newPos)
         {
-            if (_turnService != null)
-            {
-                // 턴 사용 로직 (주석 해제 시)
-                // _turnService.UseTurn();
-                //Debug.Log($"Turn Used. Current Turns Remaining: {_turnService.HasTurnRemaining}");
-            }
-
             // 이전 셀 비우기
             if (_gridMap.TryGetValue(oldPos, out GridCell oldCell))
             {
@@ -210,10 +183,6 @@ namespace Work.CIW.Code.Grid
                 // 🌟 GridObjectBase의 상태 갱신 로직 호출 (핵심 변경)
                 movingObj.OnCellOccupied(newPos);
             }
-            else
-            {   
-                Debug.LogError($"[GridSystem] Target position {newPos} is not a valid cell in the grid map!");
-            }
         }
 
         public void SetObjectInitialPosition(GridObjectBase obj, Vector3Int initPos)
@@ -225,10 +194,6 @@ namespace Work.CIW.Code.Grid
                     initCell.SetOccupant(obj);
 
                     obj.OnCellOccupied(initPos);
-                }
-                else
-                {
-                    Debug.LogWarning($"Cell {initPos} already occupied at start. Cannot place {obj.gameObject.name}");
                 }
             }
         }
