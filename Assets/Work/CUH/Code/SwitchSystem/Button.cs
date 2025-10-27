@@ -78,7 +78,6 @@ namespace Work.CUH.Code.SwitchSystem
             transform.position = CurrentGridPosition;
             Debug.Assert(linkObject != null, $"linker can not be null");
             linkObject.SetLinkColor(activatable.linker.GetLinkColor());
-            Debug.Log(activatable.linker.GetLinkColor());
         }
 
         private void OnDestroy()

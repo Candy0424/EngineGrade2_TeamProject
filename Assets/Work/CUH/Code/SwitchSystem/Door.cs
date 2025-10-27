@@ -37,6 +37,7 @@ namespace Work.CUH.Code.SwitchSystem
             _collider.enabled = false;
             onVisual.SetActive(true);
             offVisual.SetActive(false);
+            Bus<TextEvent>.Raise(new TextEvent("장치가 작동해 문이 열립니다."));
             GridSystem.Instance.RemoveObjectPosition(this, CurrentGridPosition);
         }
 
