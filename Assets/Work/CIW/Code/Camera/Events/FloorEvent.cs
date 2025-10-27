@@ -13,8 +13,6 @@ namespace Work.CIW.Code.Camera.Events
 
         public FloorEvent(int direction)
         {
-            Debug.Log("Floor Event");
-            //TargetIdx = targetIdx;
             Direction = direction;
         }
     }

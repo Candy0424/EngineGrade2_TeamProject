@@ -70,8 +70,6 @@ namespace Work.CIW.Code.Camera
         // 층 이동
         private void HandleFloorChange(FloorEvent evt)
         {
-            Debug.Log("층 바꾸기 이벤트 받음");
-
             if (IsBookTurned) return;
 
             IsBookTurned = true;
@@ -81,21 +79,11 @@ namespace Work.CIW.Code.Camera
             int nextIdx = _currentIdx + dir;
             if (nextIdx < 0 || nextIdx >= floorObjs.Count)
             {
-                if (nextIdx < 0)
-                {
-                    Debug.LogWarning($"Undo로 인한 유효하지 않은 층 인덱스({nextIdx}) 요청을 무시합니다. (Undo는 이미 실행됨)");
-                }
-                else
-                {
-                    Debug.LogError($"다음 층 인덱스({nextIdx})가 유효 범위를 벗어났습니다 (0 ~ {floorObjs.Count - 1}). 층 이동을 취소합니다.");
-                }
-
                 IsBookTurned = false;
                 return;
             }
 
-            Debug.Log("잘 살아남았구나! 실행해도 좋다!");
-            StartCoroutine(TransitionSequence(dir)); // undo 여기서 에러
+            StartCoroutine(TransitionSequence(dir));
         }
 
         private void SetFloorCameraTarget(Transform targetTrm)
@@ -105,7 +93,6 @@ namespace Work.CIW.Code.Camera
 
             floorCam.transform.position = newCamPos;
             transitionCam.transform.position = newCamPos;
-            //floorCam.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
         }
 
         public void SetBookState(int stateIdx)
@@ -136,8 +123,6 @@ namespace Work.CIW.Code.Camera
 
         public IEnumerator TransitionSequence(int direction)
         {
-            Debug.Log($"Sequence로 들어옴 : {IsBookTurned}");
-
             _turnCompleted = false;
             yield return null;
 
@@ -152,8 +137,6 @@ namespace Work.CIW.Code.Camera
 
             floorCam.Priority = DefaultPriority;
             transitionCam.Priority = ActivePriority;
-
-            Debug.Log($"Transition Camera 전환 시작 : {IsBookTurned}");
 
             bool canSuc = false;
 
@@ -174,7 +157,6 @@ namespace Work.CIW.Code.Camera
             }
             else
             {
-                Debug.LogWarning("Book Controller가 연결되지 않아 moveDuration을 사용합니다.");
                 canSuc = false;
             }
 
@@ -189,8 +171,6 @@ namespace Work.CIW.Code.Camera
             {
                 yield return new WaitForSeconds(moveDuration);
             }
-
-            Debug.Log($"책 넘김 완료 : {IsBookTurned}");
 
             float offsetY = direction > 0 ? 15f : -15f;
             bookObj.transform.position += new Vector3(0f, offsetY, 0f);
@@ -212,8 +192,6 @@ namespace Work.CIW.Code.Camera
             _currentIdx = _currentIdx + direction;
 
             yield return new WaitForSeconds(0.5f);
-
-            Debug.Log($"카메라 전환 완료 : {IsBookTurned}");
         }
 
         public void HandleBookTurnCompleted()

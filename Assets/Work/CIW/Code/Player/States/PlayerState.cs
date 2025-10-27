@@ -7,9 +7,6 @@ namespace Work.CIW.Code.Player.States
 {
     public class PlayerState : EntityState
     {
-        //protected Player _player;
-        //protected PlayerMovement _movement;
-
         protected PSBTestPlayerCode _player;
         protected PSBTestPlayerMovement _movement;
         protected readonly float _inputThreshold = 0.1f;
@@ -18,8 +15,6 @@ namespace Work.CIW.Code.Player.States
         {
             GameObject player = entity.gameObject;
 
-            //_player = player.GetComponent<Player>();
-            //_movement = player.GetComponent<PlayerMovement>();
             _player = player.GetComponent<PSBTestPlayerCode>();
             _movement = player.GetComponent<PSBTestPlayerMovement>();
 

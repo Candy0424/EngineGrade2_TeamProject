@@ -20,13 +20,9 @@ namespace Work.CIW.Code.Player.States
         public override void Enter()
         {
             base.Enter();
-
-            Debug.Log("Dead 들어옴");
-
             _player.StopAllCoroutines();
 
             _player.IsInputLocked = true;
-            Debug.Log($"바꿔줌. IsInputLocked : {_player.IsInputLocked}");
 
             //_player.InkPooling();
             _player.StartCoroutine(_player.InkPooling());
@@ -37,7 +33,6 @@ namespace Work.CIW.Code.Player.States
         {
             yield return new WaitForSeconds(2f);
             _fsmHost.OnDeadEvent?.Invoke();
-            Debug.Log("DeadEvent호출");
             _fsmHost.enabled = false;
         }
         
