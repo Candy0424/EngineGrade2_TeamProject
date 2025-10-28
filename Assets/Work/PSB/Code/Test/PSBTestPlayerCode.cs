@@ -82,18 +82,10 @@ namespace Work.PSB.Code.Test
         {
             _stateMachine = new EntityStateMachine(_fsmHost, states);
             Animator = GetComponentInChildren<EntityAnimator>();
-            if (Animator == null)
-            {
-                Debug.LogWarning("EntityAnimator 안 넣은듯?");
-            }
 
             if (turnManager != null)
             {
                 turnManager.OnTurnZeroEvent += HandleTurnZero;
-            }
-            else
-            {
-                Debug.LogError("TurnCountManager 연결 안됨");
             }
 
             Bus<GameClearEvent>.OnEvent += HandleGameClear;
@@ -188,6 +180,7 @@ namespace Work.PSB.Code.Test
 
             if (isWall)
             {
+                Debug.Log("Can't Move");
                 Bus<CommandEvent>.Raise(new CommandEvent(new NothingCommand(_movementCompo)));
                 Bus<TurnUseEvent>.Raise(new TurnUseEvent());
                 Bus<PlayerPosChangeEvent>.Raise(
@@ -220,6 +213,7 @@ namespace Work.PSB.Code.Test
             {
                 if (!_movementCompo.gridService.CanMoveTo(curGridPos, dir, out _))
                 {
+                    Debug.Log("Can't Move");
                     Bus<CommandEvent>.Raise(new CommandEvent(new NothingCommand(_movementCompo)));
                     Bus<TurnUseEvent>.Raise(new TurnUseEvent());
                     Bus<PlayerPosChangeEvent>.Raise(
@@ -247,7 +241,6 @@ namespace Work.PSB.Code.Test
 
             if (_movementCompo.isMoving)
             {
-                Debug.Log("아직 이동중이라서 죽음 처리 보류");
                 return;
             }
 

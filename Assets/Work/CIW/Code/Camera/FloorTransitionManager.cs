@@ -2,8 +2,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Ami.BroAudio;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Events;
 using Work.CIW.Code.Camera.Events;
 using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.Commands;
@@ -22,6 +24,9 @@ namespace Work.CIW.Code.Camera
         [SerializeField] private GameObject bookObj;
         
         [SerializeField] private GameObject endingObj;
+        
+        [Header("Sound setting")]
+        [SerializeField] private SoundID sfxSound;
         
         public bool IsBookTurned
         {
@@ -42,6 +47,10 @@ namespace Work.CIW.Code.Camera
 
         const int ActivePriority = 11;
         const int DefaultPriority = 9;
+        
+        [Header("BookChangeEvent")]
+        public UnityEvent OnBookOpen;
+        public UnityEvent OnBookClose;
 
         private void Awake()
         {
@@ -79,11 +88,20 @@ namespace Work.CIW.Code.Camera
             int nextIdx = _currentIdx + dir;
             if (nextIdx < 0 || nextIdx >= floorObjs.Count)
             {
+                if (nextIdx < 0)
+                {
+                    Debug.LogWarning($"Undo로 인한 유효하지 않은 층 인덱스({nextIdx}) 요청을 무시합니다. (Undo는 이미 실행됨)");
+                }
+                else
+                {
+                    Debug.LogError($"다음 층 인덱스({nextIdx})가 유효 범위를 벗어났습니다 (0 ~ {floorObjs.Count - 1}). 층 이동을 취소합니다.");
+                }
+
                 IsBookTurned = false;
                 return;
             }
-
-            StartCoroutine(TransitionSequence(dir));
+            
+            StartCoroutine(TransitionSequence(dir)); // undo 여기서 에러
         }
 
         private void SetFloorCameraTarget(Transform targetTrm)
@@ -93,6 +111,7 @@ namespace Work.CIW.Code.Camera
 
             floorCam.transform.position = newCamPos;
             transitionCam.transform.position = newCamPos;
+            //floorCam.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
         }
 
         public void SetBookState(int stateIdx)
@@ -137,6 +156,9 @@ namespace Work.CIW.Code.Camera
 
             floorCam.Priority = DefaultPriority;
             transitionCam.Priority = ActivePriority;
+            
+            OnBookOpen?.Invoke();
+            BroAudio.Play(sfxSound);
 
             bool canSuc = false;
 
@@ -157,6 +179,7 @@ namespace Work.CIW.Code.Camera
             }
             else
             {
+                Debug.LogWarning("Book Controller가 연결되지 않아 moveDuration을 사용합니다.");
                 canSuc = false;
             }
 
@@ -171,6 +194,8 @@ namespace Work.CIW.Code.Camera
             {
                 yield return new WaitForSeconds(moveDuration);
             }
+            
+            OnBookClose?.Invoke();
 
             float offsetY = direction > 0 ? 15f : -15f;
             bookObj.transform.position += new Vector3(0f, offsetY, 0f);

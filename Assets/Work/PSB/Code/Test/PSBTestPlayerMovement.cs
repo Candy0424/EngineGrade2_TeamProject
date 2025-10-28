@@ -1,6 +1,7 @@
 ﻿using Chuh007Lib.Dependencies;
 using Chuh007Lib.ObjectPool.Runtime;
 using System.Collections;
+using Ami.BroAudio;
 using UnityEngine;
 using Work.CIW.Code.Camera;
 using Work.CIW.Code.Camera.Events;
@@ -38,6 +39,10 @@ namespace Work.PSB.Code.Test
 
         [Header("Object Pooling")]
         [SerializeField] PoolingItemSO moveEffect;
+        
+        [Header("Sound Setting")]
+        [SerializeField] private SoundID moveSound;
+        [SerializeField] private SoundID deathSound;
 
         [Inject] PoolManagerMono _poolManager;
 
@@ -195,6 +200,7 @@ namespace Work.PSB.Code.Test
         {
             PoolingEffect effect = _poolManager.Pop<PoolingEffect>(moveEffect);
             effect.PlayVFX(transform.position + new Vector3(0f, 0.1f, 0f));
+            BroAudio.Play(moveSound);
             await Awaitable.WaitForSecondsAsync(2f);
             _poolManager.Push(effect);
         }
@@ -265,6 +271,11 @@ namespace Work.PSB.Code.Test
         }
 
         #endregion
+
+        public void PlayDeathSound()
+        {
+            BroAudio.Play(deathSound);
+        }
         
     }
 }

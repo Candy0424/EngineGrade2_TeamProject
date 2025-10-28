@@ -1,4 +1,5 @@
 ﻿using System;
+using Ami.BroAudio;
 using Chuh007Lib.Dependencies;
 using Chuh007Lib.ObjectPool.Runtime;
 using DG.Tweening;
@@ -29,6 +30,9 @@ namespace Work.PSB.Code.Test
         
         [Header("Command / Effect")]
         [SerializeField] private PoolingItemSO bloodEffect;
+        
+        [Header("Sound Setting")]
+        [SerializeField] private SoundID hitSound;
 
         [Header("Event")] 
         public UnityEvent OnPlayerHit;
@@ -122,6 +126,7 @@ namespace Work.PSB.Code.Test
         {
             PoolingEffect effect = _poolManager.Pop<PoolingEffect>(bloodEffect);
             effect.PlayVFX(transform.position);
+            BroAudio.Play(hitSound);
             await Awaitable.WaitForSecondsAsync(2f);
             _poolManager.Push(effect);
         }
