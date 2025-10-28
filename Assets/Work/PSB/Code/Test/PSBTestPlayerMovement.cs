@@ -42,6 +42,7 @@ namespace Work.PSB.Code.Test
         
         [Header("Sound Setting")]
         [SerializeField] private SoundID moveSound;
+        [SerializeField] private SoundID deathSound;
 
         [Inject] PoolManagerMono _poolManager;
 
@@ -270,6 +271,11 @@ namespace Work.PSB.Code.Test
         }
 
         #endregion
+
+        public void PlayDeathSound()
+        {
+            BroAudio.Play(deathSound);
+        }
         
     }
 }

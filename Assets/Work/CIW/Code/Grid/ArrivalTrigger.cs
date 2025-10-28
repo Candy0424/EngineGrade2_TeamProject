@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Ami.BroAudio;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -13,7 +14,9 @@ namespace Work.CIW.Code.Grid
     {
         [SerializeField] FloorTransitionManager floorManager;
 
-        // event bus로 변환해서 해야해
+        [Header("Sound Setting")]
+        [SerializeField] private SoundID endingSound;
+        
         public UnityEvent OnArrival;
 
         bool _isArrival = false;
@@ -27,21 +30,10 @@ namespace Work.CIW.Code.Grid
                 _isArrival = true;
 
                 OnArrival.Invoke();
+                BroAudio.Play(endingSound);
 
                 Bus<GameClearEvent>.Raise(new GameClearEvent());
             }
-        }
-
-        public IEnumerator LobbySceneCoroutine()
-        {
-            yield return new WaitForSeconds(0.5f);
-            SceneManager.LoadScene("BookScene");
-            
-        }
-        
-        public void LobbyScene()
-        {
-            StartCoroutine(LobbySceneCoroutine());
         }
         
     }
