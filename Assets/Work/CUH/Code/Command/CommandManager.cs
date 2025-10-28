@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Ami.BroAudio;
 using Chuh007Lib.Dependencies;
 using UnityEngine;
 using UnityEngine.Events;
@@ -32,6 +33,10 @@ namespace Work.CUH.Code.Command
 
         [SerializeField] FloorTransitionManager _floorManager;
         [SerializeField] PSBTestPlayerCode _playerCode;
+        
+        [Header("Sound Setting")]
+        [SerializeField] private SoundID undoSound;
+        [SerializeField] private SoundID resetSound;
         
         private void Awake()
         {
@@ -114,12 +119,16 @@ namespace Work.CUH.Code.Command
                 _lastUndoTime = Time.time;
                 Debug.Log($"Z키 눌렀으니 Undo 실행함 : {_playerCode.IsInputLocked}");
                 Undo();
+                BroAudio.Play(undoSound);
             }
 
             if (Keyboard.current.rKey.wasPressedThisFrame)
             {
                 ResetEvent?.Invoke();
+                BroAudio.Play(resetSound);
             }
         }
+        
+        
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Ami.BroAudio;
 using DG.Tweening;
 using UnityEngine;
 using Work.CIW.Code.Grid;
@@ -28,6 +29,8 @@ namespace Work.CUH.Code.SwitchSystem
 
         [Header("Target")]
         [SerializeField] private GameObject operateObject;
+        [Header("Sound Setting")]
+        [SerializeField] private SoundID btnSound;
         
         public IActivatable activatable { get; private set; }
         
@@ -123,6 +126,7 @@ namespace Work.CUH.Code.SwitchSystem
         public void ToggleSwitch()
         {
             IsActive = !IsActive;
+            BroAudio.Play(btnSound);
         }
 
         public void UndoSwitch()

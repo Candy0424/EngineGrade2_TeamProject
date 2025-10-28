@@ -79,8 +79,6 @@ namespace Work.CIW.Code.Camera
         // 층 이동
         private void HandleFloorChange(FloorEvent evt)
         {
-            Debug.Log("층 바꾸기 이벤트 받음");
-
             if (IsBookTurned) return;
 
             IsBookTurned = true;
@@ -102,8 +100,7 @@ namespace Work.CIW.Code.Camera
                 IsBookTurned = false;
                 return;
             }
-
-            Debug.Log("잘 살아남았구나! 실행해도 좋다!");
+            
             StartCoroutine(TransitionSequence(dir)); // undo 여기서 에러
         }
 
@@ -145,8 +142,6 @@ namespace Work.CIW.Code.Camera
 
         public IEnumerator TransitionSequence(int direction)
         {
-            Debug.Log($"Sequence로 들어옴 : {IsBookTurned}");
-
             _turnCompleted = false;
             yield return null;
 
@@ -161,8 +156,7 @@ namespace Work.CIW.Code.Camera
 
             floorCam.Priority = DefaultPriority;
             transitionCam.Priority = ActivePriority;
-
-            Debug.Log($"Transition Camera 전환 시작 : {IsBookTurned}");
+            
             OnBookOpen?.Invoke();
             BroAudio.Play(sfxSound);
 
@@ -200,8 +194,7 @@ namespace Work.CIW.Code.Camera
             {
                 yield return new WaitForSeconds(moveDuration);
             }
-
-            Debug.Log($"책 넘김 완료 : {IsBookTurned}");
+            
             OnBookClose?.Invoke();
 
             float offsetY = direction > 0 ? 15f : -15f;
@@ -224,8 +217,6 @@ namespace Work.CIW.Code.Camera
             _currentIdx = _currentIdx + direction;
 
             yield return new WaitForSeconds(0.5f);
-
-            Debug.Log($"카메라 전환 완료 : {IsBookTurned}");
         }
 
         public void HandleBookTurnCompleted()

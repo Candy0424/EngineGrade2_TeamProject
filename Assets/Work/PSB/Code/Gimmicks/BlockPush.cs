@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Ami.BroAudio;
 using Chuh007Lib.Dependencies;
 using Chuh007Lib.ObjectPool.Runtime;
 using UnityEngine;
@@ -20,6 +21,9 @@ namespace Work.PSB.Code.Test
 
         [SerializeField] private PoolingItemSO pushEffect;
 
+        [Header("Sound Setting")]
+        [SerializeField] private SoundID pushSound;
+        
         [Inject] private PoolManagerMono _poolManager;
 
         private IGridDataService _gridService;
@@ -147,6 +151,7 @@ namespace Work.PSB.Code.Test
             PoolingEffect effect = _poolManager.Pop<PoolingEffect>(pushEffect);
             Vector3 pos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
             effect.PlayVFX(pos);
+            BroAudio.Play(pushSound);
             await Awaitable.WaitForSecondsAsync(2f);
             _poolManager.Push(effect);
         }

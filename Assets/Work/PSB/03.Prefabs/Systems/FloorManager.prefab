@@ -50,6 +50,19 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   playerObj: {fileID: 0}
+  bookObj: {fileID: 0}
+  endingObj: {fileID: 0}
+  sfxSound:
+    ID: 1073741838
+    _sourceAsset: {fileID: 11400000, guid: 26f37f1696947bb4588870e04a391f30, type: 2}
+    <DebugObject>k__BackingField: {fileID: 1763272966469375643}
   moveDuration: 1.5
   camHeightForFloorView: 11
+  camZForFloorView: 0
   demo01: {fileID: 0}
+  OnBookOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnBookClose:
+    m_PersistentCalls:
+      m_Calls: []
