@@ -1,6 +1,7 @@
 ﻿using Chuh007Lib.Dependencies;
 using Chuh007Lib.ObjectPool.Runtime;
 using System.Collections;
+using Ami.BroAudio;
 using UnityEngine;
 using Work.CIW.Code.Camera;
 using Work.CIW.Code.Camera.Events;
@@ -38,6 +39,10 @@ namespace Work.PSB.Code.Test
 
         [Header("Object Pooling")]
         [SerializeField] PoolingItemSO moveEffect;
+        
+        [Header("Sound Setting")]
+        [SerializeField] private SoundID moveSound;
+        [SerializeField] private SoundID deathSound;
 
         [Inject] PoolManagerMono _poolManager;
 
@@ -118,6 +123,7 @@ namespace Work.PSB.Code.Test
 
             _isMoving = true;
             CreateEffect();
+            BroAudio.Play(moveSound);
             Vector3Int oldPos = _gridObject.CurrentGridPosition;
 
             float startWorldY = oldPos.y;
@@ -265,6 +271,11 @@ namespace Work.PSB.Code.Test
         }
 
         #endregion
+
+        public void PlayDeathSound()
+        {
+            BroAudio.Play(deathSound);
+        }
         
     }
 }

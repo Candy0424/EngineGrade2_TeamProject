@@ -1,4 +1,5 @@
 ﻿using System;
+using Ami.BroAudio;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Work.CIW.Code.Grid;
@@ -16,6 +17,9 @@ namespace Work.CUH.Code.SwitchSystem
         
         [Header("Target")]
         [SerializeField] private GameObject operateObject;
+        
+        [Header("Sound Setting")]
+        [SerializeField] private SoundID switchSound;
         
         public IActivatable activatable { get; private set; }
         
@@ -84,6 +88,7 @@ namespace Work.CUH.Code.SwitchSystem
         public void ToggleSwitch()
         {
             IsActive = !IsActive;
+            BroAudio.Play(switchSound);
         }
 
         public void UndoSwitch()

@@ -1,4 +1,5 @@
 ﻿using System;
+using Ami.BroAudio;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Work.CIW.Code.Grid;
@@ -16,6 +17,9 @@ namespace Work.CUH.Code.SwitchSystem
         private Collider _collider;
         
         [field: SerializeField] public ColorLinkObject linker { get; private set; }
+        
+        [Header("Sound Setting")]
+        [SerializeField] private SoundID doorSound;
         
         private void Awake()
         {
@@ -38,6 +42,7 @@ namespace Work.CUH.Code.SwitchSystem
             onVisual.SetActive(true);
             offVisual.SetActive(false);
             Bus<TextEvent>.Raise(new TextEvent("장치가 작동해 문이 열립니다."));
+            BroAudio.Play(doorSound);
             GridSystem.Instance.RemoveObjectPosition(this, CurrentGridPosition);
         }
 

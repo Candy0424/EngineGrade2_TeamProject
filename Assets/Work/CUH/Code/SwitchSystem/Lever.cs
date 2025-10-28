@@ -1,4 +1,5 @@
 ﻿using System;
+using Ami.BroAudio;
 using UnityEngine;
 using Work.CUH.Code.Commands;
 
@@ -15,6 +16,9 @@ namespace Work.CUH.Code.SwitchSystem
         
         [Header("Target")]
         [SerializeField] private GameObject operateObject;
+        
+        [Header("Sound Setting")]
+        [SerializeField] private SoundID leverSound;
         
         public IActivatable activatable { get; private set; }
         
@@ -75,6 +79,7 @@ namespace Work.CUH.Code.SwitchSystem
         public void ToggleSwitch()
         {
             IsActive = !IsActive;
+            BroAudio.Play(leverSound);
         }
 
         public void UndoSwitch()
