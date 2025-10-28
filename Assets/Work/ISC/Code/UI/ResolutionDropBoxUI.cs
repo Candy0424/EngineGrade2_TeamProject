@@ -33,8 +33,6 @@ namespace Work.ISC.Code.UI
                 uint refreshRate = rate.numerator / rate.denominator;
                 Debug.Log(resolution.width + " x " + resolution.height + " " + refreshRate + "Hz");
             }
-            
-            dropdown.AddOptions(_resolutions);
         }
     }
 }
