@@ -22,7 +22,6 @@ namespace Work.CIW.Code.Grid
         {
             if (_isArrival) return;
 
-            Debug.Log("TriggerEnter");
             if (other.gameObject.GetComponent<PSBTestPlayerCode>() != null)
             {
                 _isArrival = true;
@@ -30,15 +29,11 @@ namespace Work.CIW.Code.Grid
                 OnArrival.Invoke();
 
                 Bus<GameClearEvent>.Raise(new GameClearEvent());
-
-                Debug.Log("도착입니다!");
             }
         }
 
         public IEnumerator LobbySceneCoroutine()
         {
-            //floorManager.SetBookState(4);
-
             yield return new WaitForSeconds(0.5f);
             SceneManager.LoadScene("BookScene");
             

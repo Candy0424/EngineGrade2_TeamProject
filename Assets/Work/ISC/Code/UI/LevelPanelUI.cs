@@ -66,7 +66,6 @@ namespace Work.ISC.Code.UI
 
         private void EnableAnimation()
         {
-            Debug.Log(Time.timeScale);
             Sequence seq = DOTween.Sequence()
                 .SetUpdate(UpdateType.Normal, true)
                 .Append(transform.DOScale(1.2f, 0.2f).SetEase(Ease.InSine))
@@ -81,7 +80,12 @@ namespace Work.ISC.Code.UI
         {
             EnableAnimation();
         }
-        
+
+        private void OnDisable()
+        {
+            DisableAnimation();
+        }
+
         private void DisableAnimation()
         {
             Sequence seq = DOTween.Sequence()
@@ -96,7 +100,6 @@ namespace Work.ISC.Code.UI
 
         private void InfoUpdate()
         {
-            Debug.Log(_stageInfo);
             if (_stars.Count > 0)
             {
                 foreach (GameObject star in _stars)
