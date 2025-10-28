@@ -2,8 +2,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Ami.BroAudio;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Events;
 using Work.CIW.Code.Camera.Events;
 using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.Commands;
@@ -22,6 +24,9 @@ namespace Work.CIW.Code.Camera
         [SerializeField] private GameObject bookObj;
         
         [SerializeField] private GameObject endingObj;
+        
+        [Header("Sound setting")]
+        [SerializeField] private SoundID sfxSound;
         
         public bool IsBookTurned
         {
@@ -42,6 +47,10 @@ namespace Work.CIW.Code.Camera
 
         const int ActivePriority = 11;
         const int DefaultPriority = 9;
+        
+        [Header("BookChangeEvent")]
+        public UnityEvent OnBookOpen;
+        public UnityEvent OnBookClose;
 
         private void Awake()
         {
@@ -154,6 +163,8 @@ namespace Work.CIW.Code.Camera
             transitionCam.Priority = ActivePriority;
 
             Debug.Log($"Transition Camera 전환 시작 : {IsBookTurned}");
+            OnBookOpen?.Invoke();
+            BroAudio.Play(sfxSound);
 
             bool canSuc = false;
 
@@ -191,6 +202,7 @@ namespace Work.CIW.Code.Camera
             }
 
             Debug.Log($"책 넘김 완료 : {IsBookTurned}");
+            OnBookClose?.Invoke();
 
             float offsetY = direction > 0 ? 15f : -15f;
             bookObj.transform.position += new Vector3(0f, offsetY, 0f);

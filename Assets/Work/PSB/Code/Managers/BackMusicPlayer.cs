@@ -10,7 +10,7 @@ namespace Work.PSB.Code.Managers
 
         private void Start()
         {
-            BroAudio.Play(backMusic);    
+            BroAudio.Play(backMusic); 
         }
         
     }
