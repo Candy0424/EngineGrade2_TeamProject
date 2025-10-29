@@ -44,4 +44,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b99a56b7ed9d4e27ad7fa57e000bb8cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  undoCooldown: 0.2
   leftUndoCount: 100
+  ResetEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  _floorManager: {fileID: 0}
+  _playerCode: {fileID: 0}
+  undoSound:
+    ID: 0
+    _sourceAsset: {fileID: 0}
+    <DebugObject>k__BackingField: {fileID: 1233135700297188067}
+  resetSound:
+    ID: 1073741840
+    _sourceAsset: {fileID: 11400000, guid: 26f37f1696947bb4588870e04a391f30, type: 2}
+    <DebugObject>k__BackingField: {fileID: 1233135700297188067}
