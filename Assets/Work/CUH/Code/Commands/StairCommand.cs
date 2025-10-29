@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using Work.CUH.Code.Command;
-using Work.PSB.Code.Test;
+using Work.PSB.Code.Player;
 
 namespace Work.CUH.Code.Commands
 {

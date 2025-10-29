@@ -13,7 +13,7 @@ using Work.CUH.Code.GameEvents;
 using Work.CUH.Code.Test;
 using Work.ISC.Code.Effects;
 
-namespace Work.PSB.Code.Test
+namespace Work.PSB.Code.Player
 {
     public class PSBTestPlayerMovement : MonoBehaviour, ICommandable, IMovement, IMoveableTest
     {
