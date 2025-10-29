@@ -14,7 +14,7 @@ namespace Work.PSB.Code.Test
         {
             if (director == null) return;
 
-            if (Input.GetKeyDown(skipKey))
+            if (director.state == PlayState.Playing && Input.GetKeyDown(skipKey))
             {
                 JumpToTime(jumpTime);
             }
@@ -23,12 +23,11 @@ namespace Work.PSB.Code.Test
         private void JumpToTime(double time)
         {
             time = Mathf.Clamp((float)time, 0f, (float)director.duration);
-
+            
             director.time = time;
-
             director.Evaluate();
-
             director.Play();
+            gameObject.SetActive(false);
         }
         
     }
