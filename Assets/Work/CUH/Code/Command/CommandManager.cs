@@ -37,9 +37,12 @@ namespace Work.CUH.Code.Command
         [Header("Sound Setting")]
         [SerializeField] private SoundID undoSound;
         [SerializeField] private SoundID resetSound;
+
+        private bool _isReset;
         
         private void Awake()
         {
+            _isReset = false;
             _executionCommands = new Queue<BaseCommand>();
             _executionCommands.Clear();
             _undoCommands = new Stack<BaseCommand>();
@@ -118,8 +121,9 @@ namespace Work.CUH.Code.Command
                 Bus<UndoEvent>.Raise(new UndoEvent());
             }
 
-            if (Keyboard.current.rKey.wasPressedThisFrame)
+            if (Keyboard.current.rKey.wasPressedThisFrame && !_isReset)
             {
+                _isReset = true;
                 ResetEvent?.Invoke();
                 BroAudio.Play(resetSound);
             }
