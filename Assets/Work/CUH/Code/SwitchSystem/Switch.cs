@@ -14,6 +14,8 @@ namespace Work.CUH.Code.SwitchSystem
         [SerializeField] private GameObject onVisual;
         [SerializeField] private GameObject offVisual;
         [field: SerializeField] public ColorLinkObject linkObject { get; private set; }
+        [SerializeField] private ParticleSystem onSwitchParticle;
+        [SerializeField] private ParticleSystem offSwitchParticle;
         
         [Header("Target")]
         [SerializeField] private GameObject operateObject;
@@ -46,17 +48,23 @@ namespace Work.CUH.Code.SwitchSystem
                 _isActive = value;
                 if (_isActive)
                 {
-                    onVisual.SetActive(true);
-                    offVisual.SetActive(false);
+                    SetVisual(true);
                     activatable.Activate();
                 }
                 else
                 {
-                    onVisual.SetActive(false);
-                    offVisual.SetActive(true);
+                    SetVisual(false);
                     activatable.Deactivate();
                 }
             }
+        }
+
+        private void SetVisual(bool isActive)
+        {
+            onVisual.SetActive(isActive);
+            offVisual.SetActive(!isActive);
+            onSwitchParticle.gameObject.SetActive(isActive);
+            offSwitchParticle.gameObject.SetActive(!isActive);
         }
         
         private void Awake()
