@@ -115,7 +115,7 @@ namespace Work.CUH.Code.Command
             if (Keyboard.current.zKey.isPressed && Time.time > undoCooldown + _lastUndoTime && !_floorManager.IsBookTurned && !_playerCode.IsInputLocked) // 지금 넘어가는 중인지
             {
                 _lastUndoTime = Time.time;
-                Undo();
+                Bus<UndoEvent>.Raise(new UndoEvent());
             }
 
             if (Keyboard.current.rKey.wasPressedThisFrame)

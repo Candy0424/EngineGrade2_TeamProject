@@ -211,6 +211,9 @@ namespace Work.PSB.Code.Player
                 else
                 {
                     BroAudio.Play(errorSound);
+                    Bus<PlayerPosChangeEvent>.Raise(
+                        new PlayerPosChangeEvent(_movementCompo.transform, new Vector3(0, 0, 0)));
+                    return;
                 }
                 if (turnManager != null && turnManager.CurrentTurnCount == 0)
                 {

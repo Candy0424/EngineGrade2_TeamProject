@@ -75,7 +75,7 @@ namespace Work.CUH.Code.SwitchSystem
             Bus<PlayerPosChangeEvent>.OnEvent += HandlePlayerPosChange;
             Bus<TargetPosChangeEvent>.OnEvent += HandleTargetPosChange;
         }
-
+        
         private void Start()
         {
             CurrentGridPosition = Vector3Int.RoundToInt(transform.position);
@@ -89,18 +89,18 @@ namespace Work.CUH.Code.SwitchSystem
             Bus<PlayerPosChangeEvent>.OnEvent -= HandlePlayerPosChange;
             Bus<TargetPosChangeEvent>.OnEvent -= HandleTargetPosChange;
         }
+
         
         private void HandlePlayerPosChange(PlayerPosChangeEvent evt)
         {
             var cell = GridSystem.Instance.GetCell(CurrentGridPosition);
-            if (_upObject && cell.Occupant) return;
             if (Vector3.Distance(evt.transform.position + evt.direction, transform.position) <= 0.05f)
             {
-                Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
+                if (!IsActive)
+                    Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
             }
             else if (IsActive)
             {
-                
                 if (cell.Occupant is PSBTestPlayerCode)
                     Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
             }
