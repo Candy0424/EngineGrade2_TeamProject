@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Work.ISC.Code.UI
 {
-    public class ResolutionDropBoxUI : MonoBehaviour
+    public class DetailsPanelUI : MonoBehaviour
     {
         [SerializeField] private TMP_Dropdown dropdown;
+        [SerializeField] private Toggle toggle;
 
         private List<Resolution> _resolutions;
         private List<string> _dropdownMenus;
+        
         
         private void Awake()
         {
@@ -38,12 +41,20 @@ namespace Work.ISC.Code.UI
             }
             
             dropdown.AddOptions(_dropdownMenus);
+            SetResolution();
+            Screen.fullScreen = toggle.isOn;
         }
 
         public void SetResolution()
         {
+            Debug.Log("해상도 변경");
             Resolution res = _resolutions[dropdown.value];
-            Screen.SetResolution(res.width, res.height, false);
+            Screen.SetResolution(res.width, res.height, toggle.isOn);
+        }
+
+        public void SetFullScreen(bool isFull)
+        {
+            Screen.fullScreen = isFull;
         }
     }
 }
