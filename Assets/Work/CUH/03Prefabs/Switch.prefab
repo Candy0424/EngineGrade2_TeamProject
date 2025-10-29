@@ -256,6 +256,10 @@ MonoBehaviour:
   offVisual: {fileID: 2543475826081495083}
   <linkObject>k__BackingField: {fileID: 622845868591191785}
   operateObject: {fileID: 0}
+  switchSound:
+    ID: 1073741851
+    _sourceAsset: {fileID: 11400000, guid: 26f37f1696947bb4588870e04a391f30, type: 2}
+    <DebugObject>k__BackingField: {fileID: 5509355559844403483}
 --- !u!65 &1023602766684995316
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -286,12 +290,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 5129329242377667235}
     m_Modifications:
     - target: {fileID: 7339332881504441836, guid: 32112d5171293254781cb944f4951438, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7339332881504441836, guid: 32112d5171293254781cb944f4951438, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7339332881504441836, guid: 32112d5171293254781cb944f4951438, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7339332881504441836, guid: 32112d5171293254781cb944f4951438, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7339332881504441836, guid: 32112d5171293254781cb944f4951438, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 7339332881504441836, guid: 32112d5171293254781cb944f4951438, type: 3}
       propertyPath: m_LocalPosition.z

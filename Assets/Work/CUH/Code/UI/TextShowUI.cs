@@ -24,8 +24,12 @@ namespace Work.CUH.Code.UI
         private void HandleTextPrint(TextEvent evt)
         {
             GameObject obj = Instantiate(textPrefab, transform);
-            obj.GetComponent<TextMeshProUGUI>().text = evt.Text;
-            DOVirtual.DelayedCall(0.5f, () => Destroy(obj));
+            TextMeshProUGUI text = obj.GetComponent<TextMeshProUGUI>();
+            text.text = evt.Text;
+            obj.transform.DOMoveY(Camera.main.pixelHeight - 150f, 0.4f).SetEase(Ease.OutCubic).OnComplete(() =>
+            {
+                text.DOFade(0, 0.5f).OnComplete(() => Destroy(obj));
+            });
         }
     }
 }

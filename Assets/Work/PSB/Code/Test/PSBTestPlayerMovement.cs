@@ -123,7 +123,6 @@ namespace Work.PSB.Code.Test
 
             _isMoving = true;
             CreateEffect();
-            BroAudio.Play(moveSound);
             Vector3Int oldPos = _gridObject.CurrentGridPosition;
 
             float startWorldY = oldPos.y;
@@ -201,6 +200,7 @@ namespace Work.PSB.Code.Test
         {
             PoolingEffect effect = _poolManager.Pop<PoolingEffect>(moveEffect);
             effect.PlayVFX(transform.position + new Vector3(0f, 0.1f, 0f));
+            BroAudio.Play(moveSound);
             await Awaitable.WaitForSecondsAsync(2f);
             _poolManager.Push(effect);
         }

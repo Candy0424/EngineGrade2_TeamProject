@@ -5,6 +5,7 @@ using Chuh007Lib.ObjectPool.Runtime;
 using System;
 using System.Collections;
 using System.Threading.Tasks;
+using Ami.BroAudio;
 using UnityEngine;
 using Work.CIW.Code;
 using Work.CIW.Code.ETC;
@@ -51,6 +52,9 @@ namespace Work.PSB.Code.Test
         [SerializeField] PoolingItemSO inkPool;
 
         [Header("Interact")] [SerializeField] private float interactRange = 0.5f;
+
+        [Header("Sound Setting")] 
+        [SerializeField] private SoundID errorSound;
         
         public bool IsDead = false;
         public bool IsInputLocked = false;
@@ -82,18 +86,10 @@ namespace Work.PSB.Code.Test
         {
             _stateMachine = new EntityStateMachine(_fsmHost, states);
             Animator = GetComponentInChildren<EntityAnimator>();
-            if (Animator == null)
-            {
-                Debug.LogWarning("EntityAnimator 안 넣은듯?");
-            }
 
             if (turnManager != null)
             {
                 turnManager.OnTurnZeroEvent += HandleTurnZero;
-            }
-            else
-            {
-                Debug.LogError("TurnCountManager 연결 안됨");
             }
 
             Bus<GameClearEvent>.OnEvent += HandleGameClear;
@@ -188,6 +184,7 @@ namespace Work.PSB.Code.Test
 
             if (isWall)
             {
+                BroAudio.Play(errorSound);
                 Bus<CommandEvent>.Raise(new CommandEvent(new NothingCommand(_movementCompo)));
                 Bus<TurnUseEvent>.Raise(new TurnUseEvent());
                 Bus<PlayerPosChangeEvent>.Raise(
@@ -220,6 +217,7 @@ namespace Work.PSB.Code.Test
             {
                 if (!_movementCompo.gridService.CanMoveTo(curGridPos, dir, out _))
                 {
+                    BroAudio.Play(errorSound);
                     Bus<CommandEvent>.Raise(new CommandEvent(new NothingCommand(_movementCompo)));
                     Bus<TurnUseEvent>.Raise(new TurnUseEvent());
                     Bus<PlayerPosChangeEvent>.Raise(
@@ -247,7 +245,6 @@ namespace Work.PSB.Code.Test
 
             if (_movementCompo.isMoving)
             {
-                Debug.Log("아직 이동중이라서 죽음 처리 보류");
                 return;
             }
 
