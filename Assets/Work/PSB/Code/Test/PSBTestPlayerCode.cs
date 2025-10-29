@@ -5,6 +5,7 @@ using Chuh007Lib.ObjectPool.Runtime;
 using System;
 using System.Collections;
 using System.Threading.Tasks;
+using Ami.BroAudio;
 using UnityEngine;
 using Work.CIW.Code;
 using Work.CIW.Code.ETC;
@@ -51,6 +52,9 @@ namespace Work.PSB.Code.Test
         [SerializeField] PoolingItemSO inkPool;
 
         [Header("Interact")] [SerializeField] private float interactRange = 0.5f;
+
+        [Header("Sound Setting")] 
+        [SerializeField] private SoundID errorSound;
         
         public bool IsDead = false;
         public bool IsInputLocked = false;
@@ -180,7 +184,7 @@ namespace Work.PSB.Code.Test
 
             if (isWall)
             {
-                Debug.Log("Can't Move");
+                BroAudio.Play(errorSound);
                 Bus<CommandEvent>.Raise(new CommandEvent(new NothingCommand(_movementCompo)));
                 Bus<TurnUseEvent>.Raise(new TurnUseEvent());
                 Bus<PlayerPosChangeEvent>.Raise(
@@ -213,7 +217,7 @@ namespace Work.PSB.Code.Test
             {
                 if (!_movementCompo.gridService.CanMoveTo(curGridPos, dir, out _))
                 {
-                    Debug.Log("Can't Move");
+                    BroAudio.Play(errorSound);
                     Bus<CommandEvent>.Raise(new CommandEvent(new NothingCommand(_movementCompo)));
                     Bus<TurnUseEvent>.Raise(new TurnUseEvent());
                     Bus<PlayerPosChangeEvent>.Raise(
