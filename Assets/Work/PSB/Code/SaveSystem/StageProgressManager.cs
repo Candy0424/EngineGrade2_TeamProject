@@ -86,11 +86,12 @@ namespace Work.PSB.Code.SaveSystem
         
         private void Update()
         {
+            #if UNITY_EDITOR
             if (Input.GetKeyDown(KeyCode.B))
             {
                 ResetAllStageData();
-                Debug.Log("<color=yellow>Stage Progress Cleared (Developer Key: B)</color>");
             }
+            #endif
         }
 
         public void ResetAllStageData()

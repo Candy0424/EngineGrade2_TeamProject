@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using Work.CUH.Chuh007Lib.EventBus;
+﻿using Work.CUH.Chuh007Lib.EventBus;
 using Work.ISC.Code.SO;
 
 namespace Work.PSB.Code.Events
@@ -14,5 +13,6 @@ namespace Work.PSB.Code.Events
             StageInfo = stageInfo;
             RemainingTurns = remainingTurns;
         }
+        
     }
 }

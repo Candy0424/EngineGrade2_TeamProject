@@ -27,7 +27,6 @@ namespace Work.PSB.Code.SaveSystem
             if (evt.RemainingTurns >= thirdStarTurn) achieved[2] = true;
 
             StageProgressManager.Instance.UpdateStage(evt.StageInfo.stageName, true, achieved);
-            Debug.Log($"[StageClearChecker] {evt.StageInfo.stageName} 클리어 저장 완료");
         }
         
     }

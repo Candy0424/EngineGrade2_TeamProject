@@ -1,13 +1,10 @@
 ﻿using Ami.BroAudio;
 using UnityEngine;
 using UnityEngine.Events;
-using Work.CIW.Code.Player.Event;
 using Work.CUH.Chuh007Lib.EventBus;
-using Work.CUH.Code.GameEvents;
 using Work.ISC.Code.Managers;
 using Work.ISC.Code.SO;
 using Work.PSB.Code.Player;
-using Chuh007Lib.Dependencies;
 using Work.PSB.Code.Events;
 
 namespace Work.CIW.Code.Grid
@@ -34,7 +31,7 @@ namespace Work.CIW.Code.Grid
         private void OnTriggerEnter(Collider other)
         {
             if (_isArrival) return;
-            if (!other.TryGetComponent(out PSBTestPlayerCode player)) return;
+            if (!other.TryGetComponent(out PSBTestPlayerCode _)) return;
 
             _isArrival = true;
             BroAudio.Play(endingSound);
@@ -42,7 +39,6 @@ namespace Work.CIW.Code.Grid
             int remainingTurns = turnCountManager != null ? turnCountManager.CurrentTurnCount : 0;
 
             Bus<StageClearEvent>.Raise(new StageClearEvent(stageInfo, remainingTurns));
-
             OnArrival?.Invoke();
         }
         
