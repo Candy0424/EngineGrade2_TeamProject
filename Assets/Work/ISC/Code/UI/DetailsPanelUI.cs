@@ -47,7 +47,6 @@ namespace Work.ISC.Code.UI
 
         public void SetResolution()
         {
-            Debug.Log("해상도 변경");
             Resolution res = _resolutions[dropdown.value];
             Screen.SetResolution(res.width, res.height, toggle.isOn);
         }
