@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d5196962d41458a48b8b0f794095cfa7
+guid: ad46b2310b665fa4ea7a5c4a25ca5c5a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -95,7 +95,29 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Big_frame_square_nonTopborder_0
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 10
+        width: 4070
+        height: 3535
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 500, y: 500, z: 500, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4a0d2463020fee4a88e680879d822b4
+      internalID: 1041305545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -109,7 +131,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Big_frame_square_nonTopborder_0: 1041305545
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
