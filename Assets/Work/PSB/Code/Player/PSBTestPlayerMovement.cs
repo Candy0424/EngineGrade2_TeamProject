@@ -96,9 +96,10 @@ namespace Work.PSB.Code.Player
             if (CheckForStairs(dir)) return;
 
             Vector3Int curPos = _gridObject.CurrentGridPosition;
-            if (gridService.CanMoveTo(curPos, dir, out _))
+            if (gridService.CanMoveTo(curPos, dir, out Vector3Int targetPos))
             {
                 StartMoveLogic(input);
+                gridService.UpdateObjectPosition(_gridObject, _gridObject.CurrentGridPosition, targetPos);
             }
         }
 
@@ -143,7 +144,7 @@ namespace Work.PSB.Code.Player
             
             transform.position = finalWorldPos;
 
-            gridService.UpdateObjectPosition(_gridObject, oldPos, targetPos);
+            // gridService.UpdateObjectPosition(_gridObject, oldPos, targetPos);
 
             _isMoving = false;
 

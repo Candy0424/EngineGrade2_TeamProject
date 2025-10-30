@@ -128,15 +128,15 @@ namespace Work.CIW.Code.Grid
             }
             if (targetCell.IsOccupant)
             {
-                GridObjectBase occupant = targetCell.Occupant;
-                
-                if (occupant is BlockPush block)
-                {
-                    if (block.CanMove(dir))
-                    {
-                        return false;
-                    }
-                }
+                // GridObjectBase occupant = targetCell.Occupant;
+                //
+                // if (occupant is BlockPush block)
+                // {
+                //     if (block.CanMove(dir))
+                //     {
+                //         return false;
+                //     }
+                // }
 
                 return false;
             }

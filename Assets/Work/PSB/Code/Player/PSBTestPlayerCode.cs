@@ -205,14 +205,11 @@ namespace Work.PSB.Code.Player
 
                     blockToPush.TryMoveByCommand(dir);
                     Bus<TurnUseEvent>.Raise(new TurnUseEvent());
-                    Bus<PlayerPosChangeEvent>.Raise(
-                        new PlayerPosChangeEvent(_movementCompo.transform, new Vector3(0, 0, 0)));
+                    Bus<CommandEvent>.Raise(new CommandEvent(new NothingCommand(_movementCompo)));
                 }
-                else
+                else // 무슨 마법을 부리면 여기서 턴이 줄어들어
                 {
                     BroAudio.Play(errorSound);
-                    Bus<PlayerPosChangeEvent>.Raise(
-                        new PlayerPosChangeEvent(_movementCompo.transform, new Vector3(0, 0, 0)));
                     return;
                 }
                 if (turnManager != null && turnManager.CurrentTurnCount == 0)
@@ -228,8 +225,6 @@ namespace Work.PSB.Code.Player
                     BroAudio.Play(errorSound);
                     Bus<CommandEvent>.Raise(new CommandEvent(new NothingCommand(_movementCompo)));
                     Bus<TurnUseEvent>.Raise(new TurnUseEvent());
-                    Bus<PlayerPosChangeEvent>.Raise(
-                        new PlayerPosChangeEvent(_movementCompo.transform, new Vector3(0, 0, 0)));
                     if (turnManager != null && turnManager.CurrentTurnCount == 0)
                     {
                         HandleTurnZero();

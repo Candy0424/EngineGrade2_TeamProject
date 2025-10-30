@@ -1,6 +1,8 @@
-﻿namespace Work.CUH.Code.GameEvents
+﻿using Work.CUH.Chuh007Lib.EventBus;
+
+namespace Work.CUH.Code.GameEvents
 {
-    public struct CommandCompleteEvent
+    public struct CommandCompleteEvent : IEvent
     {
         
     }
