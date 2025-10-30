@@ -20,8 +20,9 @@ using Work.CUH.Code.SwitchSystem;
 using Work.CUH.Code.Test;
 using Work.ISC.Code.Managers;
 using Work.PSB.Code.Commands;
+using Work.PSB.Code.Test;
 
-namespace Work.PSB.Code.Test
+namespace Work.PSB.Code.Player
 {
     public class PSBTestPlayerCode : GridObjectBase
     {
@@ -206,6 +207,13 @@ namespace Work.PSB.Code.Test
                     Bus<TurnUseEvent>.Raise(new TurnUseEvent());
                     Bus<PlayerPosChangeEvent>.Raise(
                         new PlayerPosChangeEvent(_movementCompo.transform, new Vector3(0, 0, 0)));
+                }
+                else
+                {
+                    BroAudio.Play(errorSound);
+                    Bus<PlayerPosChangeEvent>.Raise(
+                        new PlayerPosChangeEvent(_movementCompo.transform, new Vector3(0, 0, 0)));
+                    return;
                 }
                 if (turnManager != null && turnManager.CurrentTurnCount == 0)
                 {

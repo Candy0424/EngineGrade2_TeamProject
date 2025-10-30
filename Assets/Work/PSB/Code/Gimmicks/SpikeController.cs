@@ -12,6 +12,7 @@ using Work.CUH.Code.GameEvents;
 using Work.ISC.Code.Effects;
 using Work.ISC.Code.System;
 using Work.PSB.Code.Commands;
+using Work.PSB.Code.Events;
 
 namespace Work.PSB.Code.Test
 {
@@ -138,6 +139,7 @@ namespace Work.PSB.Code.Test
             if (Vector3.Distance(evt.transform.position + evt.direction, transform.position) <= 0.05f)
             {
                 Bus<CommandEvent>.Raise(new CommandEvent(new TurnConsumeCommand()));
+                Bus<SpikeHitEvent>.Raise(new SpikeHitEvent());
                 CreateEffect();
                 OnPlayerHit?.Invoke();
             }

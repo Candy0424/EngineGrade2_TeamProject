@@ -9,7 +9,7 @@ using Work.CIW.Code.Camera;
 using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.Commands;
 using Work.CUH.Code.GameEvents;
-using Work.PSB.Code.Test;
+using Work.PSB.Code.Player;
 
 namespace Work.CUH.Code.Command
 {
@@ -37,9 +37,12 @@ namespace Work.CUH.Code.Command
         [Header("Sound Setting")]
         [SerializeField] private SoundID undoSound;
         [SerializeField] private SoundID resetSound;
+
+        private bool _isReset;
         
         private void Awake()
         {
+            _isReset = false;
             _executionCommands = new Queue<BaseCommand>();
             _executionCommands.Clear();
             _undoCommands = new Stack<BaseCommand>();
@@ -64,9 +67,7 @@ namespace Work.CUH.Code.Command
         public void Undo()
         {
             if (_floorManager.IsBookTurned) return;
-
-            Debug.Log($"Undo 안에 들어옴 : {_floorManager.IsBookTurned}");
-
+            
             if (_undoCommands.Count <= 0 || _currentTurnCount <= 0) return;
             if (!_undoCommands.Peek().CanExecute()) return;
             // if (leftUndoCount <= 0) return;
@@ -80,7 +81,7 @@ namespace Work.CUH.Code.Command
             {
                 leftUndoCount--;
                 _currentTurnCount--;
-                Debug.Log("Undo 턴 해줄게");
+                BroAudio.Play(undoSound);
                 Bus<TurnGetEvent>.Raise(new TurnGetEvent());
             }
         }
@@ -117,13 +118,12 @@ namespace Work.CUH.Code.Command
             if (Keyboard.current.zKey.isPressed && Time.time > undoCooldown + _lastUndoTime && !_floorManager.IsBookTurned && !_playerCode.IsInputLocked) // 지금 넘어가는 중인지
             {
                 _lastUndoTime = Time.time;
-                Debug.Log($"Z키 눌렀으니 Undo 실행함 : {_playerCode.IsInputLocked}");
-                Undo();
-                BroAudio.Play(undoSound);
+                Bus<UndoEvent>.Raise(new UndoEvent());
             }
 
-            if (Keyboard.current.rKey.wasPressedThisFrame)
+            if (Keyboard.current.rKey.wasPressedThisFrame && !_isReset)
             {
+                _isReset = true;
                 ResetEvent?.Invoke();
                 BroAudio.Play(resetSound);
             }

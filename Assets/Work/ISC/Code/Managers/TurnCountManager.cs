@@ -12,6 +12,7 @@ namespace Work.ISC.Code.Managers
         [SerializeField] private int maxTurnCount;
         [SerializeField] private int currentTurnCount;
         
+        public int MaxTurnCount => maxTurnCount;
         public int CurrentTurnCount
         {
             get => currentTurnCount;

@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using Ami.BroAudio;
+﻿using Ami.BroAudio;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 using Work.CIW.Code.Camera;
 using Work.CIW.Code.Player.Event;
 using Work.CUH.Chuh007Lib.EventBus;
-using Work.PSB.Code.Test;
+using Work.PSB.Code.Player;
+
 
 namespace Work.CIW.Code.Grid
 {
