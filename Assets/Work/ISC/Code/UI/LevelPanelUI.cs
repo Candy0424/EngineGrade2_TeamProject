@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -7,6 +6,7 @@ using UnityEngine.UI;
 using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.GameEvents;
 using Work.ISC.Code.SO;
+using Work.PSB.Code.SaveSystem;
 
 namespace Work.ISC.Code.UI
 {
@@ -24,6 +24,11 @@ namespace Work.ISC.Code.UI
         [SerializeField] private TextMeshProUGUI first;
         [SerializeField] private TextMeshProUGUI second;
         [SerializeField] private TextMeshProUGUI third;
+
+        [Header("Clear Star Prefabs")] 
+        [SerializeField] private GameObject clearStarColorPrefab;
+        [SerializeField] private GameObject clearStarGrayPrefab;
+        [SerializeField] private Transform clearStarsRoot;
         
         [Header("Level Settings")]
         [SerializeField] private int maxLevel;
@@ -124,6 +129,20 @@ namespace Work.ISC.Code.UI
             first.SetText(_stageInfo.firstStd);
             second.SetText(_stageInfo.secondStd);
             third.SetText(_stageInfo.thirdStd);
+            
+            for (int i = clearStarsRoot.childCount - 1; i >= 0; i--)
+                Destroy(clearStarsRoot.GetChild(i).gameObject);
+
+            var progress = StageProgressManager.Instance.GetStageData(_stageInfo.stageName);
+            
+            for (int i = 0; i < 3; i++)
+            {
+                bool earned = progress != null && progress.stars[i];
+
+                GameObject prefab = earned ? clearStarColorPrefab : clearStarGrayPrefab;
+                Instantiate(prefab, clearStarsRoot);
+            }
         }
+        
     }
 }

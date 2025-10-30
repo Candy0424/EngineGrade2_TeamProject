@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Playables;
 
-namespace Work.PSB.Code.Test
+namespace Work.PSB.Code.Managers
 {
     public class SkipTimeline : MonoBehaviour
     {

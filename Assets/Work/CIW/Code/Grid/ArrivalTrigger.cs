@@ -1,39 +1,47 @@
 ﻿using Ami.BroAudio;
 using UnityEngine;
 using UnityEngine.Events;
-using Work.CIW.Code.Camera;
-using Work.CIW.Code.Player.Event;
 using Work.CUH.Chuh007Lib.EventBus;
+using Work.ISC.Code.Managers;
+using Work.ISC.Code.SO;
 using Work.PSB.Code.Player;
-
+using Work.PSB.Code.Events;
 
 namespace Work.CIW.Code.Grid
 {
     public class ArrivalTrigger : MonoBehaviour
     {
-        [SerializeField] FloorTransitionManager floorManager;
+        [Header("Stage Info")]
+        [SerializeField] private StageInfoSO stageInfo;
+        [SerializeField] private TurnCountManager turnCountManager;
 
         [Header("Sound Setting")]
         [SerializeField] private SoundID endingSound;
-        
+
+        private bool _isArrival;
+
         public UnityEvent OnArrival;
 
-        bool _isArrival = false;
-        
+        private void Awake()
+        {
+            if (turnCountManager == null)
+                Debug.LogWarning("[ArrivalTrigger] TurnCountManager not found.");
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (_isArrival) return;
+            if (!other.TryGetComponent(out PSBTestPlayerCode _)) return;
 
-            if (other.gameObject.GetComponent<PSBTestPlayerCode>() != null)
-            {
-                _isArrival = true;
+            _isArrival = true;
+            BroAudio.Play(endingSound);
 
-                OnArrival.Invoke();
-                BroAudio.Play(endingSound);
+            int remainingTurns = turnCountManager != null ? turnCountManager.CurrentTurnCount : 0;
 
-                Bus<GameClearEvent>.Raise(new GameClearEvent());
-            }
+            Bus<StageClearEvent>.Raise(new StageClearEvent(stageInfo, remainingTurns));
+            OnArrival?.Invoke();
         }
+        
         
     }
 }

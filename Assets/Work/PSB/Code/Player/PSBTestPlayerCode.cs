@@ -2,16 +2,13 @@
 using Blade.FSM;
 using Chuh007Lib.Dependencies;
 using Chuh007Lib.ObjectPool.Runtime;
-using System;
 using System.Collections;
-using System.Threading.Tasks;
 using Ami.BroAudio;
 using UnityEngine;
 using Work.CIW.Code;
 using Work.CIW.Code.ETC;
 using Work.CIW.Code.Grid;
 using Work.CIW.Code.Player;
-using Work.CIW.Code.Player.Event;
 using Work.CIW.Code.Transition.Events;
 using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.Commands;
@@ -20,6 +17,7 @@ using Work.CUH.Code.SwitchSystem;
 using Work.CUH.Code.Test;
 using Work.ISC.Code.Managers;
 using Work.PSB.Code.Commands;
+using Work.PSB.Code.Events;
 using Work.PSB.Code.Test;
 
 namespace Work.PSB.Code.Player
@@ -92,8 +90,8 @@ namespace Work.PSB.Code.Player
             {
                 turnManager.OnTurnZeroEvent += HandleTurnZero;
             }
-
-            Bus<GameClearEvent>.OnEvent += HandleGameClear;
+            
+            Bus<StageClearEvent>.OnEvent += HandleGameClear;
 
             _stateMachine.ChangeState("IDLE");
         }
@@ -123,7 +121,7 @@ namespace Work.PSB.Code.Player
                 turnManager.OnTurnZeroEvent -= HandleTurnZero;
             }
 
-            Bus<GameClearEvent>.OnEvent -= HandleGameClear;
+            Bus<StageClearEvent>.OnEvent -= HandleGameClear;
         }
 
         private void Update()
@@ -256,8 +254,8 @@ namespace Work.PSB.Code.Player
             _stateMachine.ChangeState("DEAD");
             Bus<TransitionEvent>.Raise(new TransitionEvent(CIW.Code.Transition.TransitionType.Fail));
         }
-
-        private void HandleGameClear(GameClearEvent evt)
+        
+        private void HandleGameClear(StageClearEvent evt)
         {
             if (IsDead) return;
 
