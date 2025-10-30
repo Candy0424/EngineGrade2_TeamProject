@@ -14,7 +14,9 @@ namespace Work.PSB.Code.Managers
         private bool isOpen = false; // ESC 패널 상태
         private Texture2D cachedCursor;
         private bool isCursorForcedOpen = false; // 외부 UI(예: StageSelectionUI)가 커서를 강제 오픈했는지 여부
-
+        
+        public void SetOpen(bool open) => isOpen = open;
+        
         private void Start()
         {
             Time.timeScale = 1;
