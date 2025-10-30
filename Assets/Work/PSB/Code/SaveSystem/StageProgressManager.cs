@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Work.PSB.Code.SaveSystem
 {
+    [DefaultExecutionOrder(-5)]
     [Serializable]
     public class StageProgressData
     {
@@ -13,12 +14,14 @@ namespace Work.PSB.Code.SaveSystem
         public bool[] stars = new bool[3];
     }
 
+    [DefaultExecutionOrder(-5)]
     [Serializable]
     public class StageProgressContainer
     {
         public List<StageProgressData> stages = new();
     }
     
+    [DefaultExecutionOrder(-5)]
     public class StageProgressManager : MonoBehaviour
     {
         private static StageProgressManager _instance;
@@ -82,6 +85,26 @@ namespace Work.PSB.Code.SaveSystem
         {
             string json = JsonUtility.ToJson(_container, true);
             File.WriteAllText(_savePath, json);
+        }
+        
+        public int GetTotalStars()
+        {
+            int count = 0;
+    
+            foreach (var stage in _container.stages)
+            {
+                foreach (bool star in stage.stars)
+                {
+                    if (star) count++;
+                }
+            }
+
+            return count;
+        }
+
+        public int GetMaxStars()
+        {
+            return 21;  //스테이지 수 * 3 방법이 생각안나서 그냥 넣음
         }
         
         private void Update()
