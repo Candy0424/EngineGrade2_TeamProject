@@ -72,8 +72,7 @@ namespace Work.CUH.Code.SwitchSystem
         private void Awake()
         {
             activatable = operateObject.GetComponent<IActivatable>();
-            Bus<PlayerPosChangeEvent>.OnEvent += HandlePlayerPosChange;
-            Bus<TargetPosChangeEvent>.OnEvent += HandleTargetPosChange;
+            Bus<CommandCompleteEvent>.OnEvent += HandleCommandCompleted;
         }
         
         private void Start()
@@ -86,44 +85,59 @@ namespace Work.CUH.Code.SwitchSystem
 
         private void OnDestroy()
         {
-            Bus<PlayerPosChangeEvent>.OnEvent -= HandlePlayerPosChange;
-            Bus<TargetPosChangeEvent>.OnEvent -= HandleTargetPosChange;
+            Bus<CommandCompleteEvent>.OnEvent -= HandleCommandCompleted;
         }
 
-        
-        private void HandlePlayerPosChange(PlayerPosChangeEvent evt)
+        private void HandleCommandCompleted(CommandCompleteEvent evt)
         {
             var cell = GridSystem.Instance.GetCell(CurrentGridPosition);
-            if (Vector3.Distance(evt.transform.position + evt.direction, transform.position) <= 0.05f)
-            {
-                if (!IsActive)
-                    Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
-            }
-            else if (IsActive)
-            {
-                if (cell.Occupant is PSBTestPlayerCode)
-                    Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
-            }
-        }
-        
-        private void HandleTargetPosChange(TargetPosChangeEvent evt)
-        {
-            var cell = GridSystem.Instance.GetCell(CurrentGridPosition);
-            if (!cell.Occupant) _upObject = null;
-            if (_upObject && evt.transform.gameObject != _upObject) return;
-            if (Vector3.Distance(evt.transform.position + evt.direction, transform.position) <= 0.05f)
+            if (cell.Occupant && !IsActive)
             {
                 Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
-                _upObject = evt.transform.gameObject;
             }
-            else if (IsActive)
+            else if (!cell.Occupant && IsActive)
             {
-                if (cell.Occupant is PSBTestPlayerCode) return;
                 Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
-                _upObject = null;
             }
         }
-        
+
+
+        // private void HandlePlayerPosChange(PlayerPosChangeEvent evt)
+        // {
+        //     var cell = GridSystem.Instance.GetCell(CurrentGridPosition);
+        //     if (Vector3.Distance(evt.transform.position + evt.direction, transform.position) <= 0.05f)
+        //     {
+        //         if (!IsActive)
+        //             Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
+        //     }
+        //     else if (IsActive)
+        //     {
+        //         if (cell.Occupant is PSBTestPlayerCode)
+        //             Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
+        //     }
+        // }
+        //
+        // private void HandleTargetPosChange(TargetPosChangeEvent evt)
+        // {
+        //     var cell = GridSystem.Instance.GetCell(CurrentGridPosition);
+        //     if (!cell.Occupant) _upObject = null;
+        //     if (_upObject && evt.transform.gameObject != _upObject) return;
+        //     if (Vector3.Distance(evt.transform.position + evt.direction, transform.position) <= 0.05f)
+        //     {
+        //         if (!IsActive)
+        //         {
+        //             Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
+        //             _upObject = evt.transform.gameObject;
+        //         }
+        //     }
+        //     else if (IsActive)
+        //     {
+        //         if (cell.Occupant is PSBTestPlayerCode) return;
+        //         Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
+        //         _upObject = null;
+        //     }
+        // }
+        //
         public void ToggleSwitch()
         {
             IsActive = !IsActive;

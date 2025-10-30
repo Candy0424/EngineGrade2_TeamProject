@@ -135,8 +135,7 @@ namespace Work.PSB.Code.Test
         private void HandlePlayerPosChange(PlayerPosChangeEvent evt)
         {
             if (!_isRaised) return;
-            
-            if (Vector3.Distance(evt.transform.position + evt.direction, transform.position) <= 0.05f)
+            if (Vector3.Distance(evt.position + evt.direction, transform.position) <= 0.05f)
             {
                 Bus<CommandEvent>.Raise(new CommandEvent(new TurnConsumeCommand()));
                 Bus<SpikeHitEvent>.Raise(new SpikeHitEvent());

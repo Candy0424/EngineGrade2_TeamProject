@@ -13,40 +13,12 @@ MonoBehaviour:
   m_Name: SFX
   m_EditorClassIdentifier: 
   Entities:
-  - <Name>k__BackingField: GameButtonSound
-    <ID>k__BackingField: 1073741844
+  - <Name>k__BackingField: StageEnter
+    <ID>k__BackingField: 1073741842
     MulticlipsPlayMode: 0
     _group: {fileID: 0}
     Clips:
-    - AudioClip: {fileID: 8300000, guid: 68e1346127b966a4a826a826254c29d0, type: 3}
-      Volume: 1
-      Delay: 0
-      StartPosition: 0.256
-      EndPosition: 0.963
-      FadeIn: 0
-      FadeOut: 0
-      Weight: 0
-    <MasterVolume>k__BackingField: 1
-    <Loop>k__BackingField: 0
-    <SeamlessLoop>k__BackingField: 0
-    <TransitionTime>k__BackingField: 0
-    <SpatialSetting>k__BackingField: {fileID: 0}
-    <Priority>k__BackingField: 128
-    <Pitch>k__BackingField: 1
-    <PitchRandomRange>k__BackingField: 0
-    <VolumeRandomRange>k__BackingField: 0
-    <RandomFlags>k__BackingField: 0
-    SeamlessTransitionType: 0
-    TransitionTempo:
-      BPM: 0
-      Beats: 0
-    SnapToFullVolume: 0
-  - <Name>k__BackingField: UIButtonSound
-    <ID>k__BackingField: 1073741837
-    MulticlipsPlayMode: 0
-    _group: {fileID: 0}
-    Clips:
-    - AudioClip: {fileID: 8300000, guid: 600217865cf14424bb2158516f78fc7b, type: 3}
+    - AudioClip: {fileID: 8300000, guid: 96b385f3b8c85704383df854e42c8f3d, type: 3}
       Volume: 1
       Delay: 0
       StartPosition: 0
@@ -69,12 +41,12 @@ MonoBehaviour:
       BPM: 0
       Beats: 0
     SnapToFullVolume: 0
-  - <Name>k__BackingField: NextFloor
-    <ID>k__BackingField: 1073741838
+  - <Name>k__BackingField: StageClear
+    <ID>k__BackingField: 1073741843
     MulticlipsPlayMode: 0
     _group: {fileID: 0}
     Clips:
-    - AudioClip: {fileID: 8300000, guid: 578f5a4e8f2074a4e8182c44ab404bbe, type: 3}
+    - AudioClip: {fileID: 8300000, guid: f632dda3efb0beb41abce47b5877e58f, type: 3}
       Volume: 1
       Delay: 0
       StartPosition: 0
@@ -153,68 +125,68 @@ MonoBehaviour:
       BPM: 0
       Beats: 0
     SnapToFullVolume: 0
+  - <Name>k__BackingField: NextFloor
+    <ID>k__BackingField: 1073741838
+    MulticlipsPlayMode: 0
+    _group: {fileID: 0}
+    Clips:
+    - AudioClip: {fileID: 8300000, guid: 578f5a4e8f2074a4e8182c44ab404bbe, type: 3}
+      Volume: 1
+      Delay: 0
+      StartPosition: 0
+      EndPosition: 0
+      FadeIn: 0
+      FadeOut: 0
+      Weight: 0
+    <MasterVolume>k__BackingField: 1
+    <Loop>k__BackingField: 0
+    <SeamlessLoop>k__BackingField: 0
+    <TransitionTime>k__BackingField: 0
+    <SpatialSetting>k__BackingField: {fileID: 0}
+    <Priority>k__BackingField: 128
+    <Pitch>k__BackingField: 1
+    <PitchRandomRange>k__BackingField: 0
+    <VolumeRandomRange>k__BackingField: 0
+    <RandomFlags>k__BackingField: 0
+    SeamlessTransitionType: 0
+    TransitionTempo:
+      BPM: 0
+      Beats: 0
+    SnapToFullVolume: 0
+  - <Name>k__BackingField: GameButtonSound
+    <ID>k__BackingField: 1073741844
+    MulticlipsPlayMode: 0
+    _group: {fileID: 0}
+    Clips:
+    - AudioClip: {fileID: 8300000, guid: 68e1346127b966a4a826a826254c29d0, type: 3}
+      Volume: 1
+      Delay: 0
+      StartPosition: 0.256
+      EndPosition: 0.963
+      FadeIn: 0
+      FadeOut: 0
+      Weight: 0
+    <MasterVolume>k__BackingField: 1
+    <Loop>k__BackingField: 0
+    <SeamlessLoop>k__BackingField: 0
+    <TransitionTime>k__BackingField: 0
+    <SpatialSetting>k__BackingField: {fileID: 0}
+    <Priority>k__BackingField: 128
+    <Pitch>k__BackingField: 1
+    <PitchRandomRange>k__BackingField: 0
+    <VolumeRandomRange>k__BackingField: 0
+    <RandomFlags>k__BackingField: 0
+    SeamlessTransitionType: 0
+    TransitionTempo:
+      BPM: 0
+      Beats: 0
+    SnapToFullVolume: 0
   - <Name>k__BackingField: OpenDoorSound
     <ID>k__BackingField: 1073741841
     MulticlipsPlayMode: 0
     _group: {fileID: 0}
     Clips:
     - AudioClip: {fileID: 8300000, guid: c38ecb3fb2ac3d04fad5f4560b0ee345, type: 3}
-      Volume: 1
-      Delay: 0
-      StartPosition: 0
-      EndPosition: 0
-      FadeIn: 0
-      FadeOut: 0
-      Weight: 0
-    <MasterVolume>k__BackingField: 1
-    <Loop>k__BackingField: 0
-    <SeamlessLoop>k__BackingField: 0
-    <TransitionTime>k__BackingField: 0
-    <SpatialSetting>k__BackingField: {fileID: 0}
-    <Priority>k__BackingField: 128
-    <Pitch>k__BackingField: 1
-    <PitchRandomRange>k__BackingField: 0
-    <VolumeRandomRange>k__BackingField: 0
-    <RandomFlags>k__BackingField: 0
-    SeamlessTransitionType: 0
-    TransitionTempo:
-      BPM: 0
-      Beats: 0
-    SnapToFullVolume: 0
-  - <Name>k__BackingField: StageEnter
-    <ID>k__BackingField: 1073741842
-    MulticlipsPlayMode: 0
-    _group: {fileID: 0}
-    Clips:
-    - AudioClip: {fileID: 8300000, guid: 96b385f3b8c85704383df854e42c8f3d, type: 3}
-      Volume: 1
-      Delay: 0
-      StartPosition: 0
-      EndPosition: 0
-      FadeIn: 0
-      FadeOut: 0
-      Weight: 0
-    <MasterVolume>k__BackingField: 1
-    <Loop>k__BackingField: 0
-    <SeamlessLoop>k__BackingField: 0
-    <TransitionTime>k__BackingField: 0
-    <SpatialSetting>k__BackingField: {fileID: 0}
-    <Priority>k__BackingField: 128
-    <Pitch>k__BackingField: 1
-    <PitchRandomRange>k__BackingField: 0
-    <VolumeRandomRange>k__BackingField: 0
-    <RandomFlags>k__BackingField: 0
-    SeamlessTransitionType: 0
-    TransitionTempo:
-      BPM: 0
-      Beats: 0
-    SnapToFullVolume: 0
-  - <Name>k__BackingField: StageClear
-    <ID>k__BackingField: 1073741843
-    MulticlipsPlayMode: 0
-    _group: {fileID: 0}
-    Clips:
-    - AudioClip: {fileID: 8300000, guid: f632dda3efb0beb41abce47b5877e58f, type: 3}
       Volume: 1
       Delay: 0
       StartPosition: 0
@@ -265,44 +237,16 @@ MonoBehaviour:
       BPM: 0
       Beats: 0
     SnapToFullVolume: 0
-  - <Name>k__BackingField: HitSound
-    <ID>k__BackingField: 1073741846
+  - <Name>k__BackingField: SwitchSound
+    <ID>k__BackingField: 1073741851
     MulticlipsPlayMode: 0
     _group: {fileID: 0}
     Clips:
-    - AudioClip: {fileID: 8300000, guid: 15c76a87f427baa48beda4cc3ff75492, type: 3}
+    - AudioClip: {fileID: 8300000, guid: d5780b8f325f6504280f68e234d3d612, type: 3}
       Volume: 1
       Delay: 0
       StartPosition: 0
-      EndPosition: 1
-      FadeIn: 0
-      FadeOut: 0
-      Weight: 0
-    <MasterVolume>k__BackingField: 1
-    <Loop>k__BackingField: 0
-    <SeamlessLoop>k__BackingField: 0
-    <TransitionTime>k__BackingField: 0
-    <SpatialSetting>k__BackingField: {fileID: 0}
-    <Priority>k__BackingField: 128
-    <Pitch>k__BackingField: 1
-    <PitchRandomRange>k__BackingField: 0
-    <VolumeRandomRange>k__BackingField: 0
-    <RandomFlags>k__BackingField: 0
-    SeamlessTransitionType: 0
-    TransitionTempo:
-      BPM: 0
-      Beats: 0
-    SnapToFullVolume: 0
-  - <Name>k__BackingField: StepSound
-    <ID>k__BackingField: 1073741847
-    MulticlipsPlayMode: 0
-    _group: {fileID: 0}
-    Clips:
-    - AudioClip: {fileID: 8300000, guid: e0242cfc7e01adf49883eb77ac90e314, type: 3}
-      Volume: 1
-      Delay: 0
-      StartPosition: 0.069
-      EndPosition: 0.071
+      EndPosition: 0
       FadeIn: 0
       FadeOut: 0
       Weight: 0
@@ -377,16 +321,44 @@ MonoBehaviour:
       BPM: 0
       Beats: 0
     SnapToFullVolume: 0
-  - <Name>k__BackingField: SwitchSound
-    <ID>k__BackingField: 1073741851
+  - <Name>k__BackingField: StepSound
+    <ID>k__BackingField: 1073741847
     MulticlipsPlayMode: 0
     _group: {fileID: 0}
     Clips:
-    - AudioClip: {fileID: 8300000, guid: d5780b8f325f6504280f68e234d3d612, type: 3}
+    - AudioClip: {fileID: 8300000, guid: e0242cfc7e01adf49883eb77ac90e314, type: 3}
+      Volume: 1
+      Delay: 0
+      StartPosition: 0.069
+      EndPosition: 0.071
+      FadeIn: 0
+      FadeOut: 0
+      Weight: 0
+    <MasterVolume>k__BackingField: 1
+    <Loop>k__BackingField: 0
+    <SeamlessLoop>k__BackingField: 0
+    <TransitionTime>k__BackingField: 0
+    <SpatialSetting>k__BackingField: {fileID: 0}
+    <Priority>k__BackingField: 128
+    <Pitch>k__BackingField: 1
+    <PitchRandomRange>k__BackingField: 0
+    <VolumeRandomRange>k__BackingField: 0
+    <RandomFlags>k__BackingField: 0
+    SeamlessTransitionType: 0
+    TransitionTempo:
+      BPM: 0
+      Beats: 0
+    SnapToFullVolume: 0
+  - <Name>k__BackingField: HitSound
+    <ID>k__BackingField: 1073741846
+    MulticlipsPlayMode: 0
+    _group: {fileID: 0}
+    Clips:
+    - AudioClip: {fileID: 8300000, guid: 15c76a87f427baa48beda4cc3ff75492, type: 3}
       Volume: 1
       Delay: 0
       StartPosition: 0
-      EndPosition: 0
+      EndPosition: 1
       FadeIn: 0
       FadeOut: 0
       Weight: 0
@@ -414,6 +386,118 @@ MonoBehaviour:
       Volume: 1
       Delay: 0
       StartPosition: 0.639
+      EndPosition: 0
+      FadeIn: 0
+      FadeOut: 0
+      Weight: 0
+    <MasterVolume>k__BackingField: 1
+    <Loop>k__BackingField: 0
+    <SeamlessLoop>k__BackingField: 0
+    <TransitionTime>k__BackingField: 0
+    <SpatialSetting>k__BackingField: {fileID: 0}
+    <Priority>k__BackingField: 128
+    <Pitch>k__BackingField: 1
+    <PitchRandomRange>k__BackingField: 0
+    <VolumeRandomRange>k__BackingField: 0
+    <RandomFlags>k__BackingField: 0
+    SeamlessTransitionType: 0
+    TransitionTempo:
+      BPM: 0
+      Beats: 0
+    SnapToFullVolume: 0
+  - <Name>k__BackingField: UIButtonSound
+    <ID>k__BackingField: 1073741837
+    MulticlipsPlayMode: 0
+    _group: {fileID: 0}
+    Clips:
+    - AudioClip: {fileID: 8300000, guid: 600217865cf14424bb2158516f78fc7b, type: 3}
+      Volume: 1
+      Delay: 0
+      StartPosition: 0
+      EndPosition: 0
+      FadeIn: 0
+      FadeOut: 0
+      Weight: 0
+    <MasterVolume>k__BackingField: 1
+    <Loop>k__BackingField: 0
+    <SeamlessLoop>k__BackingField: 0
+    <TransitionTime>k__BackingField: 0
+    <SpatialSetting>k__BackingField: {fileID: 0}
+    <Priority>k__BackingField: 128
+    <Pitch>k__BackingField: 1
+    <PitchRandomRange>k__BackingField: 0
+    <VolumeRandomRange>k__BackingField: 0
+    <RandomFlags>k__BackingField: 0
+    SeamlessTransitionType: 0
+    TransitionTempo:
+      BPM: 0
+      Beats: 0
+    SnapToFullVolume: 0
+  - <Name>k__BackingField: SliderChargeSound
+    <ID>k__BackingField: 1073741852
+    MulticlipsPlayMode: 0
+    _group: {fileID: 0}
+    Clips:
+    - AudioClip: {fileID: 8300000, guid: 191266f7d25a9e2439a1442e53c59819, type: 3}
+      Volume: 1
+      Delay: 0
+      StartPosition: 0
+      EndPosition: 0
+      FadeIn: 0
+      FadeOut: 0
+      Weight: 0
+    <MasterVolume>k__BackingField: 1
+    <Loop>k__BackingField: 0
+    <SeamlessLoop>k__BackingField: 0
+    <TransitionTime>k__BackingField: 0
+    <SpatialSetting>k__BackingField: {fileID: 0}
+    <Priority>k__BackingField: 128
+    <Pitch>k__BackingField: 1
+    <PitchRandomRange>k__BackingField: 0
+    <VolumeRandomRange>k__BackingField: 0
+    <RandomFlags>k__BackingField: 0
+    SeamlessTransitionType: 0
+    TransitionTempo:
+      BPM: 0
+      Beats: 0
+    SnapToFullVolume: 0
+  - <Name>k__BackingField: SliderChargeSound2
+    <ID>k__BackingField: 1073741854
+    MulticlipsPlayMode: 0
+    _group: {fileID: 0}
+    Clips:
+    - AudioClip: {fileID: 8300000, guid: 733e8a5f6cddc454a932f71f7d84bdaf, type: 3}
+      Volume: 1
+      Delay: 0
+      StartPosition: 0
+      EndPosition: 0
+      FadeIn: 0
+      FadeOut: 0
+      Weight: 0
+    <MasterVolume>k__BackingField: 1
+    <Loop>k__BackingField: 0
+    <SeamlessLoop>k__BackingField: 0
+    <TransitionTime>k__BackingField: 0
+    <SpatialSetting>k__BackingField: {fileID: 0}
+    <Priority>k__BackingField: 128
+    <Pitch>k__BackingField: 1
+    <PitchRandomRange>k__BackingField: 0
+    <VolumeRandomRange>k__BackingField: 0
+    <RandomFlags>k__BackingField: 0
+    SeamlessTransitionType: 0
+    TransitionTempo:
+      BPM: 0
+      Beats: 0
+    SnapToFullVolume: 0
+  - <Name>k__BackingField: SliderEndSound
+    <ID>k__BackingField: 1073741853
+    MulticlipsPlayMode: 0
+    _group: {fileID: 0}
+    Clips:
+    - AudioClip: {fileID: 8300000, guid: bf736acb8c109b841b0e65bd5e3487bc, type: 3}
+      Volume: 1
+      Delay: 0
+      StartPosition: 0
       EndPosition: 0
       FadeIn: 0
       FadeOut: 0

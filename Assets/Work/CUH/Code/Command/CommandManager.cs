@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Ami.BroAudio;
 using Chuh007Lib.Dependencies;
 using UnityEngine;
@@ -82,6 +83,7 @@ namespace Work.CUH.Code.Command
                 leftUndoCount--;
                 _currentTurnCount--;
                 BroAudio.Play(undoSound);
+                Bus<CommandCompleteEvent>.Raise(new CommandCompleteEvent());
                 Bus<TurnGetEvent>.Raise(new TurnGetEvent());
             }
         }
@@ -92,6 +94,13 @@ namespace Work.CUH.Code.Command
         public void TurnUse(TurnUseEvent evt)
         {
             _currentTurnCount++;
+            ExecuteCommand();
+            Bus<CommandCompleteEvent>.Raise(new CommandCompleteEvent());
+            ExecuteCommand();
+        }
+
+        private void ExecuteCommand()
+        {
             while (_executionCommands.Count > 0)
             {
                 BaseCommand command = _executionCommands.Dequeue();
@@ -103,8 +112,6 @@ namespace Work.CUH.Code.Command
                 }
             }
         }
-
-
         
         // 커멘드를 넣는 작업
         // 플레이어의 행동 커멘드는 TurnUse보다 먼저 들어와야 한다.

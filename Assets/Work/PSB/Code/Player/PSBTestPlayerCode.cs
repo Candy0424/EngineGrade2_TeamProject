@@ -189,7 +189,7 @@ namespace Work.PSB.Code.Player
                 Bus<CommandEvent>.Raise(new CommandEvent(new NothingCommand(_movementCompo)));
                 Bus<TurnUseEvent>.Raise(new TurnUseEvent());
                 Bus<PlayerPosChangeEvent>.Raise(
-                    new PlayerPosChangeEvent(_movementCompo.transform, new Vector3(0, 0, 0)));
+                    new PlayerPosChangeEvent(_movementCompo.transform.position, new Vector3()));
                 if (turnManager != null && turnManager.CurrentTurnCount == 0)
                 {
                     HandleTurnZero();
@@ -206,13 +206,11 @@ namespace Work.PSB.Code.Player
                     blockToPush.TryMoveByCommand(dir);
                     Bus<TurnUseEvent>.Raise(new TurnUseEvent());
                     Bus<PlayerPosChangeEvent>.Raise(
-                        new PlayerPosChangeEvent(_movementCompo.transform, new Vector3(0, 0, 0)));
+                        new PlayerPosChangeEvent(_movementCompo.transform.position, new Vector3()));
                 }
-                else
+                else // 무슨 마법을 부리면 여기서 턴이 줄어들어
                 {
                     BroAudio.Play(errorSound);
-                    Bus<PlayerPosChangeEvent>.Raise(
-                        new PlayerPosChangeEvent(_movementCompo.transform, new Vector3(0, 0, 0)));
                     return;
                 }
                 if (turnManager != null && turnManager.CurrentTurnCount == 0)
@@ -228,8 +226,6 @@ namespace Work.PSB.Code.Player
                     BroAudio.Play(errorSound);
                     Bus<CommandEvent>.Raise(new CommandEvent(new NothingCommand(_movementCompo)));
                     Bus<TurnUseEvent>.Raise(new TurnUseEvent());
-                    Bus<PlayerPosChangeEvent>.Raise(
-                        new PlayerPosChangeEvent(_movementCompo.transform, new Vector3(0, 0, 0)));
                     if (turnManager != null && turnManager.CurrentTurnCount == 0)
                     {
                         HandleTurnZero();
@@ -328,7 +324,6 @@ namespace Work.PSB.Code.Player
         public override void OnCellOccupied(Vector3Int newPos)
         {
             CurrentGridPosition = newPos;
-            transform.position = new Vector3(newPos.x, newPos.y, newPos.z);
         }
         
     }

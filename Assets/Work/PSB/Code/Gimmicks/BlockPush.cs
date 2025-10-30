@@ -83,6 +83,8 @@ namespace Work.PSB.Code.Test
             }
 
             StartCoroutine(MoveRoutine(dir));
+            _gridService.UpdateObjectPosition(this, CurrentGridPosition, CurrentGridPosition + dir);
+
         }
 
         public bool CanMove(Vector3Int dir)
@@ -141,7 +143,7 @@ namespace Work.PSB.Code.Test
 
             transform.position = end;
             CurrentGridPosition = targetPos;
-            _gridService.UpdateObjectPosition(this, oldPos, targetPos);
+            // _gridService.UpdateObjectPosition(this, oldPos, targetPos);
 
             _isMoving = false;
         }
