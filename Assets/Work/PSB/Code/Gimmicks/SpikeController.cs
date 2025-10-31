@@ -70,17 +70,14 @@ namespace Work.PSB.Code.Test
             SpikeCommand command = new SpikeCommand(this);
             Bus<CommandEvent>.Raise(new CommandEvent(command));
         }
-
-        private void Start()
-        {
-            //StartEvent();
-        }
-
+        
         private void OnEnable()
         {
             if (spikeObject == null) return;
             if (turnManager != null && isWork)
                 Bus<TurnUseEvent>.OnEvent += OnTurnUse;
+            SpikeCommand command = new SpikeCommand(this);
+            Bus<CommandEvent>.Raise(new CommandEvent(command));
         }
         
         private void OnDisable()
