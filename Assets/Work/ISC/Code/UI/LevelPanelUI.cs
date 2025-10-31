@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.GameEvents;
@@ -40,6 +42,7 @@ namespace Work.ISC.Code.UI
 
         public UnityEvent Enable;
         public UnityEvent Disable;
+        public UnityEvent OnESC;
         
         private void Awake()
         {
@@ -66,6 +69,14 @@ namespace Work.ISC.Code.UI
         {
             DisableAnimation();
             Disable?.Invoke();
+        }
+
+        private void Update()
+        {
+            if (Keyboard.current.escapeKey.wasPressedThisFrame)
+            {
+                OnESC?.Invoke();
+            }
         }
 
         private void HandleOpenUI(OpenBookUIEvent evt)
