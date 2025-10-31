@@ -2,6 +2,7 @@
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.GameEvents;
@@ -36,6 +37,9 @@ namespace Work.ISC.Code.UI
         private List<GameObject> _stars;
 
         private StageInfoSO _stageInfo;
+
+        public UnityEvent Enable;
+        public UnityEvent Disable;
         
         private void Awake()
         {
@@ -61,6 +65,7 @@ namespace Work.ISC.Code.UI
         private void HandleCloseUI(CloseBookUIEvent evt)
         {
             DisableAnimation();
+            Disable?.Invoke();
         }
 
         private void HandleOpenUI(OpenBookUIEvent evt)
@@ -84,6 +89,7 @@ namespace Work.ISC.Code.UI
         private void OnEnable()
         {
             EnableAnimation();
+            Enable?.Invoke();
         }
 
         private void OnDisable()

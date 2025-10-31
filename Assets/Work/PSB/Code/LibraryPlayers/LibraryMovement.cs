@@ -1,6 +1,10 @@
-﻿using Blade.Entities;
+﻿using System;
+using Blade.Entities;
 using Chuh007Lib.Dependencies;
 using UnityEngine;
+using Work.CUH.Chuh007Lib.EventBus;
+using Work.CUH.Code.GameEvents;
+using Work.PSB.Code.Managers;
 
 namespace Work.PSB.Code.LibraryPlayers
 {
@@ -47,10 +51,28 @@ namespace Work.PSB.Code.LibraryPlayers
         private LibraryPlayer _entity;
 
         private bool _isRunning;
+        private bool _isRotate;
 
         public void Initialize(Entity entity)
         {
             _entity = entity as LibraryPlayer;
+            _isRotate = true;
+        }
+
+        public void HandleCloseBook()
+        {
+            _isRotate = true;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.ForceSoftware);
+        }
+
+        public void HandleOpenBook()
+        {
+            _isRotate = false;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         }
 
         public void AfterInitialize()
@@ -71,7 +93,8 @@ namespace Work.PSB.Code.LibraryPlayers
 
         private void Update()
         {
-            HandleMouseRotation();
+            if (_isRotate)
+                HandleMouseRotation();
         }
 
         private void FixedUpdate()
