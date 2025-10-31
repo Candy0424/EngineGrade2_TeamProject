@@ -22,7 +22,7 @@ namespace Work.CIW.Code.Player.States
 
         private IEnumerator WaitTime()
         {
-            yield return new WaitForSeconds(2.6f);
+            yield return new WaitForSeconds(0.5f);
             _player.ChangeState("IDLE");
         }
     }
