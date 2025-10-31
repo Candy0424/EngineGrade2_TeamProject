@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,8 +12,10 @@ namespace Work.ISC.Code.UI
 
         private List<Resolution> _resolutions;
         private List<string> _dropdownMenus;
-        
-        
+
+        private const string PREF_RESOLUTION_INDEX = "ResolutionIndex";
+        private const string PREF_FULLSCREEN = "Fullscreen";
+
         private void Awake()
         {
             _resolutions = new List<Resolution>();
@@ -39,21 +39,36 @@ namespace Work.ISC.Code.UI
                     _resolutions.Add(resolution);
                 }
             }
-            
+
             dropdown.AddOptions(_dropdownMenus);
+            
+            int savedResolutionIndex = PlayerPrefs.GetInt(PREF_RESOLUTION_INDEX, 0);
+            bool savedFullscreen = PlayerPrefs.GetInt(PREF_FULLSCREEN, 1) == 1;
+
+            dropdown.value = Mathf.Clamp(savedResolutionIndex, 0, _dropdownMenus.Count - 1);
+            toggle.isOn = savedFullscreen;
+
             SetResolution();
-            Screen.fullScreen = toggle.isOn;
         }
 
         public void SetResolution()
         {
-            Resolution res = _resolutions[dropdown.value];
+            int index = dropdown.value;
+
+            Resolution res = _resolutions[index];
             Screen.SetResolution(res.width, res.height, toggle.isOn);
+            
+            PlayerPrefs.SetInt(PREF_RESOLUTION_INDEX, index);
+            PlayerPrefs.Save();
         }
 
         public void SetFullScreen(bool isFull)
         {
             Screen.fullScreen = isFull;
+            
+            PlayerPrefs.SetInt(PREF_FULLSCREEN, isFull ? 1 : 0);
+            PlayerPrefs.Save();
         }
+        
     }
 }

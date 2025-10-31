@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using NotImplementedException = System.NotImplementedException;
 
 namespace Work.ISC.Code.Effects
 {

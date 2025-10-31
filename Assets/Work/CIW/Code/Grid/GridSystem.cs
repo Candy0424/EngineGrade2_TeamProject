@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Work.CIW.Code.Player;
-using Work.PSB.Code.Test;
 
 namespace Work.CIW.Code.Grid
 {
@@ -128,29 +127,16 @@ namespace Work.CIW.Code.Grid
             }
             if (targetCell.IsOccupant)
             {
-                // GridObjectBase occupant = targetCell.Occupant;
-                //
-                // if (occupant is BlockPush block)
-                // {
-                //     if (block.CanMove(dir))
-                //     {
-                //         return false;
-                //     }
-                // }
-
                 return false;
             }
 
             Vector3 rayOrigin = new Vector3(targetPos.x, targetPos.y + 0.5f, targetPos.z);
             Vector3 rayDir = Vector3.down;
             float maxDistance = targetPos.y + 6f;
-            //Vector3 startPos = curPos;
 
             // ���� ĭ���� �̵����� �� ���� ��� ������ �ִ°�?
             if (Physics.Raycast(rayOrigin, rayDir, out RaycastHit hit, maxDistance, whatIsWalkable))
             {
-                //Debug.Log($"[GRID CHECK] SUCCESS! Raycast hit: {hit.collider.gameObject.name}. Move is approved.");
-
                 if (Mathf.Abs(hit.point.y - targetPos.y) < 0.1f)
                 {
                     return true;
@@ -162,25 +148,20 @@ namespace Work.CIW.Code.Grid
 
         public void UpdateObjectPosition(GridObjectBase movingObj, Vector3Int oldPos, Vector3Int newPos)
         {
-            // 이전 셀 비우기
             if (_gridMap.TryGetValue(oldPos, out GridCell oldCell))
             {
-                // 🌟 IGridObject 대신 GridObjectBase 사용
                 if (oldCell.Occupant == movingObj)
                 {
-                    oldCell.SetOccupant(null); // GridCell.Occupant 및 SetOccupant가 GridObjectBase를 사용한다고 가정
-
-                    // 🌟 GridObjectBase의 상태 갱신 로직 호출 (핵심 변경)
+                    oldCell.SetOccupant(null);
+                    
                     movingObj.OnCellDeoccupied();
                 }
             }
-
-            // 새 셀 점유
+            
             if (_gridMap.TryGetValue(newPos, out GridCell newCell))
             {
-                newCell.SetOccupant(movingObj); // GridCell.SetOccupant가 GridObjectBase를 사용한다고 가정
-
-                // 🌟 GridObjectBase의 상태 갱신 로직 호출 (핵심 변경)
+                newCell.SetOccupant(movingObj);
+                
                 movingObj.OnCellOccupied(newPos);
             }
         }
@@ -210,7 +191,6 @@ namespace Work.CIW.Code.Grid
             }
         }
         
-        // Grid Cell�� ��ǥ�� �ʱ�ȭ���ش�
         public GridCell GetCell(Vector3Int pos)
         {
             _gridMap.TryGetValue(pos, out GridCell cell);

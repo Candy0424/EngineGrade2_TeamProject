@@ -68,14 +68,12 @@ namespace Work.PSB.Code.Player
 
             if (_movementCompo == null || !(_movementCompo is IMoveableTest))
             {
-                Debug.LogError("PlayerMovement 컴포넌트가 IMoveableTest를 구현하지 않았습니다.");
                 enabled = false;
             }
 
             _fsmHost = GetComponent<PlayerFSMHost>();
             if (_fsmHost == null)
             {
-                Debug.LogError("PlayerFSMHost가 Player에 없습니다.");
                 enabled = false;
                 return;
             }

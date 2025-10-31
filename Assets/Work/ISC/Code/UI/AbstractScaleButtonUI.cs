@@ -1,5 +1,4 @@
-﻿using System;
-using Ami.BroAudio;
+﻿using Ami.BroAudio;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;

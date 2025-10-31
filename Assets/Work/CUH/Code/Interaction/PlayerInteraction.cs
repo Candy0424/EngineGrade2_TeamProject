@@ -1,5 +1,4 @@
-﻿using System;
-using Blade.Entities;
+﻿using Blade.Entities;
 using UnityEngine;
 
 namespace Work.CUH.Code.Interaction

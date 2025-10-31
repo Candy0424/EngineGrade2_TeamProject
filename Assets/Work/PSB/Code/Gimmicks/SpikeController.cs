@@ -1,5 +1,4 @@
-﻿using System;
-using Ami.BroAudio;
+﻿using Ami.BroAudio;
 using Chuh007Lib.Dependencies;
 using Chuh007Lib.ObjectPool.Runtime;
 using DG.Tweening;

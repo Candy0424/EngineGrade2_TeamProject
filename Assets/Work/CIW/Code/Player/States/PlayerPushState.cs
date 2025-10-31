@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine;
 using Work.PSB.Code.Player;
-using Work.PSB.Code.Test;
 
 namespace Work.CIW.Code.Player.States
 {

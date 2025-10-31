@@ -48,8 +48,6 @@ namespace Work.PSB.Code.Test
         {
             if (gridServiceMono is IGridDataService service)
                 _gridService = service;
-            else
-                Debug.LogError("GridService가 올바르게 할당되지 않았습니다!");
         }
 
         private void Start()
@@ -78,7 +76,6 @@ namespace Work.PSB.Code.Test
 
             if (!CanMove(dir))
             {
-                Debug.Log("BlockPush: 이동 불가");
                 return;
             }
 
@@ -143,8 +140,7 @@ namespace Work.PSB.Code.Test
 
             transform.position = end;
             CurrentGridPosition = targetPos;
-            // _gridService.UpdateObjectPosition(this, oldPos, targetPos);
-
+            
             _isMoving = false;
         }
 

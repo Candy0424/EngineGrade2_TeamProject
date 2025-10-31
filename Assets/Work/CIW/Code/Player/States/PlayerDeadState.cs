@@ -1,10 +1,7 @@
 ﻿using Blade.Entities;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using Work.CIW.Code.Camera;
 using Work.PSB.Code.Player;
-using Work.PSB.Code.Test;
 
 namespace Work.CIW.Code.Player.States
 {

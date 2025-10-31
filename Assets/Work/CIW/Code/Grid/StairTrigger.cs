@@ -4,15 +4,9 @@ namespace Work.CIW.Code.Grid
 {
     public class StairTrigger : MonoBehaviour
     {
-        [Tooltip("ÀÌ°É ¹â¾ÒÀ» ¶§ ÀÌµ¿ÇÒ ¸ñÇ¥ ÃþÀÇ y ÁÂÇ¥")]
+        [Tooltip("ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ y ï¿½ï¿½Ç¥")]
         [SerializeField] int targetFloorY;
-
-        //public Vector3Int StairPosition { get; private set; }
-        //private void Start()
-        //{
-        //    StairPosition = Vector3Int.RoundToInt(transform.position);
-        //}
-
+        
         public int GetTargetY()
         {
             return targetFloorY;

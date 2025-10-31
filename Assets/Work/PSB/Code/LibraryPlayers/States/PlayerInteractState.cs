@@ -1,6 +1,5 @@
 ﻿using Blade.Entities;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Work.CUH.Code.Entities;
 using Work.CUH.Code.Interaction;
 
@@ -39,7 +38,6 @@ namespace Work.PSB.Code.LibraryPlayers.States
         {
             base.Exit();
             _trigger.OnAnimationEnd -= HandleAnimEndTrigger;
-            Debug.Log("Exiting PlayerInteractState");
         }
         
     }

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Work.CIW.Code.Player;
 
 namespace Work.CIW.Code.Grid
 {

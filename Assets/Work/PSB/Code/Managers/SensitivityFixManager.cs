@@ -1,5 +1,4 @@
-﻿using System;
-using Chuh007Lib.Dependencies;
+﻿using Chuh007Lib.Dependencies;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

@@ -1,6 +1,5 @@
 ﻿using Chuh007Lib.ObjectPool.Runtime;
 using UnityEngine;
-using NotImplementedException = System.NotImplementedException;
 
 namespace Work.ISC.Code.Effects
 {
@@ -31,7 +30,6 @@ namespace Work.ISC.Code.Effects
             _playableVFX = effectObject.GetComponent<IPlayableVFX>();
             if (_playableVFX == null)
             {
-                Debug.LogError($"The effect object {effectObject.name} does not implement IPlayableVFX.");
                 effectObject = null;
             }
         }

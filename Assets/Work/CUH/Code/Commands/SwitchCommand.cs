@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using Work.CUH.Code.Command;
+﻿using Work.CUH.Code.Command;
 using Work.CUH.Code.SwitchSystem;
 
 namespace Work.CUH.Code.Commands

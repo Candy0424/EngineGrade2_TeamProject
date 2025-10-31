@@ -1,8 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using Work.CUH.Chuh007Lib.EventBus;
-using Work.PSB.Code.Managers; // CursorManager를 사용하기 위해 추가
 
 namespace Work.PSB.Code.Managers
 {
@@ -11,9 +9,9 @@ namespace Work.PSB.Code.Managers
         [SerializeField] private GameObject escPanel;
         [SerializeField] private Texture2D texture;
 
-        private bool isOpen = false; // ESC 패널 상태
+        private bool isOpen = false;
         private Texture2D cachedCursor;
-        private bool isCursorForcedOpen = false; // 외부 UI(예: StageSelectionUI)가 커서를 강제 오픈했는지 여부
+        private bool isCursorForcedOpen = false;
         
         public void SetOpen(bool open) => isOpen = open;
         

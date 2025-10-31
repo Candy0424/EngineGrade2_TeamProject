@@ -1,8 +1,6 @@
-﻿using System;
-using Ami.BroAudio;
+﻿using Ami.BroAudio;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Work.ISC.Code.UI
@@ -49,11 +47,10 @@ namespace Work.ISC.Code.UI
                 if (_isPlaying)
                 {
                     BroAudio.Stop(loadSound);
-                    // BroAudio.ResetSequence(loadSound);
                     _isPlaying = false;
                 }
 
-                 _curGage = .0f;
+                _curGage = .0f;
             }
         }
 

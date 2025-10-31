@@ -1,5 +1,4 @@
 ﻿using Blade.Entities;
-using UnityEngine;
 
 namespace Work.CIW.Code.Player.States
 {

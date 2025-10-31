@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.VFX;
-using NotImplementedException = System.NotImplementedException;
 
 namespace Work.ISC.Code.Effects
 {

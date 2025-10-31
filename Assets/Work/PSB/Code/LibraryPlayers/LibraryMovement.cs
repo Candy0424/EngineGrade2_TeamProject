@@ -1,10 +1,6 @@
-﻿using System;
-using Blade.Entities;
+﻿using Blade.Entities;
 using Chuh007Lib.Dependencies;
 using UnityEngine;
-using Work.CUH.Chuh007Lib.EventBus;
-using Work.CUH.Code.GameEvents;
-using Work.PSB.Code.Managers;
 
 namespace Work.PSB.Code.LibraryPlayers
 {

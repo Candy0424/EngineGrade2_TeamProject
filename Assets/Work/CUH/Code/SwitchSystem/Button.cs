@@ -1,12 +1,10 @@
-﻿using System;
-using Ami.BroAudio;
+﻿using Ami.BroAudio;
 using DG.Tweening;
 using UnityEngine;
 using Work.CIW.Code.Grid;
 using Work.CUH.Chuh007Lib.EventBus;
 using Work.CUH.Code.Commands;
 using Work.CUH.Code.GameEvents;
-using Work.PSB.Code.Player;
 
 
 namespace Work.CUH.Code.SwitchSystem
@@ -100,44 +98,7 @@ namespace Work.CUH.Code.SwitchSystem
                 Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
             }
         }
-
-
-        // private void HandlePlayerPosChange(PlayerPosChangeEvent evt)
-        // {
-        //     var cell = GridSystem.Instance.GetCell(CurrentGridPosition);
-        //     if (Vector3.Distance(evt.transform.position + evt.direction, transform.position) <= 0.05f)
-        //     {
-        //         if (!IsActive)
-        //             Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
-        //     }
-        //     else if (IsActive)
-        //     {
-        //         if (cell.Occupant is PSBTestPlayerCode)
-        //             Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
-        //     }
-        // }
-        //
-        // private void HandleTargetPosChange(TargetPosChangeEvent evt)
-        // {
-        //     var cell = GridSystem.Instance.GetCell(CurrentGridPosition);
-        //     if (!cell.Occupant) _upObject = null;
-        //     if (_upObject && evt.transform.gameObject != _upObject) return;
-        //     if (Vector3.Distance(evt.transform.position + evt.direction, transform.position) <= 0.05f)
-        //     {
-        //         if (!IsActive)
-        //         {
-        //             Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
-        //             _upObject = evt.transform.gameObject;
-        //         }
-        //     }
-        //     else if (IsActive)
-        //     {
-        //         if (cell.Occupant is PSBTestPlayerCode) return;
-        //         Bus<CommandEvent>.Raise(new CommandEvent(new SwitchCommand(this)));
-        //         _upObject = null;
-        //     }
-        // }
-        //
+        
         public void ToggleSwitch()
         {
             IsActive = !IsActive;
@@ -160,7 +121,6 @@ namespace Work.CUH.Code.SwitchSystem
             else
             {
                 operateObject = null;
-                Debug.LogError("This Object is not ActivateObject");
             }
         }
 #endif

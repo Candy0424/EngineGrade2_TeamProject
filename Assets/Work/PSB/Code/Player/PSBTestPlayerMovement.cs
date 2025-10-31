@@ -144,8 +144,6 @@ namespace Work.PSB.Code.Player
             
             transform.position = finalWorldPos;
 
-            // gridService.UpdateObjectPosition(_gridObject, oldPos, targetPos);
-
             _isMoving = false;
 
             if (_playerCode != null)
@@ -223,15 +221,8 @@ namespace Work.PSB.Code.Player
                 if (hits[0].TryGetComponent(out StairTrigger stair))
                 {
                     Vector3Int teleportPos = new Vector3Int(_gridObject.CurrentGridPosition.x, stair.GetTargetY(), _gridObject.CurrentGridPosition.z);
-
-                    int floorDirection = teleportPos.y > _gridObject.CurrentGridPosition.y ? 1 : -1;
-
-                    //if (floorTransitionManager != null)
-                    //{
-                    //    floorTransitionManager.StartFloorTransition(floorDirection);
-                    //}
-
-                    Bus<CommandEvent>.Raise(new CommandEvent(new CUH.Code.Commands.StairCommand(
+                    
+                    Bus<CommandEvent>.Raise(new CommandEvent(new StairCommand(
                         this, _gridObject.CurrentGridPosition, teleportPos, dir)));
                     
                     return true;
@@ -244,8 +235,7 @@ namespace Work.PSB.Code.Player
         public void TeleportToFloor(Vector3Int targetPos, Vector3Int dir)
         {
             Vector3Int oldPos = _gridObject.CurrentGridPosition;
-
-            // nextFloorIndex인데 targetPos.y값을 보내주니 당연히 에러가 나지
+            
             Bus<FloorEvent>.Raise(new FloorEvent(targetPos.y > oldPos.y ? 1 : -1));
 
             gridService.UpdateObjectPosition(_gridObject, oldPos, targetPos);

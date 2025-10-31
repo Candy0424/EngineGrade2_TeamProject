@@ -2,7 +2,6 @@
 using TransitionsPlus;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 namespace Work.CUH.Code.Transition
 {
