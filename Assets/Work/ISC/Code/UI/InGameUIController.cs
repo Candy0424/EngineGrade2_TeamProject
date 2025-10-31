@@ -29,6 +29,7 @@ namespace Work.ISC.Code.UI
 
         public void UpdatePanel(bool isOpen)
         {
+            _isOpen = isOpen;
             int value = isOpen ? 1 : 0;
             Time.timeScale = isOpen ? 0 : 1;
             Cursor.visible = isOpen;
