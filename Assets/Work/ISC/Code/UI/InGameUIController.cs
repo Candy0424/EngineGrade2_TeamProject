@@ -31,6 +31,7 @@ namespace Work.ISC.Code.UI
         {
             int value = isOpen ? 1 : 0;
             Time.timeScale = isOpen ? 0 : 1;
+            Cursor.visible = isOpen;
             if (_tween.IsActive()) _tween.Kill();
             _tween = inGamedUI.DOScaleY(value, 0.1f).SetEase(Ease.Linear).SetUpdate(true);
         }
