@@ -64,6 +64,10 @@ namespace Work.ISC.Code.UI
         {
             Time.timeScale = 1;
             if (_tween.IsActive()) _tween.Kill();
+            
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         }
     }
 }
