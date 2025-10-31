@@ -79,6 +79,11 @@ namespace Work.ISC.Code.UI
             }
         }
 
+        private void OnDestroy()
+        {
+            if (_tween.IsActive()) _tween.Kill();
+        }
+
         protected abstract void HandleBtnClick();
 
         public virtual void HandleDown() => isHold = true;

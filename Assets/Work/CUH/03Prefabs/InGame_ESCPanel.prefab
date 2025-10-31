@@ -848,7 +848,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1464286159930405497}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4573,6 +4573,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5432254367005232192, guid: 846c999e9a0216f49a4cdc0d4582ec68, type: 3}
+      propertyPath: loadSound.ID
+      value: 1073741854
+      objectReference: {fileID: 0}
+    - target: {fileID: 5432254367005232192, guid: 846c999e9a0216f49a4cdc0d4582ec68, type: 3}
+      propertyPath: successSound.ID
+      value: 1073741853
+      objectReference: {fileID: 0}
+    - target: {fileID: 5432254367005232192, guid: 846c999e9a0216f49a4cdc0d4582ec68, type: 3}
+      propertyPath: loadSound._sourceAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 26f37f1696947bb4588870e04a391f30, type: 2}
+    - target: {fileID: 5432254367005232192, guid: 846c999e9a0216f49a4cdc0d4582ec68, type: 3}
+      propertyPath: successSound._sourceAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 26f37f1696947bb4588870e04a391f30, type: 2}
     - target: {fileID: 5595351596288549511, guid: 846c999e9a0216f49a4cdc0d4582ec68, type: 3}
       propertyPath: m_Name
       value: LibraryBtn
@@ -4599,6 +4615,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: HomeBtn
       objectReference: {fileID: 0}
+    - target: {fileID: 5360845987882819317, guid: 2f6ce0236db649548be0bf97abe8fa95, type: 3}
+      propertyPath: loadSound.ID
+      value: 1073741854
+      objectReference: {fileID: 0}
+    - target: {fileID: 5360845987882819317, guid: 2f6ce0236db649548be0bf97abe8fa95, type: 3}
+      propertyPath: successSound.ID
+      value: 1073741853
+      objectReference: {fileID: 0}
+    - target: {fileID: 5360845987882819317, guid: 2f6ce0236db649548be0bf97abe8fa95, type: 3}
+      propertyPath: loadSound._sourceAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 26f37f1696947bb4588870e04a391f30, type: 2}
+    - target: {fileID: 5360845987882819317, guid: 2f6ce0236db649548be0bf97abe8fa95, type: 3}
+      propertyPath: successSound._sourceAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 26f37f1696947bb4588870e04a391f30, type: 2}
     - target: {fileID: 5360845987882819317, guid: 2f6ce0236db649548be0bf97abe8fa95, type: 3}
       propertyPath: loadSound.<DebugObject>k__BackingField
       value: 
