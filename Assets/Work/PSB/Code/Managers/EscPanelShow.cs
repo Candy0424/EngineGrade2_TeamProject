@@ -38,6 +38,7 @@ namespace Work.PSB.Code.Managers
             if (cachedCursor != null)
                 Destroy(cachedCursor);
             
+            SetCursorLockedState(false);
             Bus<CursorToggleEvent>.OnEvent -= HandleCursorToggleRequest;
         }
 
