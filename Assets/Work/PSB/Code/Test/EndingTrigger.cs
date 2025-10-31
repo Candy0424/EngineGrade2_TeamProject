@@ -11,7 +11,6 @@ namespace Work.PSB.Code.Test
         {
             if (other.GetComponent<CharacterController>() != null)
             {
-                Debug.Log("엔딩 트리거 발동!");
                 OnEnd?.Invoke();
             }
         }
