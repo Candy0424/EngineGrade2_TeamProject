@@ -104,7 +104,7 @@ namespace Work.PSB.Code.SaveSystem
 
         public int GetMaxStars()
         {
-            return 3;  //스테이지 수 * 3 방법이 생각안나서 그냥 넣음
+            return 21;  //스테이지 수 * 3 방법이 생각안나서 그냥 넣음
         }
         
         private void Update()
