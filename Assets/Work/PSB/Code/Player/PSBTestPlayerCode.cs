@@ -161,16 +161,16 @@ namespace Work.PSB.Code.Player
 
             Collider[] hits = Physics.OverlapSphere(frontGridPos, 0.45f);
             BlockPush blockToPush = null;
-            bool isWall = false;
+            //bool isWall = false;
 
             foreach (Collider hit in hits)
             {
                 if (hit == null) continue;
-                if (hit.CompareTag("Wall"))
+                /*if (hit.CompareTag("Wall"))
                 {
                     isWall = true;
                     break;
-                }
+                }*/
 
                 if (hit.TryGetComponent(out BlockPush block))
                 {
@@ -179,7 +179,7 @@ namespace Work.PSB.Code.Player
                 }
             }
 
-            if (isWall)
+            /*if (isWall)
             {
                 BroAudio.Play(errorSound);
                 Bus<CommandEvent>.Raise(new CommandEvent(new NothingCommand(_movementCompo)));
@@ -191,7 +191,7 @@ namespace Work.PSB.Code.Player
                     HandleTurnZero();
                 }
                 return;
-            }
+            }*/
     
             if (blockToPush != null)
             {
